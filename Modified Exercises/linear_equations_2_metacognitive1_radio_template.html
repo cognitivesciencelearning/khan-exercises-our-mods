@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html data-require="math math-format subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Linear equations 2</title>
+    <script src="../khan-exercise.js"></script>
+    
+    
+    <!-- changesZZZ added this CSS to style the labels -- just makes sure the contents of the labels are vertically aligned and centered -->
+    <style type="text/css">
+
+label {
+    float: left;
+    padding: 0 1em;
+    text-align: center;
+}
+
+</style>
+
+<!-- changesZZZ end CSS styles -->
+
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="A">randRange( 2, 10 )</var>
+            <var id="B">randRangeNonZero( -10, 10 )</var>
+            <var id="D">randRange( 2, 10 )</var>
+            <var id="SOLUTION">fractionReduce( D - B, A )</var>
+        </div>
+
+        <div class="problems"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+            <div id="new">
+                <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="[zzz.BlockStrat.H]">[zzz.BlockStrat.C]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [zzz.BlockStrat.I]  Asking yourself the right questions can help you solve hard problems. When you see "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">[]</a> <a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a> <a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                 <div class="definition" id="What0">
+                        [zzz.wwh.1.I.]
+                    </div>
+                <div class="definition" id="Why0">
+                       [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How0">
+                        [zzz.wwh.3.I.]
+                    </div>
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                <div class="solution" data-type="custom">
+        <div class="instruction">
+           <code>x =</code> <input type="text" id="guessans"> 
+        </div>
+                    
+                    
+       <!-- changesZZZ changed all the selectors to record the appropriate elements 9returns values in each group of buttons for the one that has been checked -->
+        <div class="guess">[
+            $('input:radio[name=firstQ]:checked').val(),
+            $('input:radio[name=secondQ]:checked').val(),
+            $("#guessans").val()
+        ]</div>
+       <!-- changesZZZ end selectors -->
+       
+       
+        <div class="validator-function">
+            
+            
+            var correct =  (D - B) / A ;
+            var solutionDiv = $("&lt;div&gt;").text(correct);
+            var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+            return validator(guess[2]);
+        </div>
+        <div class="show-guess-solutionarea">
+            $('input:radio[name=firstQ]').val(guess[0]);
+            $('input:radio[name=firstQ]').val(guess[1]);
+            $("#guessans").val(guess[2]);
+           
+        </div>
+        <div class="example">an integer, like <code>6</code></div>
+        <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+        <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+        <div class="example">a mixed number, like <code>1\ 3/4</code></div>
+        <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+        
+    </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             <div>
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </p>
+                    <div class="definition" id="What">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why">
+                     [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How">
+                      [zzz.wwh.3.I.]
+                    </div>
+                    
+                    
+                    <!-- changesZZZ here is the prompt followed by the set of input radio buttons, enclosed in label tags that associate the labels
+                    with their correct buttons and ensure everything is styled correctly -->
+                    <p>How confident are you in your explanation?</p>
+                    <p>
+                    <label for="firstQ1">Not at all confident<br><input type="radio" id ="firstQ1" name="firstQ" value="1"> </label>
+                     <label for="firstQ2">2<br><input type="radio" id ="firstQ2" name="firstQ" value="2"></label>
+                    <label for="firstQ3">3<br><input type="radio" id ="firstQ3" name="firstQ" value="3"></label>
+                    <label for="firstQ4">4<br><input type="radio" id ="firstQ4" name="firstQ" value="4"></label>
+                    <label for="firstQ5">Completely Confident<br><input type="radio" id ="firstQ5" name="firstQ" value="5"></label>
+                    </p>
+                    <br>
+                    <!-- changesZZZ end prompt and buttons -->
+                    
+                    
+                </div>
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            <div>
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </p>
+                    <div class="definition" id="What2">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why2">
+                     [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How2">
+                      [zzz.wwh.3.I.]
+                    </div>
+                    
+                    
+                    <!-- changesZZZ specifies the second set of inputs - see previous comment for details -->
+                    <p>How confident are you in your explanation?</p>
+                    <p>
+                    <label for="secondQ1">Not at all confident<br><input type="radio" id ="secondQ1" name="secondQ" value="1"> </label>
+                     <label for="secondQ2">2<br><input type="radio" id ="secondQ2" name="secondQ" value="2"></label>
+                    <label for="secondQ3">3<br><input type="radio" id ="secondQ3" name="secondQ" value="3"></label>
+                    <label for="secondQ4">4<br><input type="radio" id ="secondQ4" name="secondQ" value="4"></label>
+                    <label for="secondQ5">Completely Confident<br><input type="radio" id ="secondQ5" name="secondQ" value="5"></label>
+                    </p>
+                    <br>
+                    <!-- changesZZZ end prompt and buttons -->
+                    
+                    
+                </div>
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+                </div>
+            <div id="original"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+               
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) /  A </var></span></p>
+                </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+            </div>
+            </div>
+    </div>
+</body>
+</html>

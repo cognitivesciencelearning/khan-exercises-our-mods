@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems spin subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Age word problems</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+    <div class="problems">
+        <div id="solve-older-1-meta"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+            <div class="vars">
+                <var id="C">randRange(3, 5)</var>
+                <var id="B">randRange(2, 20)</var>
+                <var id="A">randRange(1, 10) * (C - 1)</var>
+            </div>
+
+            <div class="question">
+                <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="foo">[StrategyQQzzz]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [StrategyAAzzz]  Asking yourself the right questions can help you solve hard problems. When you see "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">[Q1zzz]</a> <a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">[Q2zzz]</a> <a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">[Q3zzz]</a>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                 <div class="definition" id="What0">
+                        [A1zzz]
+                    </div>
+                <div class="definition" id="Why0">
+                       [A2zzz]
+                    </div>
+                     <div class="definition" id="How0">
+                        [A3zzz]
+                    </div>
+                </div>
+                <p class="spin">
+                {<var>person(1)</var> is <var>A</var> years older than <var>person(2)</var>|<var>person(2)</var> is <var>A</var> years younger than <var>person(1)</var>}.
+                {For the last {four|3|two} years, <var>person(1)</var> and <var>person(2)</var> have been going to the same school.|<var>person(1)</var> and <var>person(2)</var> first met 3 years ago.|}
+                <var>Cardinal(B)</var> years ago, <var>person(1)</var> was <var>C</var> times {as old as|older than} <var>person(2)</var>.</p>
+
+                <p>How old is <var>person(1)</var> now?</p>
+            </div>
+            <div class="solution"><var>(C * (B + A) - B) / (C - 1)</var></div>
+
+            <div class="hints">
+                <p>Let <var>person(1)</var>'s current age be <code><var>personVar(1)</var></code>.</p>
+                <div>
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">[Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">[Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">[Q3zzz]</a>&nbsp;
+                        <a href="#" class="show-subhint" data-subhint="side-question-1-1">[SQ1zzz]</a> &nbsp;
+                        <a href="#" class="show-subhint" data-subhint="side-question-1-2">[SQ2zzz]</a>
+                    </p>
+                    <div class="definition" id="What">
+                        [A1zzz]
+                    </div>
+                    <div class="definition" id="Why">
+                     [A2zzz]
+                    </div>
+                     <div class="definition" id="How">
+                      [A3zzz]
+                    </div>
+                   
+                    <div class="subhint" id="side-question-1-1">
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What1SQ11" style="color: #C00;font-weight: bold">[1SQ11Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why1SQ11" style="color: #ff0000;font-weight: bold">[1SQ11Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How1SQ11" style="color: #ff3333;font-weight: bold">[1SQ11Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What1SQ11">
+                        [1SQ11A1zzz]
+                    </div>
+                    <div class="definition" id="Why1SQ11">
+                     [1SQ11A2zzz]
+                    </div>
+                     <div class="definition" id="How1SQ11">
+                      [1SQ11A3zzz]
+                    </div>
+                     <p>
+                        <a href="#" class="show-definition" data-definition="What2SQ11" style="color: #C00;font-weight: bold">[2SQ11Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2SQ11" style="color: #ff0000;font-weight: bold">[2SQ11Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2SQ11" style="color: #ff3333;font-weight: bold">[2SQ11Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What2SQ11">
+                        [2SQ11A1zzz]
+                    </div>
+                    <div class="definition" id="Why2SQ11">
+                     [2SQ11A2zzz]
+                    </div>
+                     <div class="definition" id="How2SQ11">
+                      [2SQ11A3zzz]
+                    </div>
+                   <p>
+                        <a href="#" class="show-definition" data-definition="What3SQ11" style="color: #C00;font-weight: bold">[3SQ11Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why3SQ11" style="color: #ff0000;font-weight: bold">[3SQ11Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How3SQ11" style="color: #ff3333;font-weight: bold">[3SQ11Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What3SQ11">
+                        [3SQ11A1zzz]
+                    </div>
+                    <div class="definition" id="Why3SQ11">
+                     [3SQ11A2zzz]
+                    </div>
+                     <div class="definition" id="How3SQ11">
+                      [3SQ11A3zzz]
+                    </div>
+                    
+                </div>
+                
+                    <div class="subhint" id="side-question-1-2">
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What1SQ12" style="color: #C00;font-weight: bold">[1SQ12Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why1SQ12" style="color: #ff0000;font-weight: bold">[1SQ12Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How1SQ12" style="color: #ff3333;font-weight: bold">[1SQ12Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What1SQ12">
+                        [1SQ12A1zzz]
+                    </div>
+                    <div class="definition" id="Why1SQ12">
+                     [1SQ12A2zzz]
+                    </div>
+                     <div class="definition" id="How1SQ12">
+                      [1SQ12A3zzz]
+                    </div>
+                     <p>
+                        <a href="#" class="show-definition" data-definition="What2SQ12" style="color: #C00;font-weight: bold">[2SQ12Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2SQ12" style="color: #ff0000;font-weight: bold">[2SQ12Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2SQ12" style="color: #ff3333;font-weight: bold">[2SQ12Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What2SQ12">
+                        [2SQ12A1zzz]
+                    </div>
+                    <div class="definition" id="Why2SQ12">
+                     [2SQ12A2zzz]
+                    </div>
+                     <div class="definition" id="How2SQ12">
+                      [2SQ12A3zzz]
+                    </div>
+                   <p>
+                        <a href="#" class="show-definition" data-definition="What3SQ12" style="color: #C00;font-weight: bold">[3SQ12Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why3SQ12" style="color: #ff0000;font-weight: bold">[3SQ12Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How3SQ12" style="color: #ff3333;font-weight: bold">[3SQ12Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What3SQ12">
+                        [3SQ12A1zzz]
+                    </div>
+                    <div class="definition" id="Why3SQ12">
+                     [3SQ12A2zzz]
+                    </div>
+                     <div class="definition" id="How3SQ12">
+                      [3SQ12A3zzz]
+                    </div>
+                    
+                </div>
+                    
+                </div>
+                <p>That means that <var>B</var> years ago, <var>person(1)</var> was <code><var>personVar(1)</var> - <var>B</var></code> years old.</p>
+                
+                <p><var>person(2)</var> is <code><var>personVar(1)</var> - <var>A</var></code> years old right now, so <var>B</var> years ago, <var>he(2)</var> was <code>(<var>personVar(1)</var> - <var>A</var>) - <var>B</var> = <var>personVar(1)</var> - <var>A + B</var></code> years old.</p>
+                 <div>
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">[Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">[Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">[Q3zzz]</a>&nbsp;
+                        <a href="#" class="show-subhint" data-subhint="side-question-2-1">[SQ1zzz]</a> &nbsp;
+                        <a href="#" class="show-subhint" data-subhint="side-question-2-2">[SQ2zzz]</a>
+                    </p>
+                    <div class="definition" id="What2">
+                        [A1zzz]
+                    </div>
+                    <div class="definition" id="Why2">
+                     [A2zzz]
+                    </div>
+                     <div class="definition" id="How2">
+                      [A3zzz]
+                    </div>
+                   
+                    <div class="subhint" id="side-question-2-1">
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What1SQ21" style="color: #C00;font-weight: bold">[1SQ21Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why1SQ21" style="color: #ff0000;font-weight: bold">[1SQ21Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How1SQ21" style="color: #ff3333;font-weight: bold">[1SQ21Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What1SQ21">
+                        [1SQ21A1zzz]
+                    </div>
+                    <div class="definition" id="Why1SQ21">
+                     [1SQ21A2zzz]
+                    </div>
+                     <div class="definition" id="How1SQ21">
+                      [1SQ21A3zzz]
+                    </div>
+                     <p>
+                        <a href="#" class="show-definition" data-definition="What2SQ21" style="color: #C00;font-weight: bold">[2SQ21Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2SQ21" style="color: #ff0000;font-weight: bold">[2SQ21Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2SQ21" style="color: #ff3333;font-weight: bold">[2SQ21Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What2SQ21">
+                        [2SQ21A1zzz]
+                    </div>
+                    <div class="definition" id="Why2SQ21">
+                     [2SQ21A2zzz]
+                    </div>
+                     <div class="definition" id="How2SQ21">
+                      [2SQ21A3zzz]
+                    </div>
+                   <p>
+                        <a href="#" class="show-definition" data-definition="What3SQ21" style="color: #C00;font-weight: bold">[3SQ21Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why3SQ21" style="color: #ff0000;font-weight: bold">[3SQ21Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How3SQ21" style="color: #ff3333;font-weight: bold">[3SQ21Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What3SQ21">
+                        [3SQ21A1zzz]
+                    </div>
+                    <div class="definition" id="Why3SQ21">
+                     [3SQ21A2zzz]
+                    </div>
+                     <div class="definition" id="How3SQ21">
+                      [3SQ21A3zzz]
+                    </div>
+                    
+                </div>
+                
+                    <div class="subhint" id="side-question-2-2">
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What1SQ22" style="color: #C00;font-weight: bold">[1SQ22Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why1SQ22" style="color: #ff0000;font-weight: bold">[1SQ22Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How1SQ22" style="color: #ff3333;font-weight: bold">[1SQ22Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What1SQ22">
+                        [1SQ22A1zzz]
+                    </div>
+                    <div class="definition" id="Why1SQ22">
+                     [1SQ22A2zzz]
+                    </div>
+                     <div class="definition" id="How1SQ22">
+                      [1SQ22A3zzz]
+                    </div>
+                     <p>
+                        <a href="#" class="show-definition" data-definition="What2SQ22" style="color: #C00;font-weight: bold">[2SQ22Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2SQ22" style="color: #ff0000;font-weight: bold">[2SQ22Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2SQ22" style="color: #ff3333;font-weight: bold">[2SQ22Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What2SQ22">
+                        [2SQ22A1zzz]
+                    </div>
+                    <div class="definition" id="Why2SQ22">
+                     [2SQ22A2zzz]
+                    </div>
+                     <div class="definition" id="How2SQ22">
+                      [2SQ22A3zzz]
+                    </div>
+                   <p>
+                        <a href="#" class="show-definition" data-definition="What3SQ22" style="color: #C00;font-weight: bold">[3SQ22Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why3SQ22" style="color: #ff0000;font-weight: bold">[3SQ22Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How3SQ22" style="color: #ff3333;font-weight: bold">[3SQ22Q3zzz]</a>&nbsp;
+                        
+                    </p>
+                    <div class="definition" id="What3SQ22">
+                        [3SQ22A1zzz]
+                    </div>
+                    <div class="definition" id="Why3SQ22">
+                     [3SQ22A2zzz]
+                    </div>
+                     <div class="definition" id="How3SQ22">
+                      [3SQ22A3zzz]
+                    </div>
+                    
+                </div>
+                    
+                </div>
+                <p><var>person(1)</var> was <var>C</var> times as old as <var>person(2)</var>, so that means <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> (<var>personVar(1)</var> - <var>A + B</var>)</code>.</p>
+                
+                
+                <p>Expand: <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> <var>personVar(1)</var> - <var>C * (A + B)</var></code>.</p>
+                
+                <p>Solve for <code><var>personVar(1)</var></code> to get <code><var>C - 1</var> <var>personVar(1)</var> = <var>C * (A + B) - B</var></code>.</p>
+		
+                <p><code><var>personVar(1)</var> = <var>(C * (B + A) - B) / (C - 1)</var></code>.</p>
+            </div>
+        </div>
+
+       
+    </div>
+    </div>
+</body>
+</html>

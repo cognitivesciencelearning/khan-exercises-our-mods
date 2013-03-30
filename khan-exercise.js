@@ -2107,9 +2107,20 @@ var Khan = (function() {
             }
 
             if (pass === true) {
+                var showBox = $("#show-box");
+                if (showBox.length > 0){
+                $('#solutionarea').append('<p>Explain why that is correct <br> <input type="text" width="100%" id="explain-answer"></p>');
+                }
+                /*$('.hint-box').after('<div class="info-box explain-box" style="position:relative"><span class="info-box-header">\n\
+                                      Explanation</span><p>Explanation here</p></div>');*/
+                var hasExp = $('#instructional-explanation');
+                if (hasExp.length > 0){
+                     $("#check-answer-results .check-answer-message").html(hasExp.html()).tmpl().show();
+                }
                 // Problem has been completed but pending data request being
                 // sent to server.
                 $(Khan).trigger("problemDone");
+                
             }
 
             // Save the problem results to the server

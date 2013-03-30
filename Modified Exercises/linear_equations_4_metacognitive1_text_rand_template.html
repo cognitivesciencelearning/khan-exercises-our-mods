@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html data-require="math math-format subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Linear equations 4</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="x-on-bottom-meta"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+                <!-- A = B / (Cx + D) -->
+                <div class="vars" data-ensure="( C * ANSWER + D !== 0 )">
+                    <var id="A">randRange( 2, 8 )</var>
+                    <var id="B">randRangeNonZero( -12, 18 )</var>
+                    <var id="C">randRangeNonZero( -6, 6 )</var>
+                    <var id="D">randRangeNonZero( -6, 6 )</var>
+                    <var id="ANSWER">( B - A * D ) / ( A * C )</var>
+                    <var id="HINTRAND">randRange(1,3)</var>
+                </div>
+                <div class="problem">
+                    <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="[zzz.BlockStrat.H]">[zzz.BlockStrat.C]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [zzz.BlockStrat.C]  Asking yourself the right questions can help you solve hard problems. When you see "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> <a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a> <a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                 <div class="definition" id="What0">
+                        [zzz.wwh.1.I.]
+                    </div>
+                <div class="definition" id="Why0">
+                       [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How0">
+                        [zzz.wwh.3.I.]
+                    </div>
+                </div>
+                    
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var> = \dfrac{<var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>}</code></div>
+
+                <div class="solution" data-type="custom">
+        <div class="instruction">
+           <code>x =</code> <input type="text" id="guessans"> 
+        </div>
+        <div class="guess">[
+            $("#firsttext").val(),
+            $("#secondtext").val(),
+            $("#guessans").val()
+        ]</div>
+        <div class="validator-function">
+            
+
+            var correct = ANSWER;
+            var solutionDiv = $("&lt;div&gt;").text(correct);
+            var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+            return validator(guess[2]);
+        </div>
+        <div class="show-guess-solutionarea">
+            $("#firsttext").val(guess[0]);
+            $("#secondtext").val(guess[1]);
+            $("#guessans").val(guess[2]);
+           
+        </div>
+        <div class="example">an integer, like <code>6</code></div>
+        <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+        <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+        <div class="example">a mixed number, like <code>1\ 3/4</code></div>
+        <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+        
+    </div>
+
+                <div class="hints">
+                    <div>
+                        <p>Multiply both sides by <code><var>expr(["*", C, "x"])</var> + <var>D</var></code>:</p>
+                        <p><code>\qquad <var>A</var> (<var>expr(["*", C, "x"])</var> + <var>D</var>) = \dfrac{<var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>} (<var>expr(["*", C, "x"])</var> + <var>D</var>)</code></p>
+                        <p><code>\qquad <var>A * C</var>x + <var>A * D</var> = <var>B</var></code></p>
+                    </div>
+                    <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                        <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                        </div>
+                        <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </div>
+                    <div class="definition" id="What">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why">
+                     [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How">
+                      [zzz.wwh.3.I.]
+                    </div>
+                    <input type="text"  id="firsttext" style="width:75%;">
+                </div>
+                    <div>
+                        <p>Now <var>A * D &lt; 0 ? "add" : "subtract"</var> <code><var>abs( A * D )</var></code> <var>A * D &lt; 0 ? "to" : "from"</var> both sides:</p>
+                        <p><code>\qquad (<var>A * C</var>x + <var>A * D</var>) + <var>-A * D</var> = <var>B</var> + <var>- A * D</var></code></p>
+                        <p><code>\qquad <var>A * C</var>x = <var>B - A * D</var></code></p>
+                    </div>
+                    <div>
+                        <p>Divide by <code><var>A * C</var></code>:</p>
+                        <p><code>\qquad x = <var>fraction( B - A * D, A * C, false, false )</var></code></p>
+                    </div>
+                     <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                         <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                         </div>
+                        <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </div>
+                    <div class="definition" id="What2">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why2">
+                        [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How2">
+                        [zzz.wwh.3.I.]
+                    </div>
+                    <input type="text"  id="secondtext" style="width:75%;">
+                 </div>
+                    <div data-if="reduces( B - A * D, A * C )">
+                        <p>Reduce the fraction:</p>
+                        <p><code>\qquad x = <var>fractionReduce( B - A * D, A * C )</var></code></p>
+                    </div>
+                </div>
+            </div>
+            <div id="x-on-top-and-bottom-meta"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+                <!-- (Ax + B) / (Cx + D) = E -->
+                <div class="vars" data-ensure="abs(A - E * C) >= 2 && ( C * ANSWER + D !== 0 )">
+                    <var id="A">randRangeNonZero( -12, 18 )</var>
+                    <var id="B">randRangeNonZero( -12, 18 )</var>
+                    <var id="C">randRangeNonZero( -6, 6 )</var>
+                    <var id="D">randRangeNonZero( -6, 6 )</var>
+                    <var id="E">randRange( 2, 8 )</var>
+                    <var id="ANSWER">( E * D - B ) / ( A - E * C )</var>
+                    <var id="HINTRAND">randRange(1,3)</var>
+                </div>
+                 <div class="problem">
+                    <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more">[StrategyQQzzz]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [StrategyAAzzz]  Asking yourself the right questions can help you solve hard problems. When you see "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> <a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a> <a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                 <div class="definition" id="What0">
+                        [zzz.wwh.1.I.]
+                    </div>
+                <div class="definition" id="Why0">
+                       [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How0">
+                        [zzz.wwh.3.I.]
+                    </div>
+                </div>
+                    
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code>\dfrac{<var>expr(["*", A, "x"])</var> + <var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>} = <var>E</var></code></div>
+
+                <div class="solution" data-type="custom">
+        <div class="instruction">
+           <code>x =</code> <input type="text" id="guessans"> 
+        </div>
+        <div class="guess">[
+            $("#firsttext").val(),
+            $("#secondtext").val(),
+            $("#guessans").val()
+        ]</div>
+        <div class="validator-function">
+            
+
+            var correct = ANSWER;
+            var solutionDiv = $("&lt;div&gt;").text(correct);
+            var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+            return validator(guess[2]);
+        </div>
+        <div class="show-guess-solutionarea">
+            $("#firsttext").val(guess[0]);
+            $("#secondtext").val(guess[1]);
+            $("#guessans").val(guess[2]);
+           
+        </div>
+        <div class="example">an integer, like <code>6</code></div>
+        <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+        <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+        <div class="example">a mixed number, like <code>1\ 3/4</code></div>
+        <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+        
+    </div>
+
+                <div class="hints">
+                    <div>
+                        <p>Multiply both sides by <code><var>expr(["*", C, "x"])</var> + <var>D</var></code>:</p>
+                        <p><code>\qquad \dfrac{<var>expr(["*", A, "x"])</var> + <var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>} (<var>expr(["*", C, "x"])</var> + <var>D</var>) = <var>E</var> (<var>expr(["*", C, "x"])</var> + <var>D</var>)</code></p>
+                        <p><code>\qquad <var>expr(["*", A, "x"])</var> + <var>B</var> = <var>expr(["*", E * C, "x"])</var> + <var>E * D</var></code></p>
+                    </div>
+                    <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                        <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                        </div>
+                        <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </div>
+                    <div class="definition" id="What">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why">
+                     [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How">
+                      [zzz.wwh.3.I.]
+                    </div>
+                    <input type="text"  id="firsttext" style="width:75%;">
+                </div>
+                    <div>
+                        <p>Now <var>E * C &lt; 0 ? "add" : "subtract"</var> <code><var>abs( E * C )</var>x</code> <var>E * C &lt; 0 ? "to" : "from"</var> both sides:</p>
+                        <p><code>\qquad (<var>expr(["*", A, "x"])</var> + <var>B</var>) + <var>-E * C</var>x = (<var>expr(["*", E * C, "x"])</var> + <var>E * D</var>) + <var>-E * C</var>x</code></p>
+                        <p><code>\qquad <var>A - E * C</var>x + <var>B</var> = <var>E * D</var></code></p>
+                    </div>
+                    <div>
+                        <p>Now <var>B &lt; 0 ? "add" : "subtract"</var> <code><var>abs( B )</var></code>:</p>
+                        <p><code>\qquad (<var>A - E * C</var>x + <var>B</var>) + <var>-B</var> = <var>E * D</var> + <var>-B</var></code></p>
+                        <p><code>\qquad <var>A - E * C</var>x = <var>E * D - B</var></code></p>
+                    </div>
+                     <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                         <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                         </div>
+                         <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </div>
+                    <div class="definition" id="What2">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why2">
+                        [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How2">
+                        [zzz.wwh.3.I.]
+                    </div>
+                    <input type="text"  id="secondtext" style="width:75%;">
+                 </div>
+                    <div>
+                        <p>Divide by <code><var>A - E * C</var></code>:</p>
+                        <p><code>\qquad x = <var>fraction( E * D - B, A - E * C, false, false )</var></code></p>
+                    </div>
+                    <div data-if="reduces(E * D - B, A - E * C)">
+                        <p>Reduce the fraction:</p>
+                        <p><code>\qquad x = <var>fractionReduce( E * D - B, A - E * C )</var></code></p>
+                    </div>
+                </div>
+            </div>
+             <div id="x-on-bottom"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+                <!-- A = B / (Cx + D) -->
+                <div class="vars" data-ensure="( C * ANSWER + D !== 0 )">
+                    <var id="A">randRange( 2, 8 )</var>
+                    <var id="B">randRangeNonZero( -12, 18 )</var>
+                    <var id="C">randRangeNonZero( -6, 6 )</var>
+                    <var id="D">randRangeNonZero( -6, 6 )</var>
+                    <var id="ANSWER">( B - A * D ) / ( A * C )</var>
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var> = \dfrac{<var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>}</code></div>
+
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>ANSWER</var></span></p>
+                </div>
+
+                <div class="hints">
+                    <div>
+                        <p>Multiply both sides by <code><var>expr(["*", C, "x"])</var> + <var>D</var></code>:</p>
+                        <p><code>\qquad <var>A</var> (<var>expr(["*", C, "x"])</var> + <var>D</var>) = \dfrac{<var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>} (<var>expr(["*", C, "x"])</var> + <var>D</var>)</code></p>
+                        <p><code>\qquad <var>A * C</var>x + <var>A * D</var> = <var>B</var></code></p>
+                    </div>
+                    <div>
+                        <p>Now <var>A * D &lt; 0 ? "add" : "subtract"</var> <code><var>abs( A * D )</var></code> <var>A * D &lt; 0 ? "to" : "from"</var> both sides:</p>
+                        <p><code>\qquad (<var>A * C</var>x + <var>A * D</var>) + <var>-A * D</var> = <var>B</var> + <var>- A * D</var></code></p>
+                        <p><code>\qquad <var>A * C</var>x = <var>B - A * D</var></code></p>
+                    </div>
+                    <div>
+                        <p>Divide by <code><var>A * C</var></code>:</p>
+                        <p><code>\qquad x = <var>fraction( B - A * D, A * C, false, false )</var></code></p>
+                    </div>
+                    <div data-if="reduces( B - A * D, A * C )">
+                        <p>Reduce the fraction:</p>
+                        <p><code>\qquad x = <var>fractionReduce( B - A * D, A * C )</var></code></p>
+                    </div>
+                </div>
+            </div>
+            <div id="x-on-top-and-bottom"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+                <!-- (Ax + B) / (Cx + D) = E -->
+                <div class="vars" data-ensure="abs(A - E * C) >= 2 && ( C * ANSWER + D !== 0 )">
+                    <var id="A">randRangeNonZero( -12, 18 )</var>
+                    <var id="B">randRangeNonZero( -12, 18 )</var>
+                    <var id="C">randRangeNonZero( -6, 6 )</var>
+                    <var id="D">randRangeNonZero( -6, 6 )</var>
+                    <var id="E">randRange( 2, 8 )</var>
+                    <var id="ANSWER">( E * D - B ) / ( A - E * C )</var>
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code>\dfrac{<var>expr(["*", A, "x"])</var> + <var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>} = <var>E</var></code></div>
+
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var> ANSWER </var></span></p>
+                </div>
+
+                <div class="hints">
+                    <div>
+                        <p>Multiply both sides by <code><var>expr(["*", C, "x"])</var> + <var>D</var></code>:</p>
+                        <p><code>\qquad \dfrac{<var>expr(["*", A, "x"])</var> + <var>B</var>}{<var>expr(["*", C, "x"])</var> + <var>D</var>} (<var>expr(["*", C, "x"])</var> + <var>D</var>) = <var>E</var> (<var>expr(["*", C, "x"])</var> + <var>D</var>)</code></p>
+                        <p><code>\qquad <var>expr(["*", A, "x"])</var> + <var>B</var> = <var>expr(["*", E * C, "x"])</var> + <var>E * D</var></code></p>
+                    </div>
+                    <div>
+                        <p>Now <var>E * C &lt; 0 ? "add" : "subtract"</var> <code><var>abs( E * C )</var>x</code> <var>E * C &lt; 0 ? "to" : "from"</var> both sides:</p>
+                        <p><code>\qquad (<var>expr(["*", A, "x"])</var> + <var>B</var>) + <var>-E * C</var>x = (<var>expr(["*", E * C, "x"])</var> + <var>E * D</var>) + <var>-E * C</var>x</code></p>
+                        <p><code>\qquad <var>A - E * C</var>x + <var>B</var> = <var>E * D</var></code></p>
+                    </div>
+                    <div>
+                        <p>Now <var>B &lt; 0 ? "add" : "subtract"</var> <code><var>abs( B )</var></code>:</p>
+                        <p><code>\qquad (<var>A - E * C</var>x + <var>B</var>) + <var>-B</var> = <var>E * D</var> + <var>-B</var></code></p>
+                        <p><code>\qquad <var>A - E * C</var>x = <var>E * D - B</var></code></p>
+                    </div>
+                    <div>
+                        <p>Divide by <code><var>A - E * C</var></code>:</p>
+                        <p><code>\qquad x = <var>fraction( E * D - B, A - E * C, false, false )</var></code></p>
+                    </div>
+                    <div data-if="reduces(E * D - B, A - E * C)">
+                        <p>Reduce the fraction:</p>
+                        <p><code>\qquad x = <var>fractionReduce( E * D - B, A - E * C )</var></code></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

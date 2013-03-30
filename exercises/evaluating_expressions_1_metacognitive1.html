@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html data-require="math graphie subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Evaluating expressions 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="X">randRange(1, 10)</var>
+            <var id="COEFF">randRangeNonZero(-1, 1)* randRange(3, 10)</var>
+            <var id="CONSTANT">randRangeNonZero(-1, 1) * randRange(3, 10)</var>
+
+            <var id="SOLUTION">(X * COEFF) + CONSTANT</var>
+        </div>
+
+        <div class="problems">
+            <div>
+                <p class="problem">
+                     <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more">[StrategyQQzzz]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [StrategyAAzzz]  Asking yourself the right questions can help you solve hard problems. When you see "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">[Q1zzz]</a> <a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">[Q2zzz]</a> <a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">[Q3zzz]</a>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                 <div class="definition" id="What0">
+                        [A1zzz]
+                    </div>
+                <div class="definition" id="Why0">
+                       [A2zzz]
+                    </div>
+                     <div class="definition" id="How0">
+                        [A3zzz]
+                    </div>
+                </div>
+                    Evaluate the following expression when
+                    <span id="foo"><code>x = <var>X</var></code></span>:
+                </p>
+                <p class="question">
+                    <code><var>COEFF</var></code
+                    ><span id="var"><code>x</code></span
+                    ><code>{} + <var>CONSTANT</var></code>
+                </p>
+                <p class="solution"><var>SOLUTION</var></p>
+            </div>
+        </div>
+
+        <div class="hints">
+            <div>
+               <div class="graphie">
+                    $("#foo").addClass("hint_pink");
+                    $("#var").addClass("hint_pink");
+                </div> 
+                <p>
+                    Plug in <code>\pink{<var>X</var>}</code> for
+                    <code>x</code>.
+                </p>
+                 
+                <p>
+                    <code>\qquad=\quad<var>COEFF</var>\pink{(<var>X</var>)} +
+                    <var>CONSTANT</var></code>
+                </p>
+               
+            </div>
+             <div>
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">[Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">[Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">[Q3zzz]</a>
+                    </p>
+                    <div class="definition" id="What">
+                        [A1zzz]
+                    </div>
+                    <div class="definition" id="Why">
+                     [A2zzz]
+                    </div>
+                     <div class="definition" id="How">
+                      [A3zzz]
+                    </div>
+                    
+                </div>
+            <p>
+                <code>
+                    \qquad=\quad<var>COEFF * X</var> + <var>CONSTANT</var>
+                </code>
+            </p>
+
+            <p>
+                <code>\qquad=\quad<var>SOLUTION</var></code>
+            </p>
+             <div>
+                    <p>
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">[Q1zzz]</a> &nbsp;
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">[Q2zzz]</a>&nbsp;
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">[Q3zzz]</a>
+                    </p>
+                    <div class="definition" id="What2">
+                        [A1zzz]
+                    </div>
+                    <div class="definition" id="Why2">
+                        [A2zzz]
+                    </div>
+                     <div class="definition" id="How2">
+                        [A3zzz]
+                    </div>
+                 </div>
+        </div>
+    </div>
+</body>
+</html>

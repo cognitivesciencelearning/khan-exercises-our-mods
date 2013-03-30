@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+  <html data-require="math math-format subhints">
+      <head>
+          <title>Linear equations 2</title>
+          <script src="../khan-exercise.js"></script>
+      </head>
+      <body>
+          <div class="exercise">
+              <div class="vars">
+                  <!-- Your variables in here... -->
+				  <var id="A">randRange(2,10)</var>
+				  <var id="B">randRangeNonZero(-10,10)</var>
+				  <var id="C">randRange(2,10)</var>
+				  <!--ORIGINAL VERSION HAS SOLUTION DEFINED HERE <var id="SOLUTION">fractionReduce( D - B, A )</var>-->
+              </div>
+
+              <div class="problems">
+			  
+				<div id="new">  
+				  <div><p>    
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="Hide Information">[Learn about the "Self-Questioning" strategy]</a>
+                    </p>
+                  <div class="subhint" id="learn-more">
+                       This exercise gives you questions to help you reflect on how to solve exercises. You can recognize these questions because they are in 
+                       <span style="color: #C00;font-weight: bold">red text</span>. 
+                       <br>
+                       <br>
+                       At first, you might find this unusual, or not feel like you have a good answer. This is completely normal! These questions can still help you if you
+                       <span style="font-weight: bold;font-style: italic;">try</span> to answer them &ndash; by typing, writing, and talking out loud or in your head.
+				  </div>
+			  
+                  <div id="question">
+                      <p class="problem">Solve for <code>x</code>:</p>
+                      <p class="question"><code><var>A</var>x + <var>B</var> = <var>C</var></code></p>
+                      <p class="solution" data-type="multiple"><!-- The correct answer expected of the student. -->
+					  <code>x = </code><span class="sol"><var>(C - B) / A</var></span></p>
+                  </div>
+              </div>
+
+              <div class="hints"><!-- Any hints to show to the student. -->
+			  
+				  <div> <!--IS THIS ONLY FOR FORMATTING?-->
+				  <table width="100%">
+				    <tr>
+			          <td width="50%">
+				     <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+				     <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>C</var> + <var>-B</var></code></p>
+				     <p><code><var>A</var>x = <var>C - B</var></code></p>
+				     </td>
+			         <td width="50%">
+				     <p>
+                        <!--<span style="color: #C00;font-weight: bold">Do you understand?</span>-->
+						<a href="#" class="show-definition" data-definition="What1" style="color: #C00;font-weight: bold">Do you understand?</a>
+                     </p>
+					 <div class="definition" id="What1">
+                        What are you doing and thinking?
+                    </div>
+			          </td>
+			        </tr>
+			      </table>
+				  </div>
+				  <div>
+				  <table width="100%">
+				    <tr>
+					  <td width="50%">
+				      <p>Divide both sides by <code><var>A</var></code>.</p>
+				      <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>C-B</var>}{<var>A</var>}</code></p>
+					  </td>
+					  <td>
+					  <p>
+                        <!--<span style="color: #C00;font-weight: bold">Do you understand?</span>-->
+						<a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">Do you understand?</a>
+                      </p>
+					  <div class="definition" id="What2">
+                        What are you doing and thinking?
+                      </div>
+					  </td>
+					</tr>
+				  </table>
+					
+				  </div>
+				  
+				  <div>
+				  <table width="100%">
+				    <tr>
+					  <td width="50%">
+				      <p>Simplify.</p>
+					  <p><code>x = <var>fractionReduce( C - B, A )</var></code></p> <!--ALTERNATIVE: <p><code>x = <var>SOLUTION</var></code></p>-->
+				      </td>
+					  <td>
+					  <p>
+                        <!--<span style="color: #C00;font-weight: bold">Do you understand?</span>-->
+						<a href="#" class="show-definition" data-definition="What3" style="color: #C00;font-weight: bold">Do you understand?</a>
+                      </p>
+					  <div class="definition" id="What3">
+                        What are you doing and thinking?
+                      </div>
+					  </td>
+					</tr>
+				  </table>
+				  </div>  
+              </div>
+          </div>
+		  </div>
+  </html>

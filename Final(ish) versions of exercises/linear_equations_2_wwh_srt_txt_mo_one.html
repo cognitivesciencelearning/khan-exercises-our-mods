@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html data-require="math math-format subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Linear equations 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="A">randRange( 2, 10 )</var>
+            <var id="B">randRangeNonZero( -10, 10 )</var>
+            <var id="D">randRange( 2, 10 )</var>
+            <var id="SOLUTION">fractionReduce( D - B, A )</var>
+            <var id="HINTRAND">randRange(1,3)</var>
+        </div>
+
+        <div class="problems"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+            <div id="new">
+                <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="Hide Information">[Learn about the "Self-Questioning" strategy]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        This exercise gives you questions to help you reflect on what you learn from exercises. When you see red text &ndash;
+                        "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">What?</a>", 
+                        "<a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">Why?</a>", or
+                        "<a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">How?</a>" &ndash; 
+                   move your mouse over each red word to "ask" yourself a different question.
+                   <br>
+                   <br>
+                   At first, you might find this unusual, or not feel like you have a good answer. This is completely normal! These questions can still help you if you
+                       <span style="font-weight: bold;font-style: italic;">try</span> to answer them &ndash; by typing, writing, and talking out loud or in your head.
+                </div>
+                 <div class="definition" id="What0">
+                        What are you doing or thinking right now?
+                    </div>
+                <div class="definition" id="Why0">
+                        Why is what you are currently doing helpful? Why is it useful for achieving your goal?
+                    </div>
+                     <div class="definition" id="How0">
+                        How well is your current approach to this problem working?
+                    </div>
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+               <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) /  A </var></span></p>
+                </div>
+
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">What?</a> &nbsp;
+                    </div>
+                 <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">Why?</a>&nbsp;
+                 </div>
+                 <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">How?</a>
+                    </div>
+                    <div class="definition" id="What">
+                        What are you doing or thinking right now?
+                    </div>
+                    <div class="definition" id="Why">
+                      Why is what you are currently doing helpful? Why is it useful for achieving your goal?
+                    </div>
+                     <div class="definition" id="How">
+                      How well is your current approach to this problem working?
+                    </div>
+                     <textarea cols="30"></textarea> 
+                </div>
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">What?</a> &nbsp;
+                    </div>
+                <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">Why?</a>&nbsp;
+                </div>
+                <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">How?</a>
+                    </div>
+                    <div class="definition" id="What2">
+                        What are you doing or thinking right now?
+                    </div>
+                    <div class="definition" id="Why2">
+                      Why is what you are currently doing helpful? Why is it useful for achieving your goal?
+                    </div>
+                     <div class="definition" id="How2">
+                      How well is your current approach to this problem working?
+                    </div>
+                     <textarea cols="30"></textarea> 
+                </div>
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+                </div>
+            
+            
+            <div id="original"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+               
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) /  A </var></span></p>
+                </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+            </div>
+            </div>
+    </div>
+</body>
+</html>

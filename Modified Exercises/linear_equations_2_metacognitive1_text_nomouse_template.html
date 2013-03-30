@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html data-require="math math-format subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Linear equations 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="A">randRange( 2, 10 )</var>
+            <var id="B">randRangeNonZero( -10, 10 )</var>
+            <var id="D">randRange( 2, 10 )</var>
+            <var id="SOLUTION">fractionReduce( D - B, A )</var>
+        </div>
+
+        <div class="problems"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+            <div id="new">
+                <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="[zzz.BlockStrat.H]">[zzz.BlockStrat.C]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [zzz.BlockStrat.I]  Asking yourself the right questions can help you solve hard problems. When you see "<span style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</span> <span style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</span> <span style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</span>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                
+                <div class="solution" data-type="custom">
+        <div class="instruction">
+           <code>x =</code> <input type="text" id="guessans"> 
+        </div>
+        <div class="guess">[
+            $("#firsttext").val(),
+            $("#secondtext").val(),
+            $("#guessans").val()
+        ]</div>
+        <div class="validator-function">
+            
+
+            var correct = (D - B) / A ;
+            var solutionDiv = $("&lt;div&gt;").text(correct);
+            var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+            return validator(guess[2]);
+        </div>
+        <div class="show-guess-solutionarea">
+            $("#firsttext").val(guess[0]);
+            $("#secondtext").val(guess[1]);
+            $("#guessans").val(guess[2]);
+           
+        </div>
+        <div class="example">an integer, like <code>6</code></div>
+        <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+        <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+        <div class="example">a mixed number, like <code>1\ 3/4</code></div>
+        <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+        
+    </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             <div>
+                    <p>
+                        <span style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</span> <br>
+                        <span style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</span><br>
+                        <span style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</span>
+                    </p>
+                     <input type="text"  id="firsttext" style="width:75%;"> 
+                </div>
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            <div>
+                    <p>
+                        <span style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</span> <br>
+                        <span style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</span><br>
+                        <span style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</span>
+                    </p>
+                    <input type="text"  id="secondtext" style="width:75%;">
+                </div>
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+                </div>
+            <div id="original"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+               
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) /  A </var></span></p>
+                </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+            </div>
+            </div>
+    </div>
+</body>
+</html>

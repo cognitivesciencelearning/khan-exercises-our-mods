@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html data-require="math math-format subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Linear equations 3</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <!-- equation is Ax + B = Cx + D -->
+        <div class="vars">
+            <var id="A">randRange( 2, 10 )</var>
+            <var id="B">randRangeNonZero( -10, 10 )</var>
+            <var id="C" data-ensure="C !== A && abs( A - C ) > 1">randRange( 2, 10 )</var>
+            <var id="D" data-ensure="D !== B">randRangeNonZero( 2, 10 )</var>
+            <var id="SOLUTION">fractionReduce( D - B, A - C )</var>
+            <var id="HINTRAND">randRange(1,3)</var>
+        </div>
+
+        <div class="problems">
+            
+            <div id="new"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+                <div class="problem">
+                    <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="[zzz.BlockStrat.H]">[zzz.BlockStrat.C]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                        [zzz.BlockStrat.I]  Asking yourself the right questions can help you solve hard problems. When you see "<a href="#" class="show-definition" data-definition="What0" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> <a href="#" class="show-definition" data-definition="Why0" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a> <a href="#" class="show-definition" data-definition="How0" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>" appear, 
+                    place your mouse over each word and answer out loud to that question. Over time, you will form good habits for solving problems.
+                </div>
+                 <div class="definition" id="What0">
+                        [zzz.wwh.1.I.]
+                    </div>
+                <div class="definition" id="Why0">
+                       [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How0">
+                        [zzz.wwh.3.I.]
+                    </div>
+                </div>
+                   
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
+
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) / ( A - C )</var></span></p>
+                </div>
+            
+        
+
+        <div class="hints">
+            <div data-if="A > C" data-unwrap>
+                <div>
+                    <p>Subtract <code><var>C</var>x</code> from both sides:</p>
+                    <p><code>(<var>A</var>x + <var>B</var>) - <var>C</var>x = (<var>C</var>x + <var>D</var>) - <var>C</var>x</code></p>
+                    <p><code><var>A - C</var>x + <var>B</var> = <var>D</var></code></p>
+                </div>
+                <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </div>
+                    
+                    <div class="definition" id="What">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why">
+                     [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How">
+                      [zzz.wwh.3.I.]
+                    </div>
+                     
+                </div>
+                <div>
+                    <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                    <p><code>(<var>A - C</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                    <p><code><var>A - C</var>x = <var>D - B</var></code></p>
+                </div>
+                <div>
+                    <p>Divide both sides by <code><var>A - C</var></code>.</p>
+                    <p><code>\frac{<var>A - C</var>x}{<var>A - C</var>} = \frac{<var>D - B</var>}{<var>A - C</var>}</code></p>
+                </div>
+                 <div>
+                    <div data-else-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What2" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                     <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why2" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                     </div>
+                     <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How2" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                     </div>
+                    </p>
+                    <div class="definition" id="What2">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why2">
+                        [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How2">
+                        [zzz.wwh.3.I.]
+                    </div>
+                      
+                 </div>
+                <div>
+                    <p>Simplify.</p>
+                    <p><code>x = <var>SOLUTION</var></code></p>
+                </div>
+            </div>
+            <div data-else data-unwrap>
+                <div>
+                    <p>Subtract <code><var>A</var>x</code> from both sides:</p>
+                    <p><code>(<var>A</var>x + <var>B</var>) - <var>A</var>x = (<var>C</var>x + <var>D</var>) - <var>A</var>x</code></p>
+                    <p><code><var>B</var> = <var>C - A</var>x + <var>D</var></code></p>
+                </div>
+                <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What3" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why3" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How3" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                    </div>
+                    </p>
+                    <div class="definition" id="What3">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why3">
+                     [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How3">
+                      [zzz.wwh.3.I.]
+                    </div>
+                     <textarea cols="30"></textarea> 
+                </div>
+                <div>
+                    <p><var>D > 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D > 0 ? "from" : "to"</var> both sides:</p>
+                    <p><code><var>B</var> + <var>-D</var> = (<var>C - A</var>x + <var>D</var>) + <var>-D</var></code></p>
+                    <p><code><var>B - D</var> = <var>C - A</var>x</code></p>
+                </div>
+                <div>
+                    <p>Divide both sides by <code><var>C - A</var></code>.</p>
+                    <p><code>\dfrac{<var>B - D</var>}{<var>C - A</var>} = \dfrac{<var>C - A</var>x}{<var>C - A</var>}</code></p>
+                </div>
+                 <div>
+                    <div data-if="HINTRAND === 1">
+                        <a href="#" class="show-definition" data-definition="What4" style="color: #C00;font-weight: bold">[zzz.wwh.1.C.]</a> &nbsp;
+                    </div>
+                     <div data-else-if="HINTRAND === 2">
+                        <a href="#" class="show-definition" data-definition="Why4" style="color: #ff0000;font-weight: bold">[zzz.wwh.2.C.]</a>&nbsp;
+                     </div>
+                     <div data-else-if="HINTRAND === 3">
+                        <a href="#" class="show-definition" data-definition="How4" style="color: #ff3333;font-weight: bold">[zzz.wwh.3.C.]</a>
+                     </div>
+                    </p>
+                    <div class="definition" id="What4">
+                        [zzz.wwh.1.I.]
+                    </div>
+                    <div class="definition" id="Why4">
+                        [zzz.wwh.2.I.]
+                    </div>
+                     <div class="definition" id="How4">
+                        [zzz.wwh.3.I.]
+                    </div>
+                     <textarea cols="30"></textarea> 
+                 </div>
+                <div>
+                    <p>Simplify.</p>
+                    <p><code><var>SOLUTION</var> = x</code></p>
+                </div>
+            </div>
+        </div>
+                </div>
+            
+          <div id="original"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+                
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
+
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) / ( A - C )</var></span></p>
+                </div>
+            
+        
+
+        <div class="hints">
+            <div data-if="A > C" data-unwrap>
+                <div>
+                    <p>Subtract <code><var>C</var>x</code> from both sides:</p>
+                    <p><code>(<var>A</var>x + <var>B</var>) - <var>C</var>x = (<var>C</var>x + <var>D</var>) - <var>C</var>x</code></p>
+                    <p><code><var>A - C</var>x + <var>B</var> = <var>D</var></code></p>
+                </div>
+                
+                <div>
+                    <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                    <p><code>(<var>A - C</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                    <p><code><var>A - C</var>x = <var>D - B</var></code></p>
+                </div>
+                <div>
+                    <p>Divide both sides by <code><var>A - C</var></code>.</p>
+                    <p><code>\frac{<var>A - C</var>x}{<var>A - C</var>} = \frac{<var>D - B</var>}{<var>A - C</var>}</code></p>
+                </div>
+                 
+                <div>
+                    <p>Simplify.</p>
+                    <p><code>x = <var>SOLUTION</var></code></p>
+                </div>
+            </div>
+            <div data-else data-unwrap>
+                <div>
+                    <p>Subtract <code><var>A</var>x</code> from both sides:</p>
+                    <p><code>(<var>A</var>x + <var>B</var>) - <var>A</var>x = (<var>C</var>x + <var>D</var>) - <var>A</var>x</code></p>
+                    <p><code><var>B</var> = <var>C - A</var>x + <var>D</var></code></p>
+                </div>
+                
+                <div>
+                    <p><var>D > 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D > 0 ? "from" : "to"</var> both sides:</p>
+                    <p><code><var>B</var> + <var>-D</var> = (<var>C - A</var>x + <var>D</var>) + <var>-D</var></code></p>
+                    <p><code><var>B - D</var> = <var>C - A</var>x</code></p>
+                </div>
+                <div>
+                    <p>Divide both sides by <code><var>C - A</var></code>.</p>
+                    <p><code>\dfrac{<var>B - D</var>}{<var>C - A</var>} = \dfrac{<var>C - A</var>x}{<var>C - A</var>}</code></p>
+                </div>
+                 
+                <div>
+                    <p>Simplify.</p>
+                    <p><code><var>SOLUTION</var> = x</code></p>
+                </div>
+            </div>
+        </div>
+                </div>
+            </div>
+    </div>
+</body>
+</html>

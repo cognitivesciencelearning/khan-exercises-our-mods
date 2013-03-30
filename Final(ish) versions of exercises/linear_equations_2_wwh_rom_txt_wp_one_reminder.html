@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html data-require="math math-format subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Linear equations 2</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="vars">
+            <var id="A">randRange( 2, 10 )</var>
+            <var id="B">randRangeNonZero( -10, 10 )</var>
+            <var id="D">randRange( 2, 10 )</var>
+            <var id="SOLUTION">fractionReduce( D - B, A )</var>
+            <var id="HINTRAND">randRange(1,3)</var>
+        </div>
+
+        <div class="problems"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+            <div id="new">
+                <div><p>
+                        
+                    <a href="#" class="show-subhint" data-subhint="learn-more" data-hidden-text="Hide Information">[Learn about the "What? Why? How?" strategy]</a>
+                </p>
+                
+                 <div class="subhint" id="learn-more">
+                       <p>You can use the "What? Why? How?" strategy by asking yourself questions after each step of an exercise. The questions are:</p>
+                     <p>  <span style="color: #C00;font-weight: bold">What does this step mean to you?</span> <br>
+                        <span style="color: #ff0000;font-weight: bold">Why is it helpful to take this step? </span><br>
+                        <span style="color: #ff3333;font-weight: bold">How do you know this step is right?</span></p>
+                     
+                     <p>
+                   Asking yourself these questions helps you better understand a solution.
+                     </p>
+                     <p>In some exercises, you will be reminded to ask the questions because they will be in <span style="color:#C00;font-weight: bold">red text</span>. </p>
+                     <p>
+                       At first, you might find it unusual to ask yourself these questions, or not feel like you have a good answer. This is completely normal! 
+                       These questions can still help you if you
+                       <span style="font-weight: bold;font-style: italic;">try</span> to answer them &ndash; by typing, writing, and talking out loud or in your head. 
+                       Eventually, you will ask yourself these questions automatically.
+                     </p>
+                </div>
+                
+                </div>
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) /  A </var></span></p>
+                </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             <div>
+                    <div data-if="HINTRAND === 1">
+                        <span style="color: #C00;font-weight: bold">What does this step mean to you?</span> &nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span style="color: #ff0000;font-weight: bold">Why is it helpful to take this step?</span>&nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span style="color: #ff3333;font-weight: bold">How do you know this step is right?</span>
+                    </div>
+                   
+                    <textarea cols="30"></textarea>
+                </div>
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            <div>
+                    <div data-if="HINTRAND === 1">
+                        <span style="color: #C00;font-weight: bold">What does this step mean to you?</span> &nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span style="color: #ff0000;font-weight: bold">Why is it helpful to take this step?</span>&nbsp;
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span style="color: #ff3333;font-weight: bold">How do you know this step is right?</span>
+                    </div>
+                   <textarea cols="30"></textarea>
+                    
+                </div>
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+                </div>
+            <div id="original"> <!-- Wzzz set the weight by adding a data-weight attribute to this div tag -->
+               
+                <p class="question">Solve for <code>x</code>:</p>
+                <div><code><var>A</var>x + <var>B</var> = <var>D</var></code></div>
+                <div class="solution" data-type="multiple">
+                    <p><code>x =</code> <span class="sol"><var>( D - B ) /  A </var></span></p>
+                </div>
+
+            
+        
+
+        <div class="hints">
+            <div>
+                <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                
+                <p><code>(<var>A</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
+                <p><code><var>A</var>x = <var>D - B</var></code></p>
+            </div>
+             
+            <div>
+                <p>Divide both sides by <code><var>A</var></code>.</p>
+                <p><code>\dfrac{<var>A</var>x}{<var>A</var>} = \dfrac{<var>D - B</var>}{<var>A</var>}</code></p>
+            </div>
+            
+            <div>
+                <p>Simplify.</p>
+                <p><code>x = <var>SOLUTION</var></code></p>
+            </div>
+        </div>
+            </div>
+            </div>
+    </div>
+</body>
+</html>
