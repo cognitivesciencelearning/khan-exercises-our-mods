@@ -18,11 +18,6 @@
             width: 460px;
         }
     </style>
-    <style type="text/css">
-        #answer_area input[type=text] {
-            width: 40px;
-        }
-    </style>
 </head>
 <body>
 <div class="exercise">
@@ -101,13 +96,13 @@
             <p class="question">How many <var>BADGE</var> badges did <var>person( PERSON + 1 )</var> earn?</p>
 
             <div class="solution" data-type="multiple">
-                <p><span style="padding-right: 5px" class="sol" data-forms="integer"><var>ANSWER</var></span> <var>BADGE</var> badge(s)</p>
+                <p><span style="padding-right: 5px" class="sol short40" data-forms="integer"><var>ANSWER</var></span> <var>BADGE</var> badge(s)</p>
             </div>
 
             <div class="hints">
                 <p>The key at the bottom of the pictograph shows that each symbol represents <var>plural( VALUE_PER_IMG, "badge" )</var>.</p>
                 <div>
-                    Find <var>person( PERSON + 1 )</var>'s row in the table:
+                    <p>Find <var>person( PERSON + 1 )</var>'s row in the table:</p>
                     <div class="fake_row">
                         <span><var>person( PERSON + 1 )</var></span><span data-each="DATA[ PERSON ] times"><var>FULL_IMAGE</var>
                         </span><span data-each="(8 - DATA[ PERSON ]) times">&nbsp;</span>
