@@ -209,12 +209,30 @@ $.tmpl = {
         code: function(elem) {
             // Returns a function in order to run after other templating and var assignment
             return function(elem) {
-                if (typeof elem.MathJax === "undefined") {
-                    var $elem = $(elem);
+                var $elem = $(elem);
+
+                if (!$elem.data("tmplCodeProcessed")) {
+                    $elem.data("tmplCodeProcessed", true);
+
+                    var $script = $elem.find("script[type='math/tex']");
+
+                    if ($script.length) {
+                        // Curious, curious. Getting to this point probably
+                        // means that we cloned some elements and lost the
+                        // jQuery data as well as the script.MathJax property
+                        // in the process. Let's just reset the text (and in
+                        // doing so, remove all the MathJax stuff (both the
+                        // script and the adjacent span)) so we can start from
+                        // scratch with the templating process.  Use html(),
+                        // not text() because IE10 in IE8 mode returns "" for
+                        // the innerText of a script element.
+                        $elem.text($script.html());
+                    }
 
                     // Maintain the classes from the original element
                     if (elem.className) {
-                        $elem.wrap("<span class='" + elem.className + "'></span>");
+                        $elem.wrap("<span class='" + elem.className +
+                            "'></span>");
                     }
 
                     // Clean up any strange mathematical expressions
@@ -224,18 +242,9 @@ $.tmpl = {
                     }
 
                     // Tell MathJax that this is math to be typset
-                    // Version detection -- shoot me now.
-                    if (MathJax.version.slice(0, 2) === "1.") {
-                        // MathJax 1
-                        elem.style.display = "none";
-                        elem.type = "math/tex";
-                        $elem.text(text);
-                    } else {
-                        // MathJax 2
-                        $elem.empty();
-                        $elem.append("<script type='math/tex'>" +
-                                text.replace(/<\//g, "< /") + "</script>");
-                    }
+                    $elem.empty();
+                    $elem.append("<script type='math/tex'>" +
+                            text.replace(/<\//g, "< /") + "</script>");
 
                     // Stick the processing request onto the queue
                     if (typeof MathJax !== "undefined") {
