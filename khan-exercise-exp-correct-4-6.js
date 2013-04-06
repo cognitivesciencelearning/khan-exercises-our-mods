@@ -729,7 +729,7 @@ var Khan = (function() {
                 "../utils/underscore.js",
                 "../exercises-stub.js",
                 "../history.js",
-                "../interface.js"
+                "../interface-exp-correct-4-6.js"
             ];
 
         (function loadInitScripts() {

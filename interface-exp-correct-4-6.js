@@ -170,6 +170,29 @@ function handleAttempt(data) {
     Exercises.userActivityLog.push([
             score.correct ? "correct-activity" : "incorrect-activity",
             JSON.stringify(score.guess), timeTaken]);
+        
+// ZZZ STOPSHIP start
+    if (score.correct) {
+        var checkAnswerButton = $("#check-answer-button");
+        var studentExplanation = $("#explain-answer");
+        if (studentExplanation.length === 0){                    
+             $("#solutionarea").append("<p>Can you explain why that " +
+                                       "answer is correct?<br> " +
+                   "<textarea rows='2' cols='20' id='explain-answer'>" +
+                   "</textarea></p>"); 
+             checkAnswerButton  // .val applies to checkAnswerButton, it can spill over the line. End of line is only when ;.
+                .val("Please explain that answer.");
+             if ($("#answercontent input")  // Select the children PLEASEADDzzz to finish explaining...
+             // The div element with ID answercontent usually refers to the stuff in the box on the right of a Khan Exercise. CSS - select the HTML element with id #answercontent, get whichever children are input elements - input is a type of html tag, e.g. inputtype=radio or text).
+             .not("#hint,#next-question-button,#explain-answer") // 
+             .is(":disabled")) { // :disabled is used here, and just disabled lower on, on purpose. The : represents a pseudo selector. e.g. of a use: a:hover{text-declaration:underline} in a style tag in the <head> element.
+                    $("#answercontent input")  // Jquery (and prototype) allow chaining. First, select the child element of the element with #answercontent, 
+                    .not("#hint,#next-question-button,#explain-answer") //then remove the elements that match this condition
+                    .removeAttr("disabled"); // then remove the disabled attribute from the element that is left
+                }
+             return false;                        
+        }
+    } // ZZZ STOPSHIP end
 
     if (score.correct) {
         answeredCorrectly = true;
@@ -327,11 +350,16 @@ function buildAttemptData(correct, attemptNum, attemptContent, timeTaken,
                           skipped) {
     var framework = Exercises.getCurrentFramework();
     var data;
+    var studentExp = JSON.stringify(""); // ZZZ STOPSHIP some JSON.stringify("") object. All stuff passed to server is either a number or stringified.
+    var experimentalCondition; // ZZZ STOPSHIP
 
     if (framework === "perseus") {
         data = PerseusBridge.getSeedInfo();
     } else if (framework === "khan-exercises") {
         data = Khan.getSeedInfo();
+    }
+    if (experimentalCondition === "experimental"){ // ZZZ STOPSHIP
+        studentExp = JSON.stringify($("#explain-answer").val()); 
     }
 
     _.extend(data, {
@@ -375,7 +403,10 @@ function buildAttemptData(correct, attemptNum, attemptContent, timeTaken,
         user_assessment_key: Exercises.userAssessmentKey,
 
         // Whether the user is skipping the question
-        skipped: skipped ? 1 : 0
+        skipped: skipped ? 1 : 0,
+        
+        // The explanation provided by the user (or false if not in experimental condition)
+        explanation: studentExp
     });
 
     return data;
