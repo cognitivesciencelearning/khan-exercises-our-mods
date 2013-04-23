@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html data-require="math graphie graphie-geometry interactive constructions matrix">
-<head>
+<html data-require="math graphie graphie-geometry interactive constructions matrix"><head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Constructions 1</title>
+    <title>Compass Constructions</title>
     <script src="../khan-exercise.js"></script>
     <script>
         var applyRefFrame = function(coord, rot) {
@@ -30,18 +29,15 @@
         <div id="perpendicular">
             <div class="problem">
                 <form>
-                    <input type="button" value="Add Compass"
-                    onClick="javascript:
+                    <input onclick="javascript:
                         KhanUtil.construction.addCompass();
-                    " />
-                    <input type="button" value="Add Straightedge"
-                    onClick="javascript:
+                    " type="button" value="Add Compass">
+                    <input onclick="javascript:
                         KhanUtil.construction.addStraightedge();
-                    " />
-                    <input type="button" value="Clear"
-                    onClick="javascript:
+                    " type="button" value="Add Straightedge">
+                    <input onclick="javascript:
                         KhanUtil.construction.removeAllTools();
-                    " />
+                    " type="button" value="Clear">
                 </form>
                 <p class="question">
                     Construct a line perpendicular to the given line.
@@ -338,18 +334,15 @@
         <div id="bisector">
             <div class="problem">
                 <form>
-                    <input type="button" value="Add Compass"
-                    onClick="javascript:
+                    <input onclick="javascript:
                         KhanUtil.construction.addCompass();
-                    " />
-                    <input type="button" value="Add Straightedge"
-                    onClick="javascript:
+                    " type="button" value="Add Compass">
+                    <input onclick="javascript:
                         KhanUtil.construction.addStraightedge();
-                    " />
-                    <input type="button" value="Clear"
-                    onClick="javascript:
+                    " type="button" value="Add Straightedge">
+                    <input onclick="javascript:
                         KhanUtil.construction.removeAllTools();
-                    " />
+                    " type="button" value="Clear">
                 </form>
                 <p class="question">
                     Construct a perpendicular bisector of the line segment
@@ -442,8 +435,8 @@
                             deg = ang * 180 / PI;
                             origDeg = ROT * 180 / PI;
 
-                            if (abs(deg - origDeg + 90) &lt; 7 ||
-                                    abs(deg - origDeg - 90) &lt; 7) {
+                            if ((abs(deg - origDeg + 90) % 360) &lt; 7 ||
+                                    (abs(deg - origDeg - 90) % 360) &lt; 7) {
                                 perp = tool;
                             }
                         }
@@ -704,18 +697,15 @@
             </div>
             <div class="problem">
                 <form>
-                    <input type="button" value="Add Compass"
-                    onClick="javascript:
+                    <input onclick="javascript:
                         KhanUtil.construction.addCompass();
-                    " />
-                    <input type="button" value="Add Straightedge"
-                    onClick="javascript:
+                    " type="button" value="Add Compass">
+                    <input onclick="javascript:
                         KhanUtil.construction.addStraightedge();
-                    " />
-                    <input type="button" value="Clear"
-                    onClick="javascript:
+                    " type="button" value="Add Straightedge">
+                    <input onclick="javascript:
                         KhanUtil.construction.removeAllTools();
-                    " />
+                    " type="button" value="Clear">
                 </form>
                 <p class="question">
                     Construct an angle bisector for the given angle.
@@ -1002,5 +992,4 @@
         </div>
     </div>
     </div>
-</body>
-</html>
+</body></html>
