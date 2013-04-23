@@ -405,7 +405,7 @@ function buildAttemptData(correct, attemptNum, attemptContent, timeTaken,
         // Whether the user is skipping the question
         skipped: skipped ? 1 : 0,
         
-        // The explanation provided by the user (or false if not in experimental condition)
+        // The explanation provided by the user (or false if not in experimental condition) ZZZ STOPSHIP
         explanation: studentExp
     });
 

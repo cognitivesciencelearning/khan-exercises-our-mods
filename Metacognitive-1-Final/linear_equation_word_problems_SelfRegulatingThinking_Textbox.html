@@ -7,8 +7,8 @@
 </head>
 <body>
 <div class="exercise">
-    <script type="text/javascript">        
-       (function () { Khan.scratchpad.disable();  })()      
+    <script type="text/javascript">
+       (function () { Khan.scratchpad.disable();  })()
     </script>
     <div class="problems">
         <div id="magazine_subscription_selling">
@@ -23,50 +23,50 @@
             <div class="problem">
                  <div>
                      <p>
-                        <a href="#" class="show-subhint" 
-                           data-subhint="learn-more" 
+                        <a href="#" class="show-subhint"
+                           data-subhint="learn-more"
                            data-hidden-text="Hide Information">
-                            [Click to learn about the 
+                            [Click to learn about the
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
                             strategy]</a>
-                    </p>                
+                    </p>
                     <div class="subhint" id="learn-more">
-                         To use this strategy, ask yourself these 
+                         To use this strategy, ask yourself these
                          “<span class="hint_purple" style="font-weight: bold">
-                             What? Why? How?</span>" 
-                         questions while solving a problem. 
-                         <br> 
+                             What? Why? How?</span>"
+                         questions while solving a problem.
+                         <br>
                          <span class="hint_purple" style="font-weight: bold">
                              What are you doing or thinking right now?</span>
                          <br>
                          <span class="hint_purple" style="font-weight: bold">
-                             Why is what you are currently doing helpful? 
+                             Why is what you are currently doing helpful?
                              Why is it useful for achieving your goal?</span>
                          <br>
                          <span class="hint_purple" style="font-weight: bold">
-                             How well is your current approach to this problem 
+                             How well is your current approach to this problem
                              working?</span>
                          <br>
-                         As a reminder to ask yourself these questions,  
-                         they will sometimes appear in 
+                         As a reminder to ask yourself these questions,
+                         they will sometimes appear in
                          <span class="hint_purple" style="font-weight: bold">
-                             purple</span>. 
+                             purple</span>.
                          <br>
                          <br>
-                         <a href="#" class="show-subhint" 
-                            data-subhint="encouragement" 
+                         <a href="#" class="show-subhint"
+                            data-subhint="encouragement"
                             data-hidden-text="Hide Information">
-                             What if I can’t do it?</a>  
+                             What if I can’t do it?</a>
                          <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think 
+                            Many students are not sure what to say, or think
                             their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
-                                try</span> 
+                                try</span>
                             to think about the question, by typing or saying the
                             answer to yourself.
                          </div>
-                    </div>                
+                    </div>
                 </div>
                 <var>person(1)</var> sells magazine subscriptions and earns
                 <code>$<var>P</var></code> for every new subscriber
@@ -75,13 +75,11 @@
                 magazine subscriptions <var>he(1)</var> sells.
             </div>
             <p class="question">
-                 
                 If <var>person(1)</var> wants to earn at least
                 <code>$<var>R</var></code> this week, what is the minimum
                 number of subscriptions <var>he(1)</var> needs to sell?
             </p>
 
-            
      <div class="solution" data-type="custom">
         <div class="instruction">
             <input type="text" id="guessans"> subscriptions
@@ -89,30 +87,28 @@
         <div class="guess">[
             $("#guessans").val(),
             $("#firsttext").val(),
-            $("#secondtext").val()            
+            $("#secondtext").val()
         ]</div>
-        <div class="validator-function">   
+        <div class="validator-function">
             var correct = X;
             var solutionDiv = $("&lt;div&gt;").text(correct);
             var validator = Khan.answerTypes.number.createValidator(solutionDiv);
             return validator(guess[0]);
         </div>
         <div class="show-guess-solutionarea">
-            if (guess != null) {              
-                $("#guessans").val(guess[0]);             
-                $("#firsttext").val(guess[1]);  
-                $("#secondtext").val(guess[2]);               
+            if (guess != null) {
+                $("#guessans").val(guess[0]);
+                $("#firsttext").val(guess[1]);
+                $("#secondtext").val(guess[2]);
             }
             else {
-                $("#guessans").val(""); 
+                $("#guessans").val("");
                 $("#firsttext").val("");
-                $("#secondtext").val("");                              
-            }          
+                $("#secondtext").val("");
+            }
         </div>
         <div class="example">an integer, like <code>6</code></div>
-        
     </div>
-
 
             <div class="hints">
                 <p>To solve this, let's set up an expression to show how much
@@ -124,15 +120,15 @@
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful? 
+                            is what you are currently doing helpful?
                             Why is it useful for achieving your goal?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
-                        <span class="hint_purple" style="font-weight: bold">How 
-                            well is your current approach to this 
+                        <span class="hint_purple" style="font-weight: bold">How
+                            well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="firsttext" style="width:75%;">                    
+                    <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Amount earned this week <code>=</code></span><br>
@@ -150,15 +146,15 @@
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful? 
+                            is what you are currently doing helpful?
                             Why is it useful for achieving your goal?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
-                        <span class="hint_purple" style="font-weight: bold">How 
-                            well is your current approach to this 
+                        <span class="hint_purple" style="font-weight: bold">How
+                            well is your current approach to this
                             problem working?</span>
-                    </div>                  
-                    <input type="text"  id="secondtext" style="width:75%;"> 
+                    </div>
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Amount earned this week
@@ -203,7 +199,7 @@
             </div>
         </div>
 
-        <div id="video_game_levels"> 
+        <div id="video_game_levels">
             <div class="vars" data-ensure="Q < R">
                 <var id="Q">10 * randRange(100 / 10, 500 / 10)</var>
                 <var id="P">10 * randRange(300 / 10, 1000 / 10)</var>
@@ -215,50 +211,50 @@
             <div class="problem">
                 <div>
                      <p>
-                        <a href="#" class="show-subhint" 
-                           data-subhint="learn-more" 
+                        <a href="#" class="show-subhint"
+                           data-subhint="learn-more"
                            data-hidden-text="Hide Information">
-                            [Click to learn about the 
+                            [Click to learn about the
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
                             strategy]</a>
-                    </p>                
+                    </p>
                     <div class="subhint" id="learn-more">
-                         To use this strategy, ask yourself these 
+                         To use this strategy, ask yourself these
                          “<span class="hint_purple" style="font-weight: bold">
-                             What? Why? How?</span>" 
-                         questions while solving a problem. 
-                         <br> 
+                             What? Why? How?</span>"
+                         questions while solving a problem.
+                         <br>
                          <span class="hint_purple" style="font-weight: bold">
                              What are you doing or thinking right now?</span>
                          <br>
                          <span class="hint_purple" style="font-weight: bold">
-                             Why is what you are currently doing helpful? 
+                             Why is what you are currently doing helpful?
                              Why is it useful for achieving your goal?</span>
                          <br>
                          <span class="hint_purple" style="font-weight: bold">
-                             How well is your current approach to this problem 
+                             How well is your current approach to this problem
                              working?</span>
                          <br>
-                         As a reminder to ask yourself these questions,  
-                         they will sometimes appear in 
+                         As a reminder to ask yourself these questions,
+                         they will sometimes appear in
                          <span class="hint_purple" style="font-weight: bold">
-                             purple</span>. 
+                             purple</span>.
                          <br>
                          <br>
-                         <a href="#" class="show-subhint" 
-                            data-subhint="encouragement" 
+                         <a href="#" class="show-subhint"
+                            data-subhint="encouragement"
                             data-hidden-text="Hide Information">
-                             What if I can’t do it?</a>  
+                             What if I can’t do it?</a>
                          <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think 
+                            Many students are not sure what to say, or think
                             their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
-                                try</span> 
+                                try</span>
                             to think about the question, by typing or saying the
                             answer to yourself.
                          </div>
-                    </div>                
+                    </div>
                 </div>
                 For every level <var>person(1)</var> completes in
                 <var>his(1)</var> favorite game, <var>he(1)</var> earns
@@ -273,7 +269,6 @@
                 <var>his(1)</var> goal?
             </p>
 
-            
       <div class="solution" data-type="custom">
         <div class="instruction">
             <input type="text" id="guessans"> levels
@@ -281,28 +276,27 @@
         <div class="guess">[
             $("#guessans").val(),
             $("#firsttext").val(),
-            $("#secondtext").val()            
+            $("#secondtext").val()
         ]</div>
-        <div class="validator-function">   
+        <div class="validator-function">
             var correct = X;
             var solutionDiv = $("&lt;div&gt;").text(correct);
             var validator = Khan.answerTypes.number.createValidator(solutionDiv);
             return validator(guess[0]);
         </div>
         <div class="show-guess-solutionarea">
-            if (guess != null) {              
-                $("#guessans").val(guess[0]);             
-                $("#firsttext").val(guess[1]);  
-                $("#secondtext").val(guess[2]);               
+            if (guess != null) {
+                $("#guessans").val(guess[0]);
+                $("#firsttext").val(guess[1]);
+                $("#secondtext").val(guess[2]);
             }
-            else {           
+            else {
                 $("#guessans").val("");
                 $("#firsttext").val("");
-                $("#secondtext").val("");               
-            }          
+                $("#secondtext").val("");
+            }
         </div>
         <div class="example">an integer, like <code>6</code></div>
-        
     </div>
 
             <div class="hints">
@@ -315,15 +309,15 @@
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful? 
+                            is what you are currently doing helpful?
                             Why is it useful for achieving your goal?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
-                        <span class="hint_purple" style="font-weight: bold">How 
-                            well is your current approach to this 
+                        <span class="hint_purple" style="font-weight: bold">How
+                            well is your current approach to this
                             problem working?</span>
                     </div>
-                   <input type="text"  id="firsttext" style="width:75%;"> 
+                   <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of points <code>=</code></span><br>
@@ -343,15 +337,15 @@
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful? 
+                            is what you are currently doing helpful?
                             Why is it useful for achieving your goal?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
-                        <span class="hint_purple" style="font-weight: bold">How 
-                            well is your current approach to this 
+                        <span class="hint_purple" style="font-weight: bold">How
+                            well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="secondtext" style="width:75%;"> 
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -406,50 +400,50 @@
             <div class="problem">
                  <div>
                      <p>
-                        <a href="#" class="show-subhint" 
-                           data-subhint="learn-more" 
+                        <a href="#" class="show-subhint"
+                           data-subhint="learn-more"
                            data-hidden-text="Hide Information">
-                            [Click to learn about the 
+                            [Click to learn about the
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
                             strategy]</a>
-                    </p>                
+                    </p>
                     <div class="subhint" id="learn-more">
-                         To use this strategy, ask yourself these 
+                         To use this strategy, ask yourself these
                          “<span class="hint_purple" style="font-weight: bold">
-                             What? Why? How?</span>" 
-                         questions while solving a problem. 
-                         <br> 
+                             What? Why? How?</span>"
+                         questions while solving a problem.
+                         <br>
                          <span class="hint_purple" style="font-weight: bold">
                              What are you doing or thinking right now?</span>
                          <br>
                          <span class="hint_purple" style="font-weight: bold">
-                             Why is what you are currently doing helpful? 
+                             Why is what you are currently doing helpful?
                              Why is it useful for achieving your goal?</span>
                          <br>
                          <span class="hint_purple" style="font-weight: bold">
-                             How well is your current approach to this problem 
+                             How well is your current approach to this problem
                              working?</span>
                          <br>
-                         As a reminder to ask yourself these questions,  
-                         they will sometimes appear in 
+                         As a reminder to ask yourself these questions,
+                         they will sometimes appear in
                          <span class="hint_purple" style="font-weight: bold">
-                             purple</span>. 
+                             purple</span>.
                          <br>
                          <br>
-                         <a href="#" class="show-subhint" 
-                            data-subhint="encouragement" 
+                         <a href="#" class="show-subhint"
+                            data-subhint="encouragement"
                             data-hidden-text="Hide Information">
-                             What if I can’t do it?</a>  
+                             What if I can’t do it?</a>
                          <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think 
+                            Many students are not sure what to say, or think
                             their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
-                                try</span> 
+                                try</span>
                             to think about the question, by typing or saying the
                             answer to yourself.
                          </div>
-                    </div>                
+                    </div>
                 </div>
                 To move up to the maestro level in <var>his(1)</var> piano
                 school, <var>person(1)</var> needs to master at least
@@ -463,7 +457,6 @@
                 maestro level?
             </p>
 
-            
      <div class="solution" data-type="custom">
         <div class="instruction">
             <input type="text" id="guessans"> months
@@ -471,28 +464,27 @@
         <div class="guess">[
             $("#guessans").val(),
             $("#firsttext").val(),
-            $("#secondtext").val()            
+            $("#secondtext").val()
         ]</div>
-        <div class="validator-function">   
+        <div class="validator-function">
             var correct = X;
             var solutionDiv = $("&lt;div&gt;").text(correct);
             var validator = Khan.answerTypes.number.createValidator(solutionDiv);
             return validator(guess[0]);
         </div>
         <div class="show-guess-solutionarea">
-            if (guess != null) {              
-                $("#guessans").val(guess[0]);             
-                $("#firsttext").val(guess[1]);  
-                $("#secondtext").val(guess[2]);               
+            if (guess != null) {
+                $("#guessans").val(guess[0]);
+                $("#firsttext").val(guess[1]);
+                $("#secondtext").val(guess[2]);
             }
-            else {           
+            else {
                 $("#guessans").val("");
                 $("#firsttext").val("");
-                $("#secondtext").val("");               
-            }          
+                $("#secondtext").val("");
+            }
         </div>
         <div class="example">an integer, like <code>6</code></div>
-        
     </div>
 
             <div class="hints">
@@ -506,15 +498,15 @@
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful? 
+                            is what you are currently doing helpful?
                             Why is it useful for achieving your goal?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
-                        <span class="hint_purple" style="font-weight: bold">How 
-                            well is your current approach to this 
+                        <span class="hint_purple" style="font-weight: bold">How
+                            well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="firsttext" style="width:75%;">                     
+                    <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of songs mastered <code>=</code></span><br>
@@ -535,17 +527,16 @@
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful? 
+                            is what you are currently doing helpful?
                             Why is it useful for achieving your goal?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
-                        <span class="hint_purple" style="font-weight: bold">How 
-                            well is your current approach to this 
+                        <span class="hint_purple" style="font-weight: bold">How
+                            well is your current approach to this
                             problem working?</span>
                     </div>
-                   <input type="text"  id="secondtext" style="width:75%;">                     
+                   <input type="text"  id="secondtext" style="width:75%;">
                 </div>
-               
                 <div>
                     <p>Number of songs mastered <code>\geq
                         <var>R</var></code></span><br>
@@ -590,7 +581,6 @@
                     months.</p>
             </div>
         </div>
-        
     </div>
 </div>
 </body>

@@ -7,8 +7,8 @@
 </head>
 <body>
     <div class="exercise">
-       <script type="text/javascript">        
-       (function () { Khan.scratchpad.disable();  })()      
+       <script type="text/javascript">
+       (function () { Khan.scratchpad.disable();  })()
        </script>
         <!-- equation is Ax + B = Cx + D -->
         <div class="vars">
@@ -19,65 +19,61 @@
             <var id="SOLUTION">fractionReduce( D - B, A - C )</var>
         </div>
 
-        <div class="problems">          
-            <div>                   
+        <div class="problems">
+            <div>
                    <div>
-                        <p>                        
-                            <a href="#" class="show-subhint" 
-                               data-subhint="learn-more" 
+                        <p>
+                            <a href="#" class="show-subhint"
+                               data-subhint="learn-more"
                                data-hidden-text="Hide Information">
-                                [Click to learn about the 
-                            “<span class="hint_purple" 
+                                [Click to learn about the
+                            “<span class="hint_purple"
                                    style="font-weight: bold">What?</span>"
                              strategy]</a>
-                        </p>                
+                        </p>
                         <div class="subhint" id="learn-more">
-                            To use this strategy, ask yourself this 
+                            To use this strategy, ask yourself this
                            "<span class="hint_purple" style="font-weight: bold">
                                What?</span>"
-                            question after each hint in a problem. 
+                            question after each hint in a problem.
                             <br>
                             <br>
                             <span class="hint_purple" style="font-weight: bold">
-                                What is this step saying? Restate it in your 
+                                What is this step saying? Restate it in your
                                 own words.</span>
                             <br>
-                            <br>                  
-                            As a reminder to ask yourself this question,  
-                            it will sometimes appear in 
+                            <br>
+                            As a reminder to ask yourself this question,
+                            it will sometimes appear in
                             <span class="hint_purple" style="font-weight: bold">
-                                purple</span>. 
+                                purple</span>.
                             <br>
                             <br>
-                            <a href="#" class="show-subhint" 
-                               data-subhint="encouragement" 
+                            <a href="#" class="show-subhint"
+                               data-subhint="encouragement"
                                data-hidden-text="Hide Information">
-                                What if I can’t do it?</a>  
+                                What if I can’t do it?</a>
                             <div class="subhint" id="encouragement">
                                 Many students are not sure what to say, or think
-                                their answer isn’t good. That is fine, as long 
-                                as you 
-                                <span style="font-weight: bold; 
+                                their answer isn’t good. That is fine, as long
+                                as you
+                                <span style="font-weight: bold;
                                       font-style:italic">
-                                    try</span> 
-                                to think about the question, by typing 
+                                    try</span>
+                                to think about the question, by typing
                                 or saying the answer to yourself.
                             </div>
-                        </div>                
-                   </div>                 
-                   
-                
+                        </div>
+                   </div>
+
                 <p class="question">Solve for <code>x</code>:</p>
                 <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
 
-                
                 <div class="solution" data-type="multiple">
                     <p><code>x =</code> <span class="sol"><var>( D - B ) / ( A - C )</var></span></p>
                 </div>
                 </div>
     </div>
-            
-        
 
         <div class="hints">
             <div data-if="A > C" data-unwrap>
@@ -85,10 +81,10 @@
                     <p>Subtract <code><var>C</var>x</code> from both sides:</p>
                     <p><code>(<var>A</var>x + <var>B</var>) - <var>C</var>x = (<var>C</var>x + <var>D</var>) - <var>C</var>x</code></p>
                     <p><code><var>A - C</var>x + <var>B</var> = <var>D</var></code></p>
-                </div>                
+                </div>
                 <p class="hint_purple" style="font-weight: bold">
                     What is this step saying? Restate it in your own words.
-                </p>                     
+                </p>
                 <div>
                     <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
                     <p><code>(<var>A - C</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
@@ -97,10 +93,10 @@
                 <div>
                     <p>Divide both sides by <code><var>A - C</var></code>.</p>
                     <p><code>\frac{<var>A - C</var>x}{<var>A - C</var>} = \frac{<var>D - B</var>}{<var>A - C</var>}</code></p>
-                </div>                 
+                </div>
                 <p class="hint_purple" style="font-weight: bold">
-                   What is this step saying? Restate it in your own words. 
-                </p>                                  
+                   What is this step saying? Restate it in your own words.
+                </p>
                 <div>
                     <p>Simplify.</p>
                     <p><code>x = <var>SOLUTION</var></code></p>
@@ -133,9 +129,6 @@
                 </div>
             </div>
         </div>
-                </div>
-            
-          
-    
+    </div>
 </body>
 </html>
