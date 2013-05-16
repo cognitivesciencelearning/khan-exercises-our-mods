@@ -766,7 +766,7 @@ var Khan = (function() {
     } else {
         onjQueryLoaded();
     }
-        
+
     function onjQueryLoaded() {
         initEvents();
 
@@ -1308,6 +1308,7 @@ var Khan = (function() {
         $("#answercontent input").not("#check-answer-button")
             .prop("disabled", false);
 
+        // Show acceptable formats
         if (examples !== null && answerData.examples && answerData.examples.length > 0) {
             $("#examples-show").show();
             examples.empty();
@@ -1349,8 +1350,6 @@ var Khan = (function() {
             parent.jQuery(parent.document).trigger("problemLoaded", [makeProblem, answerData.solution]);
         }
 
-        hintsUsed = 0;
-
         $("#hint").val("I'd like a hint");
 
         $(Exercises).trigger("newProblem", {
@@ -1362,6 +1361,12 @@ var Khan = (function() {
             hints: hints,
             problem: problem
         });
+
+        hintsUsed = userExercise ? userExercise.lastCountHints : 0;
+
+        // The server says the user has taken hints on this problem already
+        // show all lastCountHints it says we have seen
+        _(hintsUsed).times(showHint);
 
         // If the textbox is empty disable "Check Answer" button
         // Note: We don't do this for multiple choice, number line, etc.
@@ -1396,6 +1401,33 @@ var Khan = (function() {
         }
 
         return answerType;
+    }
+
+    function showHint() {
+        // Called when user hits hint button triggering showHint event or when
+        // the server side data says the last_count_hints is not 0 when
+        // exercise is loaded.
+        var hint = hints.shift();
+        if (!hint) {
+            // :(
+            return;
+        }
+
+        hintsUsed++;
+
+        var problem = $(hint).parent();
+
+        // Append first so MathJax can sense the surrounding CSS context properly
+        $(hint).appendTo("#hintsarea").runModules(problem);
+
+        if (hints.length === 0) {
+            $(hint).addClass("final_answer");
+        }
+
+        // TODO(james): figure out a way to trigger hintUsed to ensure that the
+        // cards are updated properly, but make sure the the ajax calls to
+        // submit the hints are not resubmited for the case where we are
+        // calling this function because last_count_hints was not 0
     }
 
     function renderDebugInfo() {
@@ -1537,13 +1569,20 @@ var Khan = (function() {
             links.append($("<b>").text("Problem types:"));
 
             exercises.children(".problems").children().each(function(n, prob) {
-                var probID = $(prob).attr("id") || n;
-                links.append($("<a>").addClass("problem-type-link")
-                        .text(n + ": " + probID)
+                var probName = $(prob).attr("id");
+                var probID = probName || n;
+                var weight = $(prob).data("weight");
+                weight = weight != null ? weight : 1;
+
+                if (weight !== 0) {
+                    $("<a>").addClass("problem-type-link")
+                        .text("#" + (n + 1) +
+                            (probName != null ? ": " + probName : ""))
                         .attr("href", window.location.protocol + "//" +
                             window.location.host + window.location.pathname +
                             "?browse&problem=" + probID)
-                    );
+                        .appendTo(links);
+                }
             });
 
             browseWrap.append(links);
@@ -1881,24 +1920,8 @@ var Khan = (function() {
                 $("#workarea, #hintsarea").runModules(problem, "Cleanup");
             })
             .bind("showHint", function() {
-                var hint = hints.shift();
-                if (!hint) {
-                    // :(
-                    return;
-                }
-
-                hintsUsed++;
-
-                var problem = $(hint).parent();
-
-                // Append first so MathJax can sense the surrounding CSS context properly
-                $(hint).appendTo("#hintsarea").runModules(problem);
-
-                if (hints.length === 0) {
-                    $(hint).addClass("final_answer");
-                }
-
-                $(Exercises).trigger("hintUsed", {
+                showHint();
+                $(Exercises).trigger("hintShown", {
                     card: Exercises.currentCard
                 });
             })
@@ -1909,7 +1932,7 @@ var Khan = (function() {
                         var focusInput = $(lastFocusedSolutionInput);
 
                         if (!focusInput.is(":disabled")) {
-                            // focus should always work; hopefully select 
+                            // focus should always work; hopefully select
                             // will work for text fields
                             focusInput.focus();
                             if (focusInput.is("input:text")) {
@@ -1962,6 +1985,8 @@ var Khan = (function() {
 
         if (data && data.exercise) {
             exerciseId = data.exercise;
+            exerciseName = data.exerciseModel.displayName;
+            exerciseFile = data.exerciseModel.fileName;
         }
 
         if (user != null) {

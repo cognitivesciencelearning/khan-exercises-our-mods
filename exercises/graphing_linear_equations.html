@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-require="math math-format expressions graphie interactive"><head>
+<html data-require="math math-format expressions graphie interactive">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Graphing linear equations</title>
     <script src="../khan-exercise.js"></script>
@@ -215,7 +216,7 @@
                         <code><var>abs( SLOPE_FRAC[0] )</var></code>
                         <var>"position" + ( abs( SLOPE_FRAC[0] ) !== 1 ? "s" : "" )</var>
                         you move
-                        <span data-if="SLOPE_FRAC[0] &lt; 0"><em>down</em> (because it's negative)</span>
+                        <span data-if="SLOPE_FRAC[0] < 0"><em>down</em> (because it's negative)</span>
                         <span data-else="">up</span>
                         you must also move
                         <code><var>SLOPE_FRAC[1]</var></code>
@@ -334,4 +335,5 @@
         </div>
     </div>
 </div>
-</body></html>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-require="math graphie expressions"><head>
+<html data-require="math graphie expressions">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Midpoint of a segment</title>
     <script src="../khan-exercise.js"></script>
@@ -72,7 +73,7 @@
                     <p>Solve for <code class="hint_pink">x</code>:</p>
                     <p><code class="hint_pink">\qquad <var>expr([ "*", COEF_1 - COEF_2, "x" ])</var> = <var>CONST_2 - CONST_1</var></code></p>
                 </div>
-                <p class="hint_pink" data-if="abs( COEF_1 - COEF_2 - 1 ) &gt; 0.001"><code>\qquad x = <var>X</var></code></p>
+                <p class="hint_pink" data-if="abs( COEF_1 - COEF_2 - 1 ) > 0.001"><code>\qquad x = <var>X</var></code></p>
                 <div>
                     <p>
                         Substitute <code class="hint_pink"><var>X</var></code> for <code class="hint_pink">x</code> in the expressions that were given for
@@ -101,4 +102,5 @@
         </div>
     </div>
 </div>
-</body></html>
+</body>
+</html>

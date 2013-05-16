@@ -34,7 +34,11 @@ $.tmpl = {
             value = value && $.tmpl.getVAR(value);
 
             // Save the result of this data-if in the next sibling for data-else-if and data-else
-            $elem.next().data("lastCond", value);
+            // Only save the value if no previous value has been set
+            var $nextElem = $elem.next();
+            if ($nextElem.data("lastCond") === undefined) {
+                $nextElem.data("lastCond", value);
+            }
 
             if (!value) {
                 // Delete the element if the data-if evaluated to false
@@ -51,7 +55,11 @@ $.tmpl = {
             value = !lastCond && value && $.tmpl.getVAR(value);
 
             // Succeeding elements care about the visibility of both me and my preceding siblings
-            $elem.next().data("lastCond", lastCond || value);
+            // Only save the value if no previous value has been set
+            var $nextElem = $elem.next();
+            if ($nextElem.data("lastCond") === undefined) {
+                $nextElem.data("lastCond", lastCond || value);
+            }
 
             if (!value) {
                 // Delete the element if appropriate
@@ -283,7 +291,7 @@ $.tmpl = {
             ctx = {};
         }
 
-        try {
+        function doEval() {
             // Use the methods from JavaScript's built-in Math methods
             with (Math) {
                 // And the methods provided by the library
@@ -297,21 +305,29 @@ $.tmpl = {
                     }
                 }
             }
+        }
 
-        } catch (e) {
-            var info;
+        if (Khan.query.debug != null) {
+            // Skip try-catch in debug mode so that the script panel works
+            return doEval();
+        } else {
+            try {
+                return doEval();
+            } catch (e) {
+                var info;
 
-            if (elem.nodeName) {
-                info = elem.nodeName.toLowerCase();
+                if (elem.nodeName) {
+                    info = elem.nodeName.toLowerCase();
 
-                if (elem.id != null && elem.id.length > 0) {
-                    info += "#" + elem.id;
+                    if (elem.id != null && elem.id.length > 0) {
+                        info += "#" + elem.id;
+                    }
+                } else {
+                    info = JSON.stringify(code);
                 }
-            } else {
-                info = JSON.stringify(code);
-            }
 
-            Khan.error("Error while evaluating " + info, e);
+                Khan.error("Error while evaluating " + info, e);
+            }
         }
     },
 

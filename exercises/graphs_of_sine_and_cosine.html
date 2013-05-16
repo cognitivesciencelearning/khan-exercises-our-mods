@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!-- TODO: replace randFromArray with <ul> when <ul> works --><!-- TODO: make advanced version of this exercise, with negative vertical scaling, vertical and horizontal offsets --><!-- TODO: might want to change the things already rendered in graphie to highlight the current thing being hinted; ie, make the thing just displayed at 2 stroke, reduce all previously renedred things to 1 storke --><html data-require="math graphie math-format"><head>
+<!-- TODO: replace randFromArray with <ul> when <ul> works --><!-- TODO: make advanced version of this exercise, with negative vertical scaling, vertical and horizontal offsets --><!-- TODO: might want to change the things already rendered in graphie to highlight the current thing being hinted; ie, make the thing just displayed at 2 stroke, reduce all previously renedred things to 1 storke -->
+<html data-require="math graphie math-format">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Graphs of sine and cosine</title>
     <script src="../khan-exercise.js"></script>
@@ -114,7 +116,7 @@
                 <p data-else="">The distance between every other zero is <code><var>piFraction( PERIOD )</var></code>, so the period of <code>f(x)</code> is <code><var>piFraction( PERIOD )</var></code>.</p>
             </div>
 
-            <div data-if="abs( PERIOD - 2 * PI ) &lt; 0.01" data-unwrap="">
+            <div data-if="abs( PERIOD - 2 * PI ) < 0.01" data-unwrap="">
                 <p>The period of a normal <var>FNS</var> function is <code>2\pi</code>, and the period we want is <code><var>piFraction( PERIOD )</var></code>, so we don't need to worry about scaling the function horizontally.</p>
             </div>
 
@@ -149,4 +151,5 @@
             <p>So the resulting function (after we perform all these manipulations) is <code><var>plus( toFractionTex( VSCALE ) + "\\" + FN + "(" + plus( toFractionTex( 1 / HSCALE ) + "x" ) + ")" )</var></code>.</p>
         </div>
     </div>
-</body></html>
+</body>
+</html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-require="math word-problems"><head>
+<html data-require="math word-problems">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Addition and subtraction word problems</title>
     <script src="../khan-exercise.js"></script>
@@ -135,7 +136,7 @@
             <div id="add-start">
                 <p class="problem">
                     Some cars were parked in the <var>store(1)</var> store parking lot.
-                    <var>NUM2</var> more <var>plural('car')</var> <var>plural('parks', NUM2)</var> at the <var>store(1)</var> store,
+                    <var>NUM2</var> more <var>plural('car')</var> <var>plural('parks', 'park', NUM2)</var> at the <var>store(1)</var> store,
                     and now there <var>plural('is', TOTAL)</var> <var>plural(TOTAL, 'car')</var> in the parking lot.
                 </p>
                 <p class="question">
@@ -182,7 +183,7 @@
             <div id="add-result">
                 <p class="problem">
                     <var>plural(NUM1, 'car')</var> <var>plural('was', NUM1)</var> in the <var>store(1)</var> store parking lot.
-                    <var>NUM2</var> more <var>plural('car', NUM2)</var> <var>plural('parks', NUM2)</var> at the <var>store(1)</var> store.
+                    <var>NUM2</var> more <var>plural('car', NUM2)</var> <var>plural('parks', 'park', NUM2)</var> at the <var>store(1)</var> store.
                 </p>
                 <p class="question">
                     How many cars are in the parking lot now?
@@ -297,4 +298,5 @@
 
         </div>
     </div>
-</body></html>
+</body>
+</html>

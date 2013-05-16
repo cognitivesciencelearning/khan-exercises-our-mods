@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html data-require="math math-format graphie word-problems"><head>
+<html data-require="math math-format graphie word-problems">
+<head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Reading bar charts 2</title>
     <script src="../khan-exercise.js"></script>
@@ -89,7 +90,7 @@
 
                 <div class="hints">
                     <div data-each="5 times as INDEX">
-                        <div data-if="IMPROVEMENT[ INDEX ] &gt; 0">
+                        <div data-if="IMPROVEMENT[ INDEX ] > 0">
                             <p><var>person( INDEX + 1 )</var>'s final exam bar is taller than <var>his( INDEX + 1 )</var>
                             midterm bar, so <var>person( INDEX + 1 )</var> improved <var>his( INDEX + 1 )</var> score. <var>His( INDEX + 1 )</var> midterm score was
                             <code><var>MIDTERM[ INDEX ]</var></code> and <var>his( INDEX + 1 )</var> final exam score was <code><var>FINAL[ INDEX ]</var></code>, so
@@ -234,7 +235,7 @@
 
                 <div class="hints">
                     <div data-each="5 times as INDEX">
-                        <div data-if="IMPROVEMENT[ INDEX ] &gt; 0">
+                        <div data-if="IMPROVEMENT[ INDEX ] > 0">
                             <p><var>person( INDEX + 1 )</var>'s final exam bar is taller than <var>his( INDEX + 1 )</var>
                             midterm bar, so <var>person( INDEX + 1 )</var> improved <var>his( INDEX + 1 )</var> score.</p>
                             <div class="graphie" data-update="barchart">
@@ -258,4 +259,5 @@
 
         </div>
     </div>
-</body></html>
+</body>
+</html>

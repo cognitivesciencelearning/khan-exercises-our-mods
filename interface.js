@@ -23,12 +23,12 @@ _.extend(Exercises, {
     userActivityLog: undefined
 });
 
-
 var PerseusBridge = Exercises.PerseusBridge,
 
-    // Store localMode here so that it's hard to change after the fact via
+    // Store these here so that they're hard to change after the fact via
     // bookmarklet, etc.
     localMode = Exercises.localMode,
+    previewingItem,
 
     originalCheckAnswerText,
 
@@ -40,12 +40,13 @@ var PerseusBridge = Exercises.PerseusBridge,
     attempts,
     numHints,
     hintsUsed,
-    lastAttemptOrHint;
+    lastAttemptOrHint,
+    firstProblem = true;
 
 $(Exercises)
     .bind("problemTemplateRendered", problemTemplateRendered)
     .bind("newProblem", newProblem)
-    .bind("hintUsed", onHintUsed)
+    .bind("hintShown", onHintShown)
     .bind("readyForNextProblem", readyForNextProblem)
     .bind("warning", warning)
     .bind("upcomingExercise", upcomingExercise)
@@ -55,6 +56,7 @@ $(Exercises)
 
 
 function problemTemplateRendered() {
+    previewingItem = Exercises.previewingItem;
     // Setup appropriate img URLs
     $("#issue-throbber").attr("src",
             Exercises.khanExercisesUrlBase + "css/images/throbber.gif");
@@ -69,7 +71,7 @@ function problemTemplateRendered() {
 
     // 'Check Answer' or 'Submit Answer'
     originalCheckAnswerText = $("#check-answer-button").val();
-    
+
     // Solution submission
     $("#check-answer-button").click(handleCheckAnswer);
     $("#answerform").submit(handleCheckAnswer);
@@ -122,9 +124,9 @@ function newProblem(e, data) {
 
     answeredCorrectly = false,
     hintsAreFree = false,
-    attempts = 0;
+    attempts = data.userExercise ? data.userExercise.lastAttemptNumber : 0;
     numHints = data.numHints;
-    hintsUsed = 0;
+    hintsUsed = data.userExercise ? data.userExercise.lastCountHints : 0;
     lastAttemptOrHint = new Date().getTime();
 
     var framework = Exercises.getCurrentFramework();
@@ -134,7 +136,8 @@ function newProblem(e, data) {
             .addClass("framework-" + framework);
 
     // Enable/disable the get hint button
-    $("#hint").attr("disabled", numHints === 0);
+    updateHintButtonText();
+    $("#hint").attr("disabled", hintsUsed >= numHints);
 }
 
 function handleCheckAnswer() {
@@ -247,6 +250,13 @@ function handleAttempt(data) {
         return false;
     }
 
+    if (previewingItem) {
+        $("#next-question-button").prop("disabled", true);
+
+        // Skip the server; just pretend we have success
+        return false;
+    }
+
     // Save the problem results to the server
     var requestUrl = "problems/" + problemNum + "/attempt";
     request(requestUrl, attemptData).fail(function(xhr) {
@@ -287,13 +297,14 @@ function onHintButtonClicked() {
     }
 }
 
-function onHintUsed() {
+function onHintShown() {
     // Grow the scratchpad to cover the new hint
     Khan.scratchpad.resize();
 
     hintsUsed++;
     updateHintButtonText();
 
+    $(Exercises).trigger("hintUsed");
     // If there aren't any more hints, disable the get hint button
     if (hintsUsed === numHints) {
         $("#hint").attr("disabled", true);
@@ -306,7 +317,8 @@ function onHintUsed() {
 
     Exercises.userActivityLog.push(["hint-activity", "0", timeTaken]);
 
-    if (!localMode && !userExercise.readOnly && !answeredCorrectly) {
+    if (!previewingItem && !localMode && !userExercise.readOnly &&
+            !answeredCorrectly) {
         // Don't do anything on success or failure; silently failing is ok here
         request("problems/" + problemNum + "/hint",
                 buildAttemptData(false, attempts, "hint", timeTaken, false));
@@ -322,11 +334,11 @@ function updateHintButtonText() {
                 "Show next step (" + hintsLeft + " left)" :
                 "Show solution");
     } else {
-        $hintButton.val("I'd like another hint (" +
-                (hintsLeft === 1 ?
-                    "1 hint left" :
-                    hintsLeft + " hints left")
-                + ")");
+        $hintButton.val(hintsUsed ?
+                "I'd like another hint (" +
+                (hintsLeft === 1 ?  "1 hint left" : hintsLeft + " hints left")
+                + ")" :
+                "I'd like a hint");
     }
 }
 
@@ -453,8 +465,19 @@ function request(method, data) {
 
 
 function readyForNextProblem(e, data) {
+    if (firstProblem) {
+        firstProblem = false;
+        // As both of the following variables are only used to make sure the
+        // client matches the server on pageLoad, we will set them back to 0
+        // all other times to be on the safe side and to make sure that hints
+        // are not pre-filled in topic-mode when not the first problem.
+        data.userExercise.lastCountHints = 0;
+        data.userExercise.lastAttemptNumber = 0;
+    }
+
     userExercise = data.userExercise;
     problemNum = userExercise.totalDone + 1;
+
     $(Exercises).trigger("updateUserExercise", {userExercise: userExercise});
 
     // (framework depends on userExercise set above)
@@ -515,7 +538,7 @@ function enableCheckAnswer() {
         .prop("disabled", false)
         .removeClass("buttonDisabled")
         .val(originalCheckAnswerText);
-    
+
     $("#skip-question-button")
         .prop("disabled", false)
         .removeClass("buttonDisabled");
