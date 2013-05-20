@@ -2,19 +2,19 @@
 <html data-require="math math-format subhints graphie">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Linear equations 3</title>
+    <title>Equations with variables on both sides</title>
     <script src="../khan-exercise.js"></script>
 </head>
 <body>
     <div class="exercise">
         <script type="text/javascript">
-       (function () { Khan.scratchpad.disable();  })()
-       </script>
+        (function () { Khan.scratchpad.disable();  })()
+        </script>
         <!-- equation is Ax + B = Cx + D -->
         <div class="vars">
             <var id="A">randRange( 2, 10 )</var>
             <var id="B">randRangeNonZero( -10, 10 )</var>
-            <var id="C" data-ensure="C !== A && abs( A - C ) > 1">randRange( 2, 10 )</var>
+            <var id="C" data-ensure="C !== A &amp;&amp; abs( A - C ) &gt; 1">randRange( 2, 10 )</var>
             <var id="D" data-ensure="D !== B">randRangeNonZero( 2, 10 )</var>
             <var id="SOLUTION">fractionReduce( D - B, A - C )</var>
             <var id="HINTRAND">randRange(1,3)</var>
@@ -33,11 +33,11 @@
                         </a>
                     </p>
                     <div class="subhint" id="learn-more">
-                         To use this strategy, ask yourself these
-                         “<span class="hint_purple" style="font-weight: bold">
-                             What? Why? How?</span>"
-                         questions after each hint in a problem.
-                         <br>
+                        To use this strategy, ask yourself these
+                        “<span class="hint_purple" style="font-weight: bold">
+                            What? Why? How?</span>"
+                        questions after each hint in a problem.
+                        <br>
                         <span class="hint_purple" style="font-weight: bold">
                             What does this step mean to you?</span>
                         <br>
@@ -70,57 +70,56 @@
                 </div>
                 <p class="question">Solve for <code>x</code>:</p>
                 <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
-
-    <div class="solution" data-type="custom">
-        <div class="instruction">
-           <code>x =</code> <input type="text" id="guessans">
+                <div class="solution" data-type="custom">
+                    <div class="instruction">
+                       <code>x =</code> <input type="text" id="guessans">
+                    </div>
+                    <div class="guess">[
+                        $("#guessans").val(),
+                        $("#firsttext").val(),
+                        $("#secondtext").val(),
+                        $("#thirdtext").val(),
+                        $("#fourthtext").val()
+                    ]</div>
+                    <div class="validator-function">
+                        var correct = ( D - B ) / ( A - C );
+                        var solutionDiv = $("&lt;div&gt;").text(correct);
+                        var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                        return validator(guess[0]);
+                    </div>
+                    <div class="show-guess-solutionarea">
+                        if (guess != null) {
+                            $("#guessans").val(guess[0]);                            
+                        }
+                        else {
+                            $("#guessans").val("");                            
+                        }
+                    </div>
+                    <div class="show-guess">
+                        if (guess != null) {                           
+                            $("#firsttext").val(guess[1]);
+                            $("#secondtext").val(guess[2]);
+                            $("#thirdtext").val(guess[3]);
+                            $("#fourthtext").val(guess[4]);
+                        }
+                        else {                           
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                            $("#thirdtext").val("");
+                            $("#fourthtext").val("");
+                        }
+                    </div>
+                    <div class="example">an integer, like <code>6</code></div>
+                    <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+                    <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+                    <div class="example">a mixed number, like <code>1\ 3/4</code></div>
+                    <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+                </div>
+            </div>
         </div>
-        <div class="guess">[
-            $("#guessans").val(),
-            $("#firsttext").val(),
-            $("#secondtext").val(),
-            $("#thirdtext").val(),
-            $("#fourthtext").val()
-        ]</div>
-        <div class="validator-function">
-            var correct = ( D - B ) / ( A - C );
-            var solutionDiv = $("&lt;div&gt;").text(correct);
-            var validator = Khan.answerTypes.number.createValidator(solutionDiv);
-            return validator(guess[0]);
-        </div>
-        <div class="show-guess-solutionarea">
-            if (guess != null) {
-                $("#guessans").val(guess[0]);
-            }
-            else {
-                $("#guessans").val("");
-            }
-        </div>
-        <div class="show-guess">
-            if (guess != null) {                
-                $("#firsttext").val(guess[1]);
-                $("#secondtext").val(guess[2]);
-                $("#thirdtext").val(guess[3]);
-                $("#fourthtext").val(guess[4]);
-            }
-            else {                
-                $("#firsttext").val("");
-                $("#secondtext").val("");
-                $("#thirdtext").val("");
-                $("#fourthtext").val("");
-            }
-        </div>        
-        <div class="example">an integer, like <code>6</code></div>
-        <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
-        <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
-        <div class="example">a mixed number, like <code>1\ 3/4</code></div>
-        <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
-    </div>
-   </div>
-  </div>
 
         <div class="hints">
-            <div data-if="A > C" data-unwrap>
+            <div data-if="A > C" data-unwrap="">
                 <div>
                     <p>Subtract <code><var>C</var>x</code> from both sides:</p>
                     <p><code>(<var>A</var>x + <var>B</var>) - <var>C</var>x = (<var>C</var>x + <var>D</var>) - <var>C</var>x</code></p>
@@ -139,10 +138,10 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                     <input type="text"  id="firsttext" style="width:75%;">
+                    <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <div>
-                    <p><var>B > 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B > 0 ? "from" : "to"</var> both sides:</p>
+                    <p><var>B &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B &gt; 0 ? "from" : "to"</var> both sides:</p>
                     <p><code>(<var>A - C</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
                     <p><code><var>A - C</var>x = <var>D - B</var></code></p>
                 </div>
@@ -150,7 +149,7 @@
                     <p>Divide both sides by <code><var>A - C</var></code>.</p>
                     <p><code>\frac{<var>A - C</var>x}{<var>A - C</var>} = \frac{<var>D - B</var>}{<var>A - C</var>}</code></p>
                 </div>
-                 <div>
+                <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
                             does this step mean to you?</span>
@@ -163,14 +162,14 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                     <input type="text"  id="secondtext" style="width:75%;">
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>
                     <p><code>x = <var>SOLUTION</var></code></p>
                 </div>
             </div>
-            <div data-else data-unwrap>
+            <div data-else="" data-unwrap="">
                 <div>
                     <p>Subtract <code><var>A</var>x</code> from both sides:</p>
                     <p><code>(<var>A</var>x + <var>B</var>) - <var>A</var>x = (<var>C</var>x + <var>D</var>) - <var>A</var>x</code></p>
@@ -189,10 +188,10 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                     <input type="text"  id="thirdtext" style="width:75%;">
+                    <input type="text"  id="thirdtext" style="width:75%;">
                 </div>
                 <div>
-                    <p><var>D > 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D > 0 ? "from" : "to"</var> both sides:</p>
+                    <p><var>D &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D &gt; 0 ? "from" : "to"</var> both sides:</p>
                     <p><code><var>B</var> + <var>-D</var> = (<var>C - A</var>x + <var>D</var>) + <var>-D</var></code></p>
                     <p><code><var>B - D</var> = <var>C - A</var>x</code></p>
                 </div>
@@ -200,7 +199,7 @@
                     <p>Divide both sides by <code><var>C - A</var></code>.</p>
                     <p><code>\dfrac{<var>B - D</var>}{<var>C - A</var>} = \dfrac{<var>C - A</var>x}{<var>C - A</var>}</code></p>
                 </div>
-                 <div>
+                <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
                             does this step mean to you?</span>
@@ -213,7 +212,7 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                     <input type="text"  id="fourthtext" style="width:75%;">
+                    <input type="text"  id="fourthtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>
@@ -221,6 +220,6 @@
                 </div>
             </div>
         </div>
-      </div>
+    </div>
 </body>
 </html>
