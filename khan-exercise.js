@@ -225,18 +225,6 @@ var Khan = (function() {
 
     lastFocusedSolutionInput = null,
 
-    issueError = "Communication with GitHub isn't working. Please file " +
-        "the issue manually at <a href=\"" +
-        "http://github.com/Khan/khan-exercises/issues/new\">GitHub</a>. " +
-        "Please reference exercise: " + exerciseId + ".",
-    issueSuccess = function(url, title, suggestion) {
-        return ["Thank you for your feedback! Your issue has been created and can be ",
-            "found at the following link:",
-            "<p><a id=\"issue-link\" href=\"", url, "\">", title, "</a>",
-            "<p>", suggestion, "</p>"].join("");
-    },
-    issueIntro = "Remember to check the hints and double check your math. All provided information will be public. Thanks for your help!",
-
     gae_bingo = window.gae_bingo || {
         ab_test: function() {},
         bingo: function() {},
@@ -310,9 +298,9 @@ var Khan = (function() {
         },
 
         warnTimeout: function() {
-            $(Exercises).trigger("warning", ["Your internet might be too " +
+            $(Exercises).trigger("warning", [$._("Your internet might be too " +
                     "slow to see an exercise. Refresh the page or " +
-                    '<a href="" id="warn-report">report a problem</a>.',
+                    "<a href='' id='warn-report'>report a problem</a>."),
                     false]);
             // TODO(alpert): This event binding is kind of gross
             $("#warn-report").click(function(e) {
@@ -322,14 +310,20 @@ var Khan = (function() {
         },
 
         warnFont: function() {
-            var enableFontDownload = "enable font download in your browser";
+            var warning;
             if ($.browser.msie) {
-                enableFontDownload = '<a href="http://missmarcialee.com/2011/08/how-to-enable-font-download-in-internet-explorer-8/" target="_blank">enable font download</a>';
+                warning = $._('You should ' +
+                    "<a href='http://missmarcialee.com/2011/08/" +
+                    "how-to-enable-font-download-in-internet-explorer-8/' " +
+                    "target='_blank'>enable font download</a> " +
+                    "to improve the appearance of math expressions."
+                );
+            } else {
+                warning = $._("You should enable font download in your " +
+                    "browser to improve the appearance of math expressions");
             }
 
-            $(Exercises).trigger("warning", ["You should " +
-                    enableFontDownload + " to improve the appearance of " +
-                    "math expressions.", true]);
+            $(Exercises).trigger("warning", [warning, true]);
         },
 
         // TODO(alpert): This doesn't need to be in the Khan object.
@@ -517,7 +511,7 @@ var Khan = (function() {
 
                     var makeVisible = function() {
                         $("#scratchpad").show();
-                        $("#scratchpad-show").text("Hide scratchpad");
+                        $("#scratchpad-show").text($._("Hide scratchpad"));
 
                         // If pad has never been created or if it's empty
                         // because it was removed from the DOM, recreate a new
@@ -537,7 +531,7 @@ var Khan = (function() {
                     }
 
                     $("#scratchpad").hide();
-                    $("#scratchpad-show").text("Show scratchpad");
+                    $("#scratchpad-show").text($._("Show scratchpad"));
                 },
 
                 toggle: function() {
@@ -1153,11 +1147,6 @@ var Khan = (function() {
         // Remove and store hints to delay running modules on it
         hints = problem.children(".hints").remove();
 
-        // Remove the hint box if there are no hints in the problem
-        if (hints.length === 0) {
-            $(".hint-box").remove();
-        }
-
         // Only show the calculator if it's specifically allowed for this problem
         if (problem.data("calculator") == null) {
             $("#calculator").hide();
@@ -1350,7 +1339,7 @@ var Khan = (function() {
             parent.jQuery(parent.document).trigger("problemLoaded", [makeProblem, answerData.solution]);
         }
 
-        $("#hint").val("I'd like a hint");
+        $("#hint").val($._("I'd like a hint"));
 
         $(Exercises).trigger("newProblem", {
             numHints: hints.length,
@@ -1374,7 +1363,7 @@ var Khan = (function() {
             var checkAnswerButton = $("#check-answer-button");
             var skipQuestionButton = $("#skip-question-button");
             checkAnswerButton.attr("disabled", "disabled").attr(
-                "title", "Type in an answer first.");
+                "title", $._("Type in an answer first."));
             // Enables the check answer button - added so that people who type
             // in a number and hit enter quickly do not have to wait for the
             // button to be enabled by the key up
@@ -1668,6 +1657,8 @@ var Khan = (function() {
                         input.val("");
                         history.children().not(inputRow).remove();
                     } else if (behavior === "angle-mode") {
+                        // TODO(emily): The DEG/RAD should be i18nized at some
+                        // point here
                         Calculator.angleMode = Calculator.angleMode === "DEG" ?
                             "RAD" : "DEG";
                         jel.html((Calculator.angleMode === "DEG" ? "<br>" : "")
@@ -1693,6 +1684,10 @@ var Khan = (function() {
         initializeCalculator();
 
         $("#report").click(function(e) {
+            var issueIntro = $._("Remember to check the hints and " +
+                    "double check your math. All provided information will " +
+                    "be public. Thanks for your help!");
+
             e.preventDefault();
 
             var report = $("#issue").css("display") !== "none",
@@ -1742,7 +1737,21 @@ var Khan = (function() {
                 warningInfo = $("#warning-bar-content").text(),
 
                 parts = [$("#issue-body").val() || null, issueInfo.bodyInfo, agent, sessionStorageInfo, mathjaxInfo, warningInfo],
-                body = $.grep(parts, function(e) { return e != null; }).join("\n\n");
+                body = $.grep(parts, function(e) { return e != null; }).join("\n\n"),
+
+                issueError = $._("Communication with GitHub isn't working. " +
+                    "Please file the issue manually at " +
+                    "<a href=\"http://github.com/Khan/khan-exercises/issues/new\">GitHub</a>. " +
+                    "Please reference exercise: %(exerciseId)s.", {exerciseId: exerciseId}),
+                issueSuccess = function(url, title, suggestion) {
+                    return $._("Thank you for your feedback! " +
+                        "Your issue has been created and can be " +
+                        "found at the following link:" +
+                        "<p><a id=\"issue-link\" href=\"%(issueUrl)s\">%(issueTitle)s</a>" +
+                        "<p>%(suggestion)s</p>",
+                        {issueUrl: url, issueTitle: title, suggestion: suggestion}
+                    );
+                };
 
             var mathjaxLoadFailures = $.map(MathJax.Ajax.loading, function(info, script) {
                 if (info.status === -1) {
@@ -1782,14 +1791,16 @@ var Khan = (function() {
 
             if (!type) {
                 $("#issue-status").addClass("error")
-                    .html("Please specify the issue type.").show();
+                    .html($._("Please specify the issue type.")).show();
                 return;
             } else {
                 labels.push(type.slice("issue-".length));
 
-                var hintOrVideoMsg = "Please click the hint button above to see our solution, or watch a video for additional help.";
-                var refreshOrBrowserMsg = "Please try a hard refresh (press Ctrl + Shift + R)" +
-                        " or use Khan Academy from a different browser (such as Chrome or Firefox).";
+                var hintOrVideoMsg = $._("Please click the hint button above " +
+                    "to see our solution, or watch a video for additional help.");
+                var refreshOrBrowserMsg = $._("Please try a hard refresh " +
+                    "(press Ctrl + Shift + R) or use Khan Academy from a " +
+                    "different browser (such as Chrome or Firefox).");
                 var suggestion = {
                     "issue-wrong-or-unclear": hintOrVideoMsg,
                     "issue-hard": hintOrVideoMsg,
@@ -1800,7 +1811,7 @@ var Khan = (function() {
 
             if (title === "") {
                 $("#issue-status").addClass("error")
-                    .html("Please provide a valid title for the issue.").show();
+                    .html($._("Please provide a valid title for the issue.")).show();
                 return;
             }
 

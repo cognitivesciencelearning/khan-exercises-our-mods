@@ -1,13 +1,189 @@
-$.extend(KhanUtil, {
+(function() {
 
+$.extend(KhanUtil, {
     // Fill opacity for inequality shading
     FILL_OPACITY: 0.3,
 
+    // TODO(alpert): Should this be a global?
     dragging: false,
 
+    unscaledSvgPath: function(points) {
+        return $.map(points, function(point, i) {
+            if (point === true) {
+                return "z";
+            }
+            return (i === 0 ? "M" : "L") + point[0] + " " + point[1];
+        }).join("");
+    },
+
+    getDistance: function(point1, point2) {
+        var a = point1[0] - point2[0];
+        var b = point1[1] - point2[1];
+        return Math.sqrt(a * a + b * b);
+    },
+
+    /**
+     * Return the difference between two sets of coordinates
+     */
+    coordDiff: function(startCoord, endCoord) {
+        return _.map(endCoord, function(val, i) {
+            return endCoord[i] - startCoord[i];
+        });
+    },
+
+    /**
+     * Round the given coordinates to a given snap value
+     * (e.g., nearest 0.2 increment)
+     */
+    snapCoord: function(coord, snap) {
+        return _.map(coord, function(val, i) {
+            return KhanUtil.roundToNearest(snap[i], val);
+        });
+    },
+
+    // Find the angle between two or three points
+    findAngle: function(point1, point2, vertex) {
+        if (vertex === undefined) {
+            var x = point1[0] - point2[0];
+            var y = point1[1] - point2[1];
+            if (!x && !y) {
+                return 0;
+            }
+            return (180 + Math.atan2(-y, -x) * 180 / Math.PI + 360) % 360;
+        } else {
+            return KhanUtil.findAngle(point1, vertex) - KhanUtil.findAngle(point2, vertex);
+        }
+    },
+
+    createSorter: function() {
+        var sorter = {};
+        var list;
+
+        sorter.init = function(element) {
+            list = $("[id=" + element + "]").last();
+            var container = list.wrap("<div>").parent();
+            var placeholder = $("<li>");
+            placeholder.addClass("placeholder");
+            container.addClass("sortable ui-helper-clearfix");
+            var tileWidth = list.find("li").outerWidth(true);
+            var numTiles = list.find("li").length;
+
+            list.find("li").each(function(tileNum, tile) {
+                $(tile).bind("vmousedown", function(event) {
+                    if (event.type === "vmousedown" && (event.which === 1 || event.which === 0)) {
+                        event.preventDefault();
+                        $(tile).addClass("dragging");
+                        var tileIndex = $(this).index();
+                        placeholder.insertAfter(tile);
+                        placeholder.width($(tile).width());
+                        $(this).css("z-index", 100);
+                        var offset = $(this).offset();
+                        var click = {
+                            left: event.pageX - offset.left - 3,
+                            top: event.pageY - offset.top - 3
+                        };
+                        $(tile).css({ position: "absolute" });
+                        $(tile).offset({
+                            left: offset.left,
+                            top: offset.top
+                        });
+
+                        $(document).bind("vmousemove vmouseup", function(event) {
+                            event.preventDefault();
+                            if (event.type === "vmousemove") {
+                                $(tile).offset({
+                                    left: event.pageX - click.left,
+                                    top: event.pageY - click.top
+                                });
+                                var leftEdge = list.offset().left;
+                                var midWidth = $(tile).offset().left - leftEdge;
+                                var index = 0;
+                                var sumWidth = 0;
+                                list.find("li").each(function() {
+                                    if (this === placeholder[0] || this === tile) {
+                                        return;
+                                    }
+                                    if (midWidth > sumWidth + $(this).outerWidth(true) / 2) {
+                                        index += 1;
+                                    }
+                                    sumWidth += $(this).outerWidth(true);
+                                });
+                                if (index !== tileIndex) {
+                                    tileIndex = index;
+                                    if (index === 0) {
+                                        placeholder.prependTo(list);
+                                        $(tile).prependTo(list);
+                                    } else {
+                                        placeholder.detach();
+                                        $(tile).detach();
+                                        var preceeding = list.find("li")[index - 1];
+                                        placeholder.insertAfter(preceeding);
+                                        $(tile).insertAfter(preceeding);
+                                    }
+                                }
+                            } else if (event.type === "vmouseup") {
+                                $(document).unbind("vmousemove vmouseup");
+                                var position = $(tile).offset();
+                                $(position).animate(placeholder.offset(), {
+                                    duration: 150,
+                                    step: function(now, fx) {
+                                        position[fx.prop] = now;
+                                        $(tile).offset(position);
+                                    },
+                                    complete: function() {
+                                        $(tile).css("z-index", 0);
+                                        placeholder.detach();
+                                        $(tile).css({ position: "static" });
+                                        $(tile).removeClass("dragging");
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
+            });
+        };
+
+        sorter.getContent = function() {
+            content = [];
+            list.find("li").each(function(tileNum, tile) {
+                content.push($.trim($(tile).find(".sort-key").text()));
+            });
+            return content;
+        };
+
+        sorter.setContent = function(content) {
+            var tiles = [];
+            $.each(content, function(n, sortKey) {
+                var tile = list.find("li .sort-key").filter(function() {
+                    // sort-key must match exactly
+                    return $(this).text() === sortKey;
+                }).closest("li").get(0);
+                $(tile).detach();  // remove matched tile so you can have duplicates
+                tiles.push(tile);
+            });
+            list.append(tiles);
+        };
+
+
+        return sorter;
+    },
+
+    // Useful for shapes that are only sometimes drawn. If a shape isn't
+    // needed, it can be replaced with bogusShape which just has stub methods
+    // that successfully do nothing.
+    // The alternative would be 'if..typeof' checks all over the place.
+    bogusShape: {
+        animate: function() {},
+        attr: function() {},
+        remove: function() {}
+    }
+});
+
+$.extend(KhanUtil.Graphie.prototype, {
     // Wrap graphInit to create a fixed-size graph automatically scaled to the given range
     initAutoscaledGraph: function(range, options) {
-        var graph = KhanUtil.currentGraph;
+        var graph = this;
         options = $.extend({
             xpixels: 500,
             ypixels: 500,
@@ -41,7 +217,7 @@ $.extend(KhanUtil, {
     // of everything else where we can add invisible shapes with mouse
     // handlers wherever we want.
     addMouseLayer: function() {
-        var graph = KhanUtil.currentGraph;
+        var graph = this;
 
         // Attach various metrics that are used by the interactive functions.
         // TODO: Add appropriate helper functions in graphie and replace a lot of
@@ -80,7 +256,7 @@ $.extend(KhanUtil, {
      * Get mouse coordinates in pixels
      */
     getMousePx: function(event) {
-        var graphie = KhanUtil.currentGraph;
+        var graphie = this;
 
         // mouse{X|Y} is in pixels relative to the SVG
         var mouseX = event.pageX - $(graphie.raphael.
@@ -95,40 +271,7 @@ $.extend(KhanUtil, {
      * Get mouse coordinates in graph coordinates
      */
     getMouseCoord: function(event) {
-        return KhanUtil.currentGraph.unscalePoint(KhanUtil.getMousePx(event));
-    },
-
-    /**
-     * Return the difference between two sets of coordinates
-     */
-    coordDiff: function(startCoord, endCoord) {
-        return _.map(endCoord, function(val, i) {
-            return endCoord[i] - startCoord[i];
-        });
-    },
-
-    /**
-     * Round the given coordinates to a given snap value
-     * (e.g., nearest 0.2 increment)
-     */
-    snapCoord: function(coord, snap) {
-        return _.map(coord, function(val, i) {
-            return KhanUtil.roundToNearest(snap[i], val);
-        });
-    },
-
-    // Find the angle between two or three points
-    findAngle: function(point1, point2, vertex) {
-        if (vertex === undefined) {
-            var x = point1[0] - point2[0];
-            var y = point1[1] - point2[1];
-            if (!x && !y) {
-                return 0;
-            }
-            return (180 + Math.atan2(-y, -x) * 180 / Math.PI + 360) % 360;
-        } else {
-            return KhanUtil.findAngle(point1, vertex) - KhanUtil.findAngle(point2, vertex);
-        }
+        return this.unscalePoint(this.getMousePx(event));
     },
 
     // Draw angle arcs
@@ -149,7 +292,7 @@ $.extend(KhanUtil, {
 
         var arcset = [];
         for (var arc = 0; arc < numArcs; ++arc) {
-            arcset.push(KhanUtil.currentGraph.arc(vertex, radius + (0.15 * arc), startAngle, endAngle));
+            arcset.push(this.arc(vertex, radius + (0.15 * arc), startAngle, endAngle));
         }
         return arcset;
     },
@@ -210,7 +353,7 @@ $.extend(KhanUtil, {
     addMovablePoint: function(options) {
         // The state object that gets returned
         var movablePoint = $.extend(true, {
-            graph: KhanUtil.currentGraph,
+            graph: this,
             coord: [0, 0],
             snapX: 0,
             snapY: 0,
@@ -437,6 +580,7 @@ $.extend(KhanUtil, {
                                 movablePoint.mouseTarget.attr("cy", mouseY);
                                 movablePoint.coord = [coordX, coordY];
                                 movablePoint.updateLineEnds();
+                                $(movablePoint).trigger("move");
                             }
 
 
@@ -559,19 +703,6 @@ $.extend(KhanUtil, {
         return movablePoint;
     },
 
-    svgPath: function(points) {
-        return $.map(points, function(point, i) {
-            if (point === true) {
-                return "z";
-            }
-            return (i === 0 ? "M" : "L") + point[0] + " " + point[1];
-        }).join("");
-    },
-
-    getDistance: function(point1, point2) {
-        return Math.sqrt((point1[0] - point2[0]) * (point1[0] - point2[0]) + (point1[1] - point2[1]) * (point1[1] - point2[1]));
-    },
-
     // Plot a function that allows the user to mouse over points on the function.
     // * currently, the function must be continuous
     //
@@ -584,10 +715,11 @@ $.extend(KhanUtil, {
     //   event handler that gets called when the mouse moves away from the function.
     //
     addInteractiveFn: function(fn, options) {
+        var graph = this;
         options = $.extend({
-            graph: KhanUtil.currentGraph,
+            graph: graph,
             snap: 0,
-            range: [KhanUtil.currentGraph.range[0][0], KhanUtil.currentGraph.range[0][1]]
+            range: [graph.range[0][0], graph.range[0][1]]
         }, options);
         var graph = options.graph;
         var interactiveFn = {
@@ -659,7 +791,8 @@ $.extend(KhanUtil, {
             points.push([(x1 - graph.range[0][0]) * graph.scale[0], (graph.range[1][1] - y1) * graph.scale[1]]);
         }
         // plot the polygon and make it invisible
-        interactiveFn.mouseTarget = graph.mouselayer.path(this.svgPath(points));
+        interactiveFn.mouseTarget = graph.mouselayer.path(
+                KhanUtil.unscaledSvgPath(points));
         interactiveFn.mouseTarget.attr({ fill: "#000", "opacity": 0.0 });
 
         // Add mouse handlers to the polygon
@@ -718,17 +851,6 @@ $.extend(KhanUtil, {
     },
 
 
-    // Useful for shapes that are only sometimes drawn. If a shape isn't
-    // needed, it can be replaced with bogusShape which just has stub methods
-    // that successfully do nothing.
-    // The alternative would be 'if..typeof' checks all over the place.
-    bogusShape: {
-        animate: function() {},
-        attr: function() {},
-        remove: function() {}
-    },
-
-
     // MovableLineSegment is a line segment that can be dragged around the
     // screen. By attaching a smartPoint to each (or one) end, the ends can be
     // manipulated individually.
@@ -755,7 +877,7 @@ $.extend(KhanUtil, {
     //
     addMovableLineSegment: function(options) {
         var lineSegment = $.extend({
-            graph: KhanUtil.currentGraph,
+            graph: this,
             coordA: [0, 0],
             coordZ: [1, 1],
             snapX: 0,
@@ -803,10 +925,10 @@ $.extend(KhanUtil, {
         for (var i = 0; i < lineSegment.ticks; ++i) {
             lineSegment.tick[i] = KhanUtil.bogusShape;
         }
-        var path = KhanUtil.svgPath([[0, 0], [graph.scale[0], 0]]);
+        var path = KhanUtil.unscaledSvgPath([[0, 0], [graph.scale[0], 0]]);
         for (var i = 0; i < lineSegment.ticks; ++i) {
             var tickoffset = (0.5 * graph.scale[0]) - (lineSegment.ticks - 1) * 1 + (i * 2);
-            path += KhanUtil.svgPath([[tickoffset, -7], [tickoffset, 7]]);
+            path += KhanUtil.unscaledSvgPath([[tickoffset, -7], [tickoffset, 7]]);
         }
         lineSegment.visibleLine = graph.raphael.path(path);
         lineSegment.visibleLine.attr(lineSegment.normalStyle);
@@ -991,7 +1113,7 @@ $.extend(KhanUtil, {
 
     addArrowWidget: function(options) {
         var arrowWidget = $.extend({
-            graph: KhanUtil.currentGraph,
+            graph: this,
             direction: "up",
             coord: [0, 0],
             onClick: function() {}
@@ -1047,121 +1169,6 @@ $.extend(KhanUtil, {
         };
 
         return arrowWidget;
-    },
-
-
-    createSorter: function() {
-        var sorter = {};
-        var list;
-
-        sorter.init = function(element) {
-            list = $("[id=" + element + "]").last();
-            var container = list.wrap("<div>").parent();
-            var placeholder = $("<li>");
-            placeholder.addClass("placeholder");
-            container.addClass("sortable ui-helper-clearfix");
-            var tileWidth = list.find("li").outerWidth(true);
-            var numTiles = list.find("li").length;
-
-            list.find("li").each(function(tileNum, tile) {
-                $(tile).bind("vmousedown", function(event) {
-                    if (event.type === "vmousedown" && (event.which === 1 || event.which === 0)) {
-                        event.preventDefault();
-                        $(tile).addClass("dragging");
-                        var tileIndex = $(this).index();
-                        placeholder.insertAfter(tile);
-                        placeholder.width($(tile).width());
-                        $(this).css("z-index", 100);
-                        var offset = $(this).offset();
-                        var click = {
-                            left: event.pageX - offset.left - 3,
-                            top: event.pageY - offset.top - 3
-                        };
-                        $(tile).css({ position: "absolute" });
-                        $(tile).offset({
-                            left: offset.left,
-                            top: offset.top
-                        });
-
-                        $(document).bind("vmousemove vmouseup", function(event) {
-                            event.preventDefault();
-                            if (event.type === "vmousemove") {
-                                $(tile).offset({
-                                    left: event.pageX - click.left,
-                                    top: event.pageY - click.top
-                                });
-                                var leftEdge = list.offset().left;
-                                var midWidth = $(tile).offset().left - leftEdge;
-                                var index = 0;
-                                var sumWidth = 0;
-                                list.find("li").each(function() {
-                                    if (this === placeholder[0] || this === tile) {
-                                        return;
-                                    }
-                                    if (midWidth > sumWidth + $(this).outerWidth(true) / 2) {
-                                        index += 1;
-                                    }
-                                    sumWidth += $(this).outerWidth(true);
-                                });
-                                if (index !== tileIndex) {
-                                    tileIndex = index;
-                                    if (index === 0) {
-                                        placeholder.prependTo(list);
-                                        $(tile).prependTo(list);
-                                    } else {
-                                        placeholder.detach();
-                                        $(tile).detach();
-                                        var preceeding = list.find("li")[index - 1];
-                                        placeholder.insertAfter(preceeding);
-                                        $(tile).insertAfter(preceeding);
-                                    }
-                                }
-                            } else if (event.type === "vmouseup") {
-                                $(document).unbind("vmousemove vmouseup");
-                                var position = $(tile).offset();
-                                $(position).animate(placeholder.offset(), {
-                                    duration: 150,
-                                    step: function(now, fx) {
-                                        position[fx.prop] = now;
-                                        $(tile).offset(position);
-                                    },
-                                    complete: function() {
-                                        $(tile).css("z-index", 0);
-                                        placeholder.detach();
-                                        $(tile).css({ position: "static" });
-                                        $(tile).removeClass("dragging");
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-        };
-
-        sorter.getContent = function() {
-            content = [];
-            list.find("li").each(function(tileNum, tile) {
-                content.push($.trim($(tile).find(".sort-key").text()));
-            });
-            return content;
-        };
-
-        sorter.setContent = function(content) {
-            var tiles = [];
-            $.each(content, function(n, sortKey) {
-                var tile = list.find("li .sort-key").filter(function() {
-                    // sort-key must match exactly
-                    return $(this).text() === sortKey;
-                }).closest("li").get(0);
-                $(tile).detach();  // remove matched tile so you can have duplicates
-                tiles.push(tile);
-            });
-            list.append(tiles);
-        };
-
-
-        return sorter;
     },
 
 
@@ -1308,7 +1315,7 @@ $.extend(KhanUtil, {
             }
         }, rect);
 
-        var graphie = KhanUtil.currentGraph;
+        var graphie = this;
 
 
 
@@ -1368,7 +1375,7 @@ $.extend(KhanUtil, {
             var sameY = sames[i][1];
             var coord = coords[i];
 
-            var point = KhanUtil.addMovablePoint({
+            var point = graphie.addMovablePoint({
                 graph: graphie,
                 coord: coord,
                 normalStyle: rect.normalStyle.points,
@@ -1412,7 +1419,7 @@ $.extend(KhanUtil, {
             var constrainX = (i % 2); // odd edges have X constrained
             var constrainY = ((i + 1) % 2); // even edges have Y constrained
 
-            var edge = KhanUtil.addMovableLineSegment({
+            var edge = graphie.addMovableLineSegment({
                 graph: graphie,
                 pointA: pointA,
                 pointZ: pointZ,
@@ -1586,7 +1593,7 @@ $.extend(KhanUtil, {
                             (event.which === 1 || event.which === 0)) {
                         event.preventDefault();
                         rect.toFront();
-                        rect.prevCoord = KhanUtil.getMouseCoord(event);
+                        rect.prevCoord = graphie.getMouseCoord(event);
 
                         rect.enableHoverStyle();
 
@@ -1596,7 +1603,7 @@ $.extend(KhanUtil, {
                             KhanUtil.dragging = true;
 
                             if (event.type === "vmousemove") {
-                                var currCoord = KhanUtil.getMouseCoord(event);
+                                var currCoord = graphie.getMouseCoord(event);
 
                                 if (rect.prevCoord && rect.prevCoord.length === 2) {
                                     var diff = KhanUtil.coordDiff(rect.prevCoord, currCoord);
@@ -1610,7 +1617,7 @@ $.extend(KhanUtil, {
                                 rect.dragging = false;
                                 KhanUtil.dragging = false;
 
-                                var currCoord = KhanUtil.getMouseCoord(event);
+                                var currCoord = graphie.getMouseCoord(event);
                                 if (currCoord[0] < rect.getX() ||
                                     currCoord[0] > rect.getX2() ||
                                     currCoord[1] < rect.getY() ||
@@ -1636,13 +1643,13 @@ $.extend(KhanUtil, {
     // circ: graphie circle
     // perim: invisible mouse target for dragging/changing radius
     addCircleGraph: function(options) {
-        var graphie = KhanUtil.currentGraph;
+        var graphie = this;
         var circle = $.extend({
             center: [0, 0],
             radius: 2
         }, options);
 
-        circle.centerPoint = KhanUtil.addMovablePoint({
+        circle.centerPoint = graphie.addMovablePoint({
             graph: graphie,
             coord: circle.center,
             normalStyle: {
@@ -1797,12 +1804,15 @@ $.extend(KhanUtil, {
         });
 
         return circle;
+    },
+
+    protractor: function(center) {
+        return new Protractor(this, center);
     }
 });
 
 
-function Protractor(center) {
-    var graph = KhanUtil.currentGraph;
+function Protractor(graph, center) {
     this.set = graph.raphael.set();
 
     this.cx = center[0];
@@ -1848,13 +1858,13 @@ function Protractor(center) {
     // add it to the set so it translates with everything else
     this.set.push(arrow);
 
-    this.centerPoint = KhanUtil.addMovablePoint({
+    this.centerPoint = graph.addMovablePoint({
         coord: center,
         visible: false
     });
 
     // Use a movablePoint for rotation
-    this.rotateHandle = KhanUtil.addMovablePoint({
+    this.rotateHandle = graph.addMovablePoint({
         coord: [
             Math.sin(275 * Math.PI / 180) * (r + 0.5) + this.cx,
             Math.cos(275 * Math.PI / 180) * (r + 0.5) + this.cy
@@ -1935,7 +1945,6 @@ function Protractor(center) {
     };
 
     this.moveTo = function moveTo(x, y) {
-        var graph = KhanUtil.currentGraph;
         var start = graph.scalePoint(pro.centerPoint.coord);
         var end = graph.scalePoint([x, y]);
         var time = KhanUtil.getDistance(start, end) * 2;  // 2ms per pixel
@@ -1980,3 +1989,5 @@ function Protractor(center) {
     this.makeTranslatable();
     return this;
 }
+
+})();

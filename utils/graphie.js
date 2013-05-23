@@ -1,5 +1,38 @@
 (function() {
-    var createGraph = function(el) {
+    var Graphie = KhanUtil.Graphie = function() {
+    };
+
+    _.extend(Graphie.prototype, {
+        cartToPolar: cartToPolar,
+        polar: polar
+    });
+
+    /* Convert cartesian coordinates [x, y] to polar coordinates [r,
+     * theta], with theta in degrees, or in radians if angleInRadians is
+     * specified.
+     */
+    function cartToPolar(coord, angleInRadians) {
+        var r = Math.sqrt(Math.pow(coord[0], 2) + Math.pow(coord[1], 2));
+        var theta = Math.atan2(coord[1], coord[0]);
+        // convert angle range from [-pi, pi] to [0, 2pi]
+        if (theta < 0) {
+            theta += 2 * Math.PI;
+        }
+        if (!angleInRadians) {
+            theta = theta * 180 / Math.PI;
+        }
+        return [r, theta];
+    }
+
+    function polar(r, th) {
+        if (typeof r === "number") {
+            r = [r, r];
+        }
+        th = th * Math.PI / 180;
+        return [r[0] * Math.cos(th), r[1] * Math.sin(th)];
+    }
+
+    KhanUtil.createGraphie = function(el) {
         var xScale = 40, yScale = 40, xRange, yRange;
 
         $(el).css("position", "relative");
@@ -117,30 +150,6 @@
             });
 
             return processed;
-        };
-
-        /* Convert cartesian coordinates to polar coordinates (angle in degrees).
-         * - Will return angle in radians if `angleInRadians` is specified as truthy.
-         */
-        var cartToPolar = function(coord, angleInRadians) {
-            var r = Math.sqrt(Math.pow(coord[0], 2) + Math.pow(coord[1], 2));
-            var theta = Math.atan2(coord[1], coord[0]);
-            // convert angle range from [-pi, pi] to [0, 2pi]
-            if (theta < 0) {
-                theta += 2 * Math.PI;
-            }
-            if (!angleInRadians) {
-                theta = theta * 180 / Math.PI;
-            }
-            return [r, theta];
-        };
-
-        var polar = function(r, th) {
-            if (typeof r === "number") {
-                r = [r, r];
-            }
-            th = th * Math.PI / 180;
-            return [r[0] * Math.cos(th), r[1] * Math.sin(th)];
         };
 
         var addArrowheads = function arrows(path) {
@@ -303,9 +312,6 @@
                     }
                     // Run after MathJax typesetting
                     MathJax.Hub.Queue(function() {
-                        // Avoid an icky flash
-                        span.css("visibility", "hidden");
-
                         var setMargins = function(size) {
                             span.css("visibility", "");
                             if (typeof direction === "number") {
@@ -333,24 +339,29 @@
 
                         // Wait for the browser to render it
                         var tries = 0;
-                        var size = [span.outerWidth(), span.outerHeight()];
+                        (function check() {
+                            var width = span[0].scrollWidth;
+                            var height = span[0].scrollHeight;
 
-                        if (size[1] > 18) {
-                            setMargins(size);
-                            callback();
-                        } else {
-                            var inter = setInterval(function() {
-                                size = [span.outerWidth(), span.outerHeight()];
+                            // Heuristic to guess if the font has kicked in so
+                            // we have box metrics (Magic number ick, but this
+                            // seems to work mostly-consistently)
+                            if (height > 18 || ++tries >= 10 ||
 
-                                // Heuristic to guess if the font has kicked in so we have box metrics
-                                // (Magic number ick, but this seems to work mostly-consistently)
-                                if (size[1] > 18 || ++tries >= 10) {
-                                    setMargins(size);
-                                    clearInterval(inter);
-                                    callback();
-                                }
-                            }, 100);
-                        }
+                                    // If the span is detached for some reason,
+                                    // these dimensions will just be 0 anyway
+                                    // so don't bother.
+                                    !$.contains(document.body, span[0])) {
+
+                                setMargins([width, height]);
+                                callback();
+                            } else {
+                                // Avoid an icky flash
+                                span.css("visibility", "hidden");
+
+                                setTimeout(check, 100);
+                            }
+                        })();
 
                         return callback;
                     });
@@ -485,7 +496,8 @@
             }
         };
 
-        var graphie = {
+        var graphie = new Graphie();
+        _.extend(graphie, {
             raphael: raphael,
 
             init: function(options) {
@@ -530,11 +542,8 @@
             scaleVector: scaleVector,
 
             unscalePoint: unscalePoint,
-            unscaleVector: unscaleVector,
-
-            polar: polar,
-            cartToPolar: cartToPolar
-        };
+            unscaleVector: unscaleVector
+        });
 
         $.each(drawingTools, function(name) {
             graphie[name] = function() {
@@ -818,7 +827,7 @@
                         .attr("id", $(this).attr("id")).insertAfter(this)[0];
                     $(this).remove();
                 }
-                graphie = createGraph(el);
+                graphie = KhanUtil.createGraphie(el);
                 $(el).data("graphie", graphie);
             }
 
