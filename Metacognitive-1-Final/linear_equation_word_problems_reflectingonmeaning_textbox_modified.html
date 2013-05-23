@@ -24,26 +24,29 @@
                 <div>
                     <p>
                         <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
                             [Click to learn about the
                             “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
+                            What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
+                        To use this strategy, ask yourself these
+                        “<span class="hint_purple" style="font-weight: bold">
+                            What? Why? How?</span>"
+                        questions after each hint in a problem.
                         <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            What does this step mean to you?</span>
                         <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
+                        <span class="hint_purple" style="font-weight: bold">
+                            Why is it helpful to take this step?</span>
                         <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
@@ -53,10 +56,10 @@
                            data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
+                           Many students are not sure what to say, or think
                            their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
+                           <span style="font-weight: bold; font-style:italic">
+                               try</span>
                            to think about the question, by typing or saying the
                            answer to yourself.
                         </div>
@@ -86,7 +89,7 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
@@ -97,15 +100,17 @@
                         $("#guessans").val("");                        
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
-                        $("#firsttext").val(guess[1]);
-                        $("#secondtext").val(guess[2]);
+                <div class="show-guess">
+                    if ($("#firsttext").length > 0) {
+                        if (guess != null) {                        
+                            $("#firsttext").val(guess[1]);
+                            $("#secondtext").val(guess[2]);
+                        }
+                        else {                       
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -113,11 +118,20 @@
             <div class="hints">
                 <p>To solve this, let's set up an expression to show how much
                     money <var>person(1)</var> will make.</p>
-                 <div>
-                    <p class="hint_purple" style="font-weight: bold">
-                        What is this step saying? Restate it in your own words.
-                    </p>
-                    <input type="text" id="firsttext" style="width:75%;">
+                <div>
+                    <div data-if="HINTRAND === 1">
+                        <span class="hint_purple" style="font-weight: bold">What
+                            does this step mean to you?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span class="hint_purple" style="font-weight: bold">Why
+                            is it helpful to take this step?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span class="hint_purple" style="font-weight: bold">How
+                            do you know this step is right?</span>
+                    </div>
+                    <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Amount earned this week <code>=</code></span><br>
@@ -129,10 +143,19 @@
                     <strong>at least</strong> <code>$<var>R</var></code> this
                     week, we can turn this into an inequality.</p>
                 <div>
-                    <p class="hint_purple" style="font-weight: bold">
-                        What is this step saying? Restate it in your own words.
-                    </p>
-                    <input type="text" id="secondtext" style="width:75%;">
+                    <div data-if="HINTRAND === 1">
+                        <span class="hint_purple" style="font-weight: bold">What
+                            does this step mean to you?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span class="hint_purple" style="font-weight: bold">Why
+                            is it helpful to take this step?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span class="hint_purple" style="font-weight: bold">How
+                            do you know this step is right?</span>
+                    </div>
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Amount earned this week
@@ -183,47 +206,51 @@
                 <var id="P">10 * randRange(300 / 10, 1000 / 10)</var>
                 <var id="R">10 * randRange(2000 / 10, 4000 / 10)</var>
                 <var id="X">ceil((R - Q) / P)</var>
+                <var id="HINTRAND">randRange(1,3)</var>
             </div>
 
             <div class="problem">
-                <div>
-                    <p>
+                 <div>
+                     <p>
                         <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
+                        To use this strategy, ask yourself these
+                        “<span class="hint_purple" style="font-weight: bold">
+                            What? Why? How?</span>"
+                        questions after each hint in a problem.
                         <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            What does this step mean to you?</span>
                         <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
+                        <span class="hint_purple" style="font-weight: bold">
+                            Why is it helpful to take this step?</span>
                         <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
+                            data-subhint="encouragement"
+                            data-hidden-text="Hide Information">
+                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
+                            their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
                                 try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
+                            to think about the question, by typing or saying the
+                            answer to yourself.
                         </div>
                     </div>
                 </div>
@@ -252,7 +279,7 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
@@ -263,15 +290,17 @@
                         $("#guessans").val("");                        
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null) {   
-                        $("#firsttext").val(guess[1]);
-                        $("#secondtext").val(guess[2]);
+                <div class="show-guess">
+                    if ($("#firsttext").length > 0) {
+                        if (guess != null) {                        
+                            $("#firsttext").val(guess[1]);
+                            $("#secondtext").val(guess[2]);
+                        }
+                        else {                       
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
-                    else {
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -280,10 +309,19 @@
                 <p>To solve this, let's set up an expression to show how many
                     points <var>person(1)</var> will have after each level.</p>
                 <div>
-                    <p class="hint_purple" style="font-weight: bold">
-                        What is this step saying? Restate it in your own words.
-                    </p>
-                    <input type="text" id="firsttext" style="width:75%;">
+                    <div data-if="HINTRAND === 1">
+                        <span class="hint_purple" style="font-weight: bold">What
+                            does this step mean to you?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span class="hint_purple" style="font-weight: bold">Why
+                            is it helpful to take this step?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span class="hint_purple" style="font-weight: bold">How
+                            do you know this step is right?</span>
+                    </div>
+                    <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of points <code>=</code></span><br>
@@ -297,10 +335,19 @@
                     before going to bed, we can set up an inequality.
                 </p>
                 <div>
-                    <p class="hint_purple" style="font-weight: bold">
-                        What is this step saying? Restate it in your own words.
-                    </p>
-                    <input type="text" id="secondtext" style="width:75%;">
+                    <div data-if="HINTRAND === 1">
+                        <span class="hint_purple" style="font-weight: bold">What
+                            does this step mean to you?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span class="hint_purple" style="font-weight: bold">Why
+                            is it helpful to take this step?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span class="hint_purple" style="font-weight: bold">How
+                            do you know this step is right?</span>
+                    </div>
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -349,47 +396,51 @@
                 <var id="R">randRange(50, 200)</var>
                 <var id="P">randRange(1, 10)</var>
                 <var id="X">ceil(( R - Q ) / P)</var>
+                <var id="HINTRAND">randRange(1,3)</var>
             </div>
 
             <div class="problem">
                 <div>
                     <p>
                         <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
+                        To use this strategy, ask yourself these
+                        “<span class="hint_purple" style="font-weight: bold">
+                            What? Why? How?</span>"
+                        questions after each hint in a problem.
                         <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            What does this step mean to you?</span>
                         <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
+                        <span class="hint_purple" style="font-weight: bold">
+                            Why is it helpful to take this step?</span>
                         <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself this question, it will
-                        sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
+                            data-subhint="encouragement"
+                            data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
+                            their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
                                 try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
+                            to think about the question, by typing or saying the
+                            answer to yourself.
                         </div>
                     </div>
                 </div>
@@ -428,15 +479,17 @@
                         $("#guessans").val("");                        
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
-                        $("#firsttext").val(guess[1]);
-                        $("#secondtext").val(guess[2]);
+                <div class="show-guess">
+                    if ($("#firsttext").length > 0) {
+                        if (guess != null) {                        
+                            $("#firsttext").val(guess[1]);
+                            $("#secondtext").val(guess[2]);
+                        }
+                        else {                       
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -446,10 +499,19 @@
                     songs <var>person(1)</var> will have mastered after each
                     month.</p>
                 <div>
-                    <p class="hint_purple" style="font-weight: bold">
-                        What is this step saying? Restate it in your own words.
-                    </p>
-                    <input type="text"  id="firsttext" style="width:75%;">
+                    <div data-if="HINTRAND === 1">
+                        <span class="hint_purple" style="font-weight: bold">What
+                            does this step mean to you?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span class="hint_purple" style="font-weight: bold">Why
+                            is it helpful to take this step?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span class="hint_purple" style="font-weight: bold">How
+                            do you know this step is right?</span>
+                    </div>
+                   <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of songs mastered <code>=</code></span><br>
@@ -464,10 +526,19 @@
                     inequality to find the number of months needed.
                 </p>
                 <div>
-                    <p class="hint_purple" style="font-weight: bold">
-                        What is this step saying? Restate it in your own words.
-                    </p>
-                   <input type="text"  id="secondtext" style="width:75%;">
+                    <div data-if="HINTRAND === 1">
+                        <span class="hint_purple" style="font-weight: bold">What
+                            does this step mean to you?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 2">
+                        <span class="hint_purple" style="font-weight: bold">Why
+                            is it helpful to take this step?</span>
+                    </div>
+                    <div data-else-if="HINTRAND === 3">
+                        <span class="hint_purple" style="font-weight: bold">How
+                            do you know this step is right?</span>
+                    </div>
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of songs mastered <code>\geq

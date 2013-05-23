@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-require="math word-problems subhints">
+<html data-require="math word-problems subhints graphie">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Linear equation word problems</title>
@@ -12,7 +12,7 @@
     </script>
     <div class="problems">
         <div id="magazine_subscription_selling">
-            <div class="vars" data-ensure="Q < R">
+            <div class="vars" data-ensure="Q &lt; R">
                 <var id="Q">randRange(20, 40)</var>
                 <var id="P">randRange(2, 10)</var>
                 <var id="R">randRange(30, 100)</var>
@@ -20,13 +20,13 @@
             </div>
 
             <div class="problem">
-                 <div>
-                     <p>
-                       <a href="#" class="show-subhint"
+                <div>
+                    <p>
+                        <a href="#" class="show-subhint"
                           data-subhint="learn-more"
                           data-hidden-text="Hide Information">
-                           [Click to learn about the
-                           “<span class="hint_purple" style="font-weight: bold">
+                            [Click to learn about the
+                            “<span class="hint_purple" style="font-weight: bold">
                             What?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
@@ -53,11 +53,11 @@
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
+                            their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
                                 try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
+                            to think about the question, by typing or saying the
+                            answer to yourself.
                         </div>
                     </div>
                 </div>
@@ -72,9 +72,40 @@
                 <code>$<var>R</var></code> this week, what is the minimum
                 number of subscriptions <var>he(1)</var> needs to sell?
             </p>
-            <div class="solution" data-type="multiple">
-                <span class="sol" data-forms="integer"><var>X</var></span>
-                subscriptions
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    <input type="text" id="guessans"> subscriptions
+                </div>
+                <div class="guess">[
+                    $("#guessans").val(),
+                    $("#firsttext").val(),
+                    $("#secondtext").val()
+                ]</div>
+                <div class="validator-function">
+                    var correct = X;
+                    var solutionDiv = $("&lt;div&gt;").text(correct);
+                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    return validator(guess[0]);
+                </div>
+                <div class="show-guess-solutionarea">
+                    if (guess != null) {
+                        $("#guessans").val(guess[0]);                        
+                    }
+                    else {
+                        $("#guessans").val("");                        
+                    }
+                </div>
+                <div class="show-guess">                   
+                    if (guess != null && $("#firsttext").length > 0) {                        
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
+                    }
+                    else {                       
+                        $("#firsttext").val("");
+                        $("#secondtext").val("");
+                    }                  
+                </div>
+                <div class="example">an integer, like <code>6</code></div>
             </div>
             <div class="hints">
                 <p>To solve this, let's set up an expression to show how much
@@ -92,7 +123,7 @@
                     <strong>at least</strong> <code>$<var>R</var></code> this
                     week, we can turn this into an inequality.</p>
                 <p class="hint_purple" style="font-weight: bold">
-                   What is this step saying? Restate it in your own words.
+                    What is this step saying? Restate it in your own words.
                 </p>
                 <div>
                     <p>Amount earned this week
@@ -118,7 +149,7 @@
                         x \cdot $<var>P</var> \geq $<var>R - Q</var>
                     </code></p>
                 </div>
-                <div data-if="(R - Q) % P !== 0" data-unwrap>
+                <div data-if="(R - Q) % P !== 0" data-unwrap="">
                     <p><code>x \geq \dfrac{<var>R - Q</var>}{<var>P</var>}
                         \approx <var>((R - Q) / P).toFixed(2)</var></code></p>
                     <p data-if="(R - Q) % P !== 0">
@@ -128,7 +159,7 @@
                         <code><var>X</var></code>.
                     </p>
                 </div>
-                <div data-else>
+                <div data-else="">
                     <p><code>x \geq \dfrac{<var>R - Q</var>}{<var>P</var>} =
                         <var>(R - Q) / P</var></code></p>
                 </div>
@@ -138,7 +169,7 @@
         </div>
 
         <div id="video_game_levels">
-            <div class="vars" data-ensure="Q < R">
+            <div class="vars" data-ensure="Q &lt; R">
                 <var id="Q">10 * randRange(100 / 10, 500 / 10)</var>
                 <var id="P">10 * randRange(300 / 10, 1000 / 10)</var>
                 <var id="R">10 * randRange(2000 / 10, 4000 / 10)</var>
@@ -179,11 +210,11 @@
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
+                            their answer isn’t good. That is fine, as long as you
                             <span style="font-weight: bold; font-style:italic">
                                 try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
+                            to think about the question, by typing or saying the
+                            answer to yourself.
                         </div>
                     </div>
                 </div>
@@ -200,16 +231,47 @@
                 <var>his(1)</var> goal?
             </p>
 
-             <div class="solution" data-type="multiple">
-                <span class="sol" data-forms="integer"><var>X</var></span>
-                levels
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    <input type="text" id="guessans"> levels
+                </div>
+                <div class="guess">[
+                    $("#guessans").val(),
+                    $("#firsttext").val(),
+                    $("#secondtext").val()
+                ]</div>
+                <div class="validator-function">
+                    var correct = X;
+                    var solutionDiv = $("&lt;div&gt;").text(correct);
+                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    return validator(guess[0]);
+                </div>
+                <div class="show-guess-solutionarea">
+                    if (guess != null) {
+                        $("#guessans").val(guess[0]);                        
+                    }
+                    else {
+                        $("#guessans").val("");                        
+                    }
+                </div>
+                <div class="show-guess">                   
+                    if (guess != null && $("#firsttext").length > 0) {                        
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
+                    }
+                    else {                       
+                        $("#firsttext").val("");
+                        $("#secondtext").val("");
+                    }                  
+                </div>
+                <div class="example">an integer, like <code>6</code></div>
             </div>
 
             <div class="hints">
                 <p>To solve this, let's set up an expression to show how many
                     points <var>person(1)</var> will have after each level.</p>
                 <p class="hint_purple" style="font-weight: bold">
-                   What is this step saying? Restate it in your own words.
+                    What is this step saying? Restate it in your own words.
                 </p>
                 <p>
                     <span>Number of points <code>=</code></span><br>
@@ -223,7 +285,7 @@
                     before going to bed, we can set up an inequality.
                 </p>
                 <p class="hint_purple" style="font-weight: bold">
-                   What is this step saying? Restate it in your own words.
+                    What is this step saying? Restate it in your own words.
                 </p>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -247,7 +309,7 @@
                         x \cdot <var>P</var> \geq <var>R - Q</var>
                     </code></p>
                 </div>
-                <div data-if="(R - Q) % P !== 0" data-unwrap>
+                <div data-if="(R - Q) % P !== 0" data-unwrap="">
                     <p><code>x \geq \dfrac{<var>R - Q</var>}{<var>P</var>}
                         \approx <var>((R - Q) / P).toFixed(2)</var></code></p>
                     <p data-if="(R - Q) % P !== 0">
@@ -257,7 +319,7 @@
                         <code><var>X</var></code>.
                     </p>
                 </div>
-                <div data-else>
+                <div data-else="">
                     <p><code>x \geq \dfrac{<var>R - Q</var>}{<var>P</var>} =
                         <var>(R - Q) / P</var></code></p>
                 </div>
@@ -267,7 +329,7 @@
         </div>
 
         <div id="piano_months">
-            <div class="vars" data-ensure="Q < R">
+            <div class="vars" data-ensure="Q &lt; R">
                 <var id="Q">randRange(5, 50)</var>
                 <var id="R">randRange(50, 200)</var>
                 <var id="P">randRange(1, 10)</var>
@@ -275,13 +337,13 @@
             </div>
 
             <div class="problem">
-                 <div>
-                     <p>
-                       <a href="#" class="show-subhint"
+                <div>
+                    <p>
+                        <a href="#" class="show-subhint"
                           data-subhint="learn-more"
                           data-hidden-text="Hide Information">
-                           [Click to learn about the
-                           “<span class="hint_purple" style="font-weight: bold">
+                            [Click to learn about the
+                            “<span class="hint_purple" style="font-weight: bold">
                             What?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
@@ -328,9 +390,40 @@
                 maestro level?
             </p>
 
-            <div class="solution" data-type="multiple">
-                <span class="sol" data-forms="integer"><var>X</var></span>
-                months
+            <div class="solution" data-type="custom">
+                <div class="instruction">
+                    <input type="text" id="guessans"> months
+                </div>
+                <div class="guess">[
+                    $("#guessans").val(),
+                    $("#firsttext").val(),
+                    $("#secondtext").val()
+                ]</div>
+                <div class="validator-function">
+                    var correct = X;
+                    var solutionDiv = $("&lt;div&gt;").text(correct);
+                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    return validator(guess[0]);
+                </div>
+                <div class="show-guess-solutionarea">
+                    if (guess != null) {
+                        $("#guessans").val(guess[0]);                        
+                    }
+                    else {
+                        $("#guessans").val("");                        
+                    }
+                </div>
+                <div class="show-guess">                   
+                    if (guess != null && $("#firsttext").length > 0) {                        
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
+                    }
+                    else {                       
+                        $("#firsttext").val("");
+                        $("#secondtext").val("");
+                    }                  
+                </div>
+                <div class="example">an integer, like <code>6</code></div>
             </div>
 
             <div class="hints">
@@ -357,8 +450,8 @@
                 </p>
                 <div>
                     <p>Number of songs mastered <code>\geq
-                        <var>R</var></code></span><br>
-                    <p>
+                        <var>R</var></code><br>
+                    </p><p>
                     <span>Months at school <code>\times</code> Songs mastered
                         per month</span><br>
                     <span><code>\qquad+</code> Songs already mastered
@@ -376,12 +469,12 @@
                 <div>
                     <p><code>
                         x \cdot <var>P</var> \geq <var>R</var> - <var>Q</var>
-                    </p></code>
+                    </code></p>
                     <p><code>
                         x \cdot <var>P</var> \geq <var>R - Q</var>
-                    </p></code>
+                    </code></p>
                 </div>
-                <div data-if="(R - Q) % P !== 0" data-unwrap>
+                <div data-if="(R - Q) % P !== 0" data-unwrap="">
                     <p><code>x \geq \dfrac{<var>R - Q</var>}{<var>P</var>}
                         \approx <var>((R - Q) / P).toFixed(2)</var></code></p>
                     <p data-if="(R - Q) % P !== 0">
@@ -391,7 +484,7 @@
                         <code><var>X</var></code>.
                     </p>
                 </div>
-                <div data-else>
+                <div data-else="">
                     <p><code>x \geq \dfrac{<var>R - Q</var>}{<var>P</var>} =
                         <var>(R - Q) / P</var></code></p>
                 </div>
