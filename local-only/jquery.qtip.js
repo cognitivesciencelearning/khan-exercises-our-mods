@@ -202,7 +202,7 @@ function QTip(target, options, id, attr)
 		tooltip.toggleClass(disabledClass, disabled);
 
 		tooltip.toggleClass('ui-helper-reset '+createWidgetClass(), on).toggleClass(defaultClass, options.style.def && !on);
-		
+
 		if(elements.content) {
 			elements.content.toggleClass( createWidgetClass('content'), on);
 		}
@@ -975,7 +975,7 @@ function QTip(target, options, id, attr)
 				// Cache event
 				cache.event = $.extend({}, event);
 			}
-	
+
 			// Render the tooltip if showing and it isn't already
 			if(!self.rendered) { return state ? self.render(1) : self; }
 
@@ -1989,7 +1989,7 @@ function Ajax(api)
 
 			// Cancel old request
 			if(xhr && xhr.abort) { xhr.abort(); }
-			
+
 			// Check if user delcared a content selector like in .load()
 			if(hasSelector > -1) {
 				selector = url.substr(hasSelector);
@@ -2029,7 +2029,7 @@ function Ajax(api)
 						// inject the contents of the document in, removing the scripts
 						// to avoid any 'Permission Denied' errors in IE
 						.append(content.replace(RSCRIPT, ""))
-						
+
 						// Locate the specified elements
 						.find(selector);
 				}
@@ -2074,7 +2074,7 @@ function Ajax(api)
 AJAX = PLUGINS.ajax = function(api)
 {
 	var self = api.plugins.ajax;
-	
+
 	return 'object' === typeof self ? self : (api.plugins.ajax = new Ajax(api));
 };
 
@@ -2255,7 +2255,7 @@ function Tip(qTip, command)
 					pos.left -= adjust.left;
 					shift.left = FALSE;
 				}
-				
+
 				css[ offset.right !== undefined ? RIGHT : LEFT ] = shift.x;
 			}
 		}
@@ -2323,7 +2323,7 @@ function Tip(qTip, command)
 	/* border width calculator */
 	function parseWidth(corner, side, use) {
 		side = !side ? corner[corner.precedance] : side;
-		
+
 		var isTitleTop = elems.titlebar && corner.y === TOP,
 			elem = isTitleTop ? elems.titlebar : tooltip,
 			borderSide = 'border-' + side + '-width',
@@ -2400,7 +2400,7 @@ function Tip(qTip, command)
 			bigHyp, ratio, result,
 
 		smallHyp = Math.sqrt( pow(base, 2) + pow(height, 2) ),
-		
+
 		hyp = [
 			(border / base) * smallHyp, (border / height) * smallHyp
 		];
@@ -2433,7 +2433,7 @@ function Tip(qTip, command)
 				// Bind update events
 				tooltip.unbind(TIPNS).bind('tooltipmove'+TIPNS, reposition);
 			}
-			
+
 			return enabled;
 		},
 
@@ -2684,7 +2684,7 @@ function Tip(qTip, command)
 			tip.css({ top: '', bottom: '', left: '', right: '', margin: '' }).css(position);
 			return position;
 		},
-		
+
 		destroy: function()
 		{
 			// Unbind events
@@ -2709,7 +2709,7 @@ function Tip(qTip, command)
 TIP = PLUGINS.tip = function(api)
 {
 	var self = api.plugins.tip;
-	
+
 	return 'object' === typeof self ? self : (api.plugins.tip = new Tip(api));
 };
 
@@ -2965,7 +2965,7 @@ function Modal(api)
 			// Initialise
 			self.destroy();
 			self.init();
-			
+
 			// Show the modal if not visible already and tooltip is visible
 			overlay.toggle( tooltip.is(':visible') );
 		}
@@ -2985,7 +2985,7 @@ function Modal(api)
 
 			// Set z-index
 			.css('z-index', PLUGINS.modal.zindex + $(MODALSELECTOR).length)
-			
+
 			// Apply our show/hide/focus modal events
 			.bind('tooltipshow'+namespace+' tooltiphide'+namespace, function(event, api, duration) {
 				var oEvent = event.originalEvent;
@@ -3518,7 +3518,7 @@ function Ie6(api)
 IE6 = PLUGINS.ie6 = function(api)
 {
 	var self = api.plugins.ie6;
-	
+
 	// Proceed only if the browser is IE6
 	if(PLUGINS.ie !== 6) { return FALSE; }
 
