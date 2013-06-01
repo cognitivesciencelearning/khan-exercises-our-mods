@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems spin khanscript graphie subhints">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Age word problems</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+          <script type="text/khanscript">
+        var exerciseContents = $("#workarea").children("div");
+        $("#workarea, #hintsarea").children().hide();
+        console.log(exerciseContents);
+        $("#workarea").prepend("&lt;p id='first-framing' class='hint_purple'&gt;If you are only told about the relationships between two people's ages, what kind of math is useful for figuring out actual ages? &lt;/p&gt;");
+        $("#first-framing").after("&lt;p id='second-framing' class='hint_purple'&gt;The guiding question to keep in mind for this exercise is: &quot;How can you convert word problems into algebra expressions?&quot; &lt;/p&gt;");
+        $("#second-framing").after("&lt;div class='simple-button green' style='width:50%' id='cont-button' onclick='$(\042#workarea, #hintsarea\042).children().show(200); $(\042#first-framing\042).hide(); $(\042#second-framing\042).hide(); $(\042#cont-button\042).hide();' &gt; Click to continue to the exercise &lt;/div&gt;");
+        $("#cont-button").after("&lt;a href='#' class='show-subhint' data-subhint='alt-framing' data-hidden-text='Hide Information' id='alt-sub'&gt; Click to see alternative framings &lt;/a&gt;");
+        $("#alt-sub").after("&lt;div class='subhint' id='alt-framing'&gt; &lt;p&gt; first alt framing &lt;/p&gt; &lt;p&gt; second alt framing &lt;/p&gt; &lt;/div&gt;");
+         </script>
+    <div class="problems">
+        <div id="solve-older-1">
+            <div class="vars">
+                <var id="C">randRange(3, 5)</var>
+                <var id="B">randRange(2, 20)</var>
+                <var id="A">randRange(1, 10) * (C - 1)</var>
+            </div>
+
+            <div class="question">
+                <p class="spin">
+                {<span class="first"><var>person(1)</var> is <var>A</var> years older than <var>person(2)</var></span>|<span class="first"><var>person(2)</var> is <var>A</var> years younger than <var>person(1)</var></span>}.
+                {For the last {four|3|two} years, <var>person(1)</var> and <var>person(2)</var> have been going to the same school.|<var>person(1)</var> and <var>person(2)</var> first met 3 years ago.|}
+                <span class="second"><var>Cardinal(B)</var> years ago, <var>person(1)</var> was <var>C</var> times {as old as|older than} <var>person(2)</var>.</span></p>
+
+                <p>How old is <var>person(1)</var> now?</p>
+            </div>
+            <div class="solution"><var>(C * (B + A) - B) / (C - 1)</var></div>
+
+            <div class="hints">
+		<p>We can use the given information to write down two equations that describe the ages of <var>person(1)</var> and <var>person(2)</var>.</p>
+                <p>Let <var>person(1)</var>'s current age be <code><var>personVar(1)</var></code> and <var>person(2)</var>'s current age be <code><var>personVar(2)</var></code>.</p>
+                <div>
+                    <p>The information in the first sentence can be expressed in the following equation:</p>
+                    <div>
+                        <p><code class="hint_blue"><var>personVar(1)</var> = <var>personVar(2)</var> + <var>A</var></code></p>
+                    </div>
+                    <div class="graphie">
+                        $(".first").addClass("hint_blue");
+                    </div>
+                </div>
+                <div>
+                <p class="hint_purple">Do you see why this step makes sense or is justified?</p>
+                <a href="#" class="show-subhint" data-subhint="first-alternatives">Click to see alternative interventions.</a>
+                <div class="subhint" id="first-alternatives">first alternative</div>
+                </div>
+                <p><var>Cardinal(B)</var> years ago, <var>person(1)</var> was <code><var>personVar(1)</var> - <var>B</var></code> years old, and <var>person(2)</var> was <code><var>personVar(2)</var> - <var>B</var></code> years old.</p>
+                <div>
+                    <p>The information in the second sentence can be expressed in the following equation:</p>
+                    <div>
+                        <p><code class="hint_red"><var>personVar(1)</var> - <var>B</var> = <var>C</var>(<var>personVar(2)</var> - <var>B</var>)</code></p>
+                    </div>
+                    <div class="graphie">
+                        $(".second").addClass("hint_red");
+                    </div>
+                </div>
+                <p>Now we have two independent equations, and we can solve for our two unknowns.</p>
+                <p>Because we are looking for <code><var>personVar(1)</var></code>, it might be easiest to solve our first equation for <code><var>personVar(2)</var></code> and substitute it into our second equation.</p>
+                <div>
+                    <p>Solving our first equation for <code><var>personVar(2)</var></code>, we get: <code class="hint_blue"><var>personVar(2)</var> = <var>personVar(1)</var> - <var>A</var></code>. Substituting this into our second equation, we get the equation:</p>
+                    <div>
+                        <p><code class="hint_red"><var>personVar(1)</var> - <var>B</var> = <var>C</var>(</code><code class="hint_blue">(<var>personVar(1)</var> - <var>A</var>)</code> <code class="hint_red"> -</code> <code class="hint_red"> <var>B</var>)</code></p>
+                    </div>
+                    <p>which combines the information about <code><var>personVar(1)</var></code> from both of our original equations.</p>
+                </div>
+                <p>Simplifying the right side of this equation, we get: <code><var>personVar(1)</var> - <var>B</var> = <var>C</var><var>personVar(1)</var> - <var>C * (A + B)</var></code>.</p>
+                <p class="hint_purple">What step do you think is coming next?</p>
+                <p>Solving for <code><var>personVar(1)</var></code>, we get: <code><var>C - 1</var> <var>personVar(1)</var> = <var>C * (A + B) - B</var></code>.</p>
+				<p><code><var>personVar(1)</var> = <var>(C * (B + A) - B) / (C - 1)</var></code>.</p>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</body>
+</html>
