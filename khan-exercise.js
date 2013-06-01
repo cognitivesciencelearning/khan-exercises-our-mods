@@ -285,7 +285,7 @@ var Khan = (function() {
             "word-problems": ["math"],
             "derivative-intuition": ["jquery.mobile.vmouse"],
             "unit-circle": ["jquery.mobile.vmouse"],
-            "interactive": ["jquery.mobile.vmouse"],
+            "interactive": ["graphie", "jquery.mobile.vmouse"],
             "mean-and-median": ["stat"],
             "math-model": ["ast"],
             "simplify": ["math-model", "ast", "expr-helpers", "expr-normal-form", "steps-helpers"],
@@ -312,7 +312,7 @@ var Khan = (function() {
         warnFont: function() {
             var warning;
             if ($.browser.msie) {
-                warning = $._('You should ' +
+                warning = $._("You should " +
                     "<a href='http://missmarcialee.com/2011/08/" +
                     "how-to-enable-font-download-in-internet-explorer-8/' " +
                     "target='_blank'>enable font download</a> " +
@@ -329,10 +329,6 @@ var Khan = (function() {
         // TODO(alpert): This doesn't need to be in the Khan object.
         getBaseModules: function() {
             var mods = [];
-            if (localMode) {
-                mods.push("jquery-ui", "../jquery.qtip");
-            }
-
             // Base modules required for every problem
             // MathJax is here because Perseus wants it loaded regardless of if
             // we load a khan-exercises problem that needs it. Previously it
@@ -739,11 +735,21 @@ var Khan = (function() {
         // Load in jQuery and underscore, as well as the interface glue code
         // TODO(cbhl): Don't load history.js if we aren't in readOnly mode.
         var initScripts = [
-                "../jquery.js",
-                "../jquery-migrate-1.1.1.js",
-                "../utils/underscore.js",
-                "../utils/jed.js",
-                "../utils/i18n.js",
+                "../local-only/jquery.js",
+                "../local-only/jquery-migrate-1.1.1.js",
+                "../local-only/jquery.ui.core.js",
+                "../local-only/jquery.ui.widget.js",
+                "../local-only/jquery.ui.mouse.js",
+                "../local-only/jquery.ui.position.js",
+                "../local-only/jquery.ui.effect.js",
+                "../local-only/jquery.ui.effect-shake.js",
+                "../local-only/jquery.qtip.js",
+                "../local-only/underscore.js",
+                "../local-only/jed.js",
+                "../local-only/i18n.js",
+                // TODO(csilvers): I18N: pick the file based on lang=XX param
+                "../local-only/localeplanet/icu.en-US.js",
+                "../local-only/i18n.js",
                 "../exercises-stub.js",
                 "../history.js",
                 "../interface.js"
@@ -1428,9 +1434,9 @@ var Khan = (function() {
         // triggered on newProblem
 
         if (userExercise == null || Khan.query.debug != null) {
-            $("#problem-permalink").text("Permalink: "
-                + problemID + " #"
-                + problemSeed)
+            $("#problem-permalink").text("Permalink: " +
+                                         problemID + " #" +
+                                         problemSeed)
                 .attr("href", window.location.protocol + "//" + window.location.host + window.location.pathname + "?debug&problem=" + problemID + "&seed=" + problemSeed);
         }
 
@@ -1482,7 +1488,7 @@ var Khan = (function() {
                     .css({
                         "padding-left": "20px",
                         "outline":
-                            (problemID === probID || problemID === '' + n) ?
+                            (problemID === probID || problemID === "" + n) ?
                             "1px dashed gray" : ""
                     })
                     .append($("<span>").text(n + ": "))
@@ -1666,8 +1672,8 @@ var Khan = (function() {
                         // point here
                         Calculator.angleMode = Calculator.angleMode === "DEG" ?
                             "RAD" : "DEG";
-                        jel.html((Calculator.angleMode === "DEG" ? "<br>" : "")
-                            + Calculator.angleMode);
+                        jel.html((Calculator.angleMode === "DEG" ? "<br>" : "") +
+                                 Calculator.angleMode);
                     } else if (behavior === "evaluate") {
                         evaluate();
                     }
@@ -2025,8 +2031,8 @@ var Khan = (function() {
      * Load an exercise and return a promise that is resolved when an exercise
      * is loaded
      *
-     * @param exerciseElem HTML element with jQuery data properties name,
-     * weight, rootName, and fileName
+     * @param {Element} exerciseElem HTML element with jQuery data
+     * properties name, weight, rootName, and fileName
      */
     function loadExercise(exerciseElem) {
         exerciseElem = $(exerciseElem).detach();

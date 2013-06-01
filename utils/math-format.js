@@ -233,13 +233,14 @@ $.extend(KhanUtil, {
     },
 
     // Ported from https://github.com/clojure/clojure/blob/master/src/clj/clojure/pprint/cl_format.clj#L285
+    // TODO(csilvers): I18N: this doesn't work at all outside English.
+    // cf. https://github.com/kslazarev/numbers_and_words (Ruby, sadly).
     cardinal: function(n) {
-        // TODO(jeresig): i18n: Is this something that can be ported?
         var cardinalScales = ["", $._("thousand"), $._("million"),
             $._("billion"), $._("trillion"), $._("quadrillion"),
-            $._("quintillion"), $._("sextillion"), $._("septillion"), 
+            $._("quintillion"), $._("sextillion"), $._("septillion"),
             $._("octillion"), $._("nonillion"), $._("decillion"),
-            $._("undecillion"), $._("duodecillion"), $._("tredecillion"), 
+            $._("undecillion"), $._("duodecillion"), $._("tredecillion"),
             $._("quattuordecillion"), $._("quindecillion"),
             $._("sexdecillion"), $._("septendecillion"), $._("octodecillion"),
             $._("novemdecillion"), $._("vigintillion")];
@@ -262,7 +263,6 @@ $.extend(KhanUtil, {
                     {unit: cardinalUnits[hundredDigit]});
             }
 
-            // TODO(jeresig): i18n: This will need to changed
             if (hundredDigit && rest) {
                 str += " ";
             }
@@ -278,7 +278,6 @@ $.extend(KhanUtil, {
                         str += cardinalTens[tenDigit];
                     }
 
-                    // TODO(jeresig): i18n: This will need to changed
                     if (tenDigit && unitDigit) {
                         str += "-";
                     }
@@ -322,7 +321,6 @@ $.extend(KhanUtil, {
                 words.unshift($._("negative"));
             }
 
-            // TODO(jeresig): i18n: This will need to changed
             return words.join(" ");
         }
     },
@@ -332,6 +330,7 @@ $.extend(KhanUtil, {
         return card.charAt(0).toUpperCase() + card.slice(1);
     },
 
+    // TODO(csilvers): I18N: this is not locale-safe.
     ordinal: function(n) {
         if (n <= 9) {
             return ["zeroth", "first", "second", "third", "fourth", "fifth",
@@ -367,8 +366,8 @@ $.extend(KhanUtil, {
         } else if (underRadical[1] === 1) {
             // The absolute value of the number under the radical is a perfect square
 
-            rootString += KhanUtil.fraction(-b + underRadical[0], 2 * a, true, true, true) + ","
-                + KhanUtil.fraction(-b - underRadical[0], 2 * a, true, true, true);
+            rootString += KhanUtil.fraction(-b + underRadical[0], 2 * a, true, true, true) + "," +
+                KhanUtil.fraction(-b - underRadical[0], 2 * a, true, true, true);
         } else {
             // under the radical can be partially simplified
             var divisor = KhanUtil.getGCD(b, 2 * a, underRadical[0]);
@@ -388,16 +387,26 @@ $.extend(KhanUtil, {
     // Thanks to Ghostoy on http://stackoverflow.com/questions/6784894/commafy/6786040#6786040
     commafy: function(num) {
         var str = num.toString().split(".");
+        var thousands = icu.getDecimalFormatSymbols().grouping_separator;
+        var decimal = icu.getDecimalFormatSymbols().decimal_separator;
 
         if (str[0].length >= 5) {
-            str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g, "$1{,}");
+            str[0] = str[0].replace(/(\d)(?=(\d{3})+$)/g,
+                                    "$1{" + thousands + "}");
         }
 
         if (str[1] && str[1].length >= 5) {
             str[1] = str[1].replace(/(\d{3})(?=\d)/g, "$1\\;");
         }
 
-        return str.join(".");
+        return str.join(decimal);
+    },
+
+    // Rounds num to X places, and uses the proper decimal point.
+    // But does *not* insert thousands separators.
+    localeToFixed: function(num, places) {
+        var decimal = icu.getDecimalFormatSymbols().decimal_separator;
+        return num.toFixed(places).replace(".", decimal);
     },
 
     // Formats strings like "Axy + By + Cz + D" where A, B, and C are variables

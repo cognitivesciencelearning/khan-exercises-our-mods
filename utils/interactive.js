@@ -1688,6 +1688,7 @@ $.extend(KhanUtil.Graphie.prototype, {
                 "opacity": 0.002  // This is as close to 0 as MSIE will allow
             });
 
+        // Highlight circle circumference on center point hover
         $(circle.centerPoint.mouseTarget[0]).on(
             "vmouseover vmouseout", function(event) {
                 if (circle.centerPoint.highlight) {
@@ -1714,17 +1715,18 @@ $.extend(KhanUtil.Graphie.prototype, {
             circle.toFront();
             circle.circ.attr({
                 cx: graphie.scalePoint(x)[0],
-                cy: graphie.scalePoint(y)[1],
+                cy: graphie.scalePoint(y)[1]
             });
             circle.perim.attr({
                 cx: graphie.scalePoint(x)[0],
-                cy: graphie.scalePoint(y)[1],
+                cy: graphie.scalePoint(y)[1]
             });
         };
 
-        circle.centerPoint.onMoveEnd = function(x, y) {
-            circle.center = [x, y];
-        };
+        $(circle.centerPoint).on("move", function() {
+            circle.center = this.coord;
+            $(circle).trigger("move");
+        });
 
         // circle.setCenter(x, y) moves the circle to the specified
         // x, y coordinate as if the user had dragged it there.
@@ -1740,12 +1742,18 @@ $.extend(KhanUtil.Graphie.prototype, {
             circle.radius = r;
 
             circle.perim.attr({
-                r: graphie.scaleVector(r)[0],
+                r: graphie.scaleVector(r)[0]
             });
             circle.circ.attr({
                 rx: graphie.scaleVector(r)[0],
                 ry: graphie.scaleVector(r)[1]
             });
+        };
+
+        circle.remove = function() {
+            circle.centerPoint.remove();
+            circle.circ.remove();
+            circle.perim.remove();
         };
 
         $(circle.perim[0]).css("cursor", "move");
@@ -1810,6 +1818,7 @@ $.extend(KhanUtil.Graphie.prototype, {
                             radius = Math.max(1,
                                 Math.round(radius / 0.5) * 0.5);
                             circle.setRadius(radius);
+                            $(circle).trigger("move");
                         } else if (event.type === "vmouseup") {
                             $(document).off("vmousemove vmouseup");
                             circle.dragging = false;
