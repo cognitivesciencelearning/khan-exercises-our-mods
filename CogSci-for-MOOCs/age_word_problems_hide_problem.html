@@ -3,16 +3,16 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Age word problems</title>
-    <script src="../khan-exercise.js"></script>
+    <script src="../khan-exercise-post-prompt-intervention.js"></script>
     
 </head>
 <body>
     
     <div class="exercise">
          <script type="text/khanscript">
-        var exerciseContents = $("#workarea").children("div");
+        
         $("#workarea, #hintsarea").children().hide();
-        console.log(exerciseContents);
+        
         $("#workarea").prepend("&lt;p id='first-framing' class='hint_purple'&gt;If you are only told about the relationships between two people's ages, what kind of math is useful for figuring out actual ages? &lt;/p&gt;");
         $("#first-framing").after("&lt;p id='second-framing' class='hint_purple'&gt;The guiding question to keep in mind for this exercise is: &quot;How can you convert word problems into algebra expressions?&quot; &lt;/p&gt;");
         $("#second-framing").after("&lt;div class='simple-button green' style='width:50%' id='cont-button' onclick='$(\042#workarea, #hintsarea\042).children().show(200); $(\042#first-framing\042).hide(); $(\042#second-framing\042).hide(); $(\042#cont-button\042).hide(); $(\042#alt-sub\042).hide(); $(\042#alt-framing\042).hide();' &gt; Click to continue to the exercise &lt;/div&gt;");
