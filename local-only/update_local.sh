@@ -42,14 +42,18 @@ cp -f "$srcdir"/jed.js "$destdir"
 cp -f "$srcdir"/i18n.js "$destdir"
 
 # jquery-ui is in its own package.
-for f in core widget mouse position effect effect-shake; do
-   cp -f "$webapp_root"/javascript/jqueryui-package/jquery.ui.$f "$destdir"
+for f in core widget mouse position effect \
+    effect-shake button draggable resizable dialog; do
+   cp -f "$webapp_root"/javascript/jqueryui-package/jquery.ui.$f.js "$destdir"
 done
 
 # We copy all the icu files, so we can support 'commafy' in all locales.
 mkdir -p "$destdir/localeplanet"
 cp -f "$webapp_root"/third_party/javascript-khansrc/localeplanet/icu.* \
     "$destdir/localeplanet"
+
+# Remove the __language__ symlink
+rm -f "$destdir/localeplanet/icu.__language__.js"
 
 # Update khan-site.css
 python "$webapp_root/deploy/combine.py" shared.css exercises.css \

@@ -776,6 +776,9 @@ $.fn["word-problemsLoad"] = function() {
         }), 25, 10]
     ]);
 
+    // TODO(emily): I18N: add both "row of CROP" as well as just "CROP" for
+    // pluralization. For example, in Polish, adding "row of" to "tomatoes"
+    // changes the pluralization of "tomatoes".
     var farmers = new IncrementalShuffler([
         {
             farmer: new Plural(function(num) {
@@ -836,14 +839,6 @@ $.fn["word-problemsLoad"] = function() {
         new Plural(function(num) {
             return $.ngettext("kilometer", "kilometers", num);
         })
-    ]);
-
-    // TODO(jeresig): I18N: Kill this.
-    var distanceActivities = new IncrementalShuffler([
-        {present: "ride", past: "rode", noun: "bike", done: "biked", continuous: "biking"},
-        {present: "row", past: "rowed", noun: "boat", done: "rowed", continuous: "rowing"},
-        {present: "drive", past: "drove", noun: "car", done: "driven", continuous: "driving"},
-        {present: "walk", past: "walked", noun: "dog", done: "walked", continuous: "walking"}
     ]);
 
     // TODO(jeresig): I18N: Kill this.
@@ -957,31 +952,6 @@ $.fn["word-problemsLoad"] = function() {
 
         distance: function(i) {
             return distances.get(i - 1);
-        },
-
-        // TODO(jeresig): I18N: Kill this.
-        rode: function(i) {
-            return distanceActivities.get(i - 1).past;
-        },
-
-        // TODO(jeresig): I18N: Kill this.
-        ride: function(i) {
-            return distanceActivities.get(i - 1).present;
-        },
-
-        // TODO(jeresig): I18N: Kill this.
-        bike: function(i) {
-            return distanceActivities.get(i - 1).noun;
-        },
-
-        // TODO(jeresig): I18N: Kill this.
-        biked: function(i) {
-            return distanceActivities.get(i - 1).done;
-        },
-
-        // TODO(jeresig): I18N: Kill this.
-        biking: function(i) {
-            return distanceActivities.get(i - 1).continuous;
         },
 
         farmer: function(i) {

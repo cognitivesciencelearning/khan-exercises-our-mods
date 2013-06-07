@@ -604,7 +604,6 @@ Khan.answerTypes = $.extend(Khan.answerTypes, {
     number: {
         convertToPredicate: function(correct, options) {
             if (options.type === "predicate") {
-                console.log("moo");
                 return solution;
             }
 
@@ -709,10 +708,11 @@ Khan.answerTypes = $.extend(Khan.answerTypes, {
                 rad = $('<input type="text">');
             }
             // Make them look pretty
-            solutionarea.addClass("radical")
+            $("<div class='radical'>")
                 .append($("<span>").append(inte))
                 .append('<span class="surd">&radic;</span>')
-                .append($("<span>").append(rad).addClass("overline"));
+                .append($("<span>").append(rad).addClass("overline"))
+                .appendTo(solutionarea);
 
             var ansSquared = parseFloat(solutionText);
             var ans = KhanUtil.splitRadical(ansSquared);
