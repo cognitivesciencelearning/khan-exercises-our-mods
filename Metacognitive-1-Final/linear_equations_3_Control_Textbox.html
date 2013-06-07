@@ -86,20 +86,30 @@
                         var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                         return validator(guess[0]);
                     </div>
-                    <div class="show-guess">
+                    <div class="show-guess-solutionarea">
                         if (guess != null) {
                             $("#guessans").val(guess[0]);
-                            $("#firsttext").val(guess[1]);
-                            $("#secondtext").val(guess[2]);
-                            $("#thirdtext").val(guess[3]);
-                            $("#fourthtext").val(guess[4]);
                         }
                         else {
                             $("#guessans").val("");
-                            $("#firsttext").val("");
-                            $("#secondtext").val("");
-                            $("#thirdtext").val("");
-                            $("#fourthtext").val("");
+                            if ($("#firsttext").length &gt; 0) {
+                                $("#firsttext").val("");
+                                $("#secondtext").val("");
+                            }
+                            if ($("#thirdtext").length &gt; 0) {
+                                $("#thirdtext").val("");
+                                $("#fourthtext").val("");
+                            }
+                        }
+                    </div>
+                    <div class="show-guess">
+                        if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
+                            $("#firsttext").val(guess[1]);
+                            $("#secondtext").val(guess[2]);
+                        }
+                        if (guess != null &amp;&amp; $("#thirdtext").length &gt; 0) {
+                            $("#thirdtext").val(guess[3]);
+                            $("#thirdtext").val(guess[4]);
                         }
                     </div>
                     <div class="example">an integer, like <code>6</code></div>

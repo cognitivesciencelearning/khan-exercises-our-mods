@@ -13,11 +13,11 @@
         
         $("#workarea, #hintsarea").children().hide();
         
-        $("#workarea").prepend("&lt;p id='first-framing' class='hint_purple'&gt;If you are only told about the relationships between two people's ages, what kind of math is useful for figuring out actual ages? &lt;/p&gt;");
-        $("#first-framing").after("&lt;p id='second-framing' class='hint_purple'&gt;The guiding question to keep in mind for this exercise is: &quot;How can you convert word problems into algebra expressions?&quot; &lt;/p&gt;");
-        $("#second-framing").after("&lt;div class='simple-button green' style='width:50%' id='cont-button' onclick='$(\042#workarea, #hintsarea\042).children().show(200); $(\042#first-framing\042).hide(); $(\042#second-framing\042).hide(); $(\042#cont-button\042).hide(); $(\042#alt-sub\042).hide(); $(\042#alt-framing\042).hide();' &gt; Click to continue to the exercise &lt;/div&gt;");
-        $("#cont-button").after("&lt;a href='#' class='show-subhint' data-subhint='alt-framing' data-hidden-text='Hide Information' id='alt-sub'&gt; Click to see alternative framings &lt;/a&gt;");
-        $("#alt-sub").after("&lt;div class='subhint' id='alt-framing'&gt; &lt;p&gt; first alt framing &lt;/p&gt; &lt;p&gt; second alt framing &lt;/p&gt; &lt;/div&gt;");
+        $("#workarea").prepend("&lt;p id='first-framing' class='hint_purple'&gt;The guiding question to keep in mind for this exercise is: &quot;How can you convert word problems into algebra expressions?&quot; &lt;/p&gt;");
+        $("#first-framing").after("&lt;a href='#' class='show-subhint' data-subhint='alt-framing' data-hidden-text='Hide Alternatives' id='alt-sub'&gt; Alternative prompts &lt;/a&gt;");
+        $("#alt-sub").after("&lt;div class='subhint' id='alt-framing'&gt; &lt;p  class='hint_purple'&gt;If you are only told about the relationships between two people's ages, what kind of math is useful for figuring out actual ages? &lt;/p&gt; &lt;p class='hint_purple'&gt; \[Additional prompts can be inserted here.\] &lt;/p&gt; &lt;/div&gt;");
+        $("#alt-framing").after("&lt;div class='simple-button green' style='width:50%' id='cont-button' onclick='$(\042#workarea, #hintsarea\042).children().show(200); $(\042#first-framing\042).hide(); $(\042#second-framing\042).hide(); $(\042#cont-button\042).hide(); $(\042#alt-sub\042).hide(); $(\042#alt-framing\042).hide();' &gt; Click to continue to the exercise &lt;/div&gt;");
+        
          </script>
     
     <div class="problems">
@@ -43,16 +43,22 @@
                 <p>That means that <var>B</var> years ago, <var>person(1)</var> was <code><var>personVar(1)</var> - <var>B</var></code> years old.</p>
                 <p data-if="isMale(2)"><var>person(2)</var> is <code><var>personVar(1)</var> - <var>A</var></code> years old right now, so <var>B</var> years ago, he was <code>(<var>personVar(1)</var> - <var>A</var>) - <var>B</var> = <var>personVar(1)</var> - <var>A + B</var></code> years old.</p><p data-else=""><var>person(2)</var> is <code><var>personVar(1)</var> - <var>A</var></code> years old right now, so <var>B</var> years ago, she was <code>(<var>personVar(1)</var> - <var>A</var>) - <var>B</var> = <var>personVar(1)</var> - <var>A + B</var></code> years old.</p>
                 <div>
-                <p class="hint_purple">Do you see why this step makes sense or is justified?</p>
-                <a href="#" class="show-subhint" data-subhint="first-alternatives">Click to see alternative interventions.</a>
-                <div class="subhint" id="first-alternatives">first alternative</div>
+                <p class="hint_purple">Why is it helpful to take this step?</p>
+                <a href="#" class="show-subhint" data-subhint="first-alternatives" data-hidden-text='Hide Alternatives'>Alternative prompts</a>
+                <div class="subhint" id="first-alternatives"><p class="hint_purple">What does this step mean to you?</p>
+                <p class="hint_purple">How do you know this step is right?</p>
+                <p class="hint_purple">[Additional prompts can be inserted here.]</p>
+                </div>
                 </div>
                 <p><var>person(1)</var> was <var>C</var> times as old as <var>person(2)</var>, so that means <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> (<var>personVar(1)</var> - <var>A + B</var>)</code>.</p>
                 <p>Expand: <code><var>personVar(1)</var> - <var>B</var> = <var>C</var> <var>personVar(1)</var> - <var>C * (A + B)</var></code>.</p>
                 <div>
-                <p class="hint_purple">What step do you think is coming next?</p>
-                <a href="#" class="show-subhint" data-subhint="second-alternatives">Click to see alternative interventions.</a>
-                <div class="subhint" id="second-alternatives">second alternative</div>
+                <p class="hint_purple">What are you doing or thinking right now?</p>
+                <a href="#" class="show-subhint" data-subhint="second-alternatives" data-hidden-text='Hide Alternatives'>Alternative prompts</a>
+                <div class="subhint" id="second-alternatives"><p class="hint_purple">Why is what you are currently doing helpful? Why is it useful for achieving your goal?</p>
+                <p class="hint_purple">How well is your current approach to this problem working?</p>
+                <p class="hint_purple">[Additional prompts can be inserted here.]</p>
+                </div>
                 </div>
                 <p>Solve for <code><var>personVar(1)</var></code> to get <code><var>C - 1</var> <var>personVar(1)</var> = <var>C * (A + B) - B</var></code>.</p>
 				<p><code><var>personVar(1)</var> = <var>(C * (B + A) - B) / (C - 1)</var></code>.</p>

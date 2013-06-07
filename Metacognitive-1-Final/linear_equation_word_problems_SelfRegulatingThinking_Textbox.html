@@ -80,7 +80,7 @@
                 number of subscriptions <var>he(1)</var> needs to sell?
             </p>
 
-             <div class="solution" data-type="custom">
+            <div class="solution" data-type="custom">
                 <div class="instruction">
                     <input type="text" id="guessans"> subscriptions
                 </div>
@@ -92,26 +92,26 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
                     if (guess != null) {
-                        $("#guessans").val(guess[0]);                        
+                        $("#guessans").val(guess[0]);
                     }
                     else {
-                        $("#guessans").val("");                        
+                        $("#guessans").val("");
+                        if ($("#firsttext").length &gt; 0) {
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
+                <div class="show-guess">
+                    if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                         $("#firsttext").val(guess[1]);
                         $("#secondtext").val(guess[2]);
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -134,7 +134,7 @@
                             well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="firsttext" style="width:75%;">
+                    <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Amount earned this week <code>=</code></span><br>
@@ -160,7 +160,7 @@
                             well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="secondtext" style="width:75%;">
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Amount earned this week
@@ -287,26 +287,26 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
                     if (guess != null) {
-                        $("#guessans").val(guess[0]);                        
+                        $("#guessans").val(guess[0]);
                     }
                     else {
-                        $("#guessans").val("");                        
+                        $("#guessans").val("");
+                        if ($("#firsttext").length &gt; 0) {
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
+                <div class="show-guess">
+                    if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                         $("#firsttext").val(guess[1]);
                         $("#secondtext").val(guess[2]);
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -329,7 +329,7 @@
                             well is your current approach to this
                             problem working?</span>
                     </div>
-                   <input type="text"  id="firsttext" style="width:75%;">
+                   <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of points <code>=</code></span><br>
@@ -357,7 +357,7 @@
                             well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="secondtext" style="width:75%;">
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -481,26 +481,26 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
                     if (guess != null) {
-                        $("#guessans").val(guess[0]);                        
+                        $("#guessans").val(guess[0]);
                     }
                     else {
-                        $("#guessans").val("");                        
+                        $("#guessans").val("");
+                        if ($("#firsttext").length &gt; 0) {
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
+                <div class="show-guess">
+                    if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                         $("#firsttext").val(guess[1]);
                         $("#secondtext").val(guess[2]);
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -524,7 +524,7 @@
                             well is your current approach to this
                             problem working?</span>
                     </div>
-                    <input type="text"  id="firsttext" style="width:75%;">
+                    <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of songs mastered <code>=</code></span><br>
@@ -553,7 +553,7 @@
                             well is your current approach to this
                             problem working?</span>
                     </div>
-                   <input type="text"  id="secondtext" style="width:75%;">
+                   <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of songs mastered <code>\geq

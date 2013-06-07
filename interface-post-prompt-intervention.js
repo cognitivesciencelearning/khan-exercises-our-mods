@@ -187,6 +187,28 @@ function handleAttempt(data) {
             score.correct ? "correct-activity" : "incorrect-activity",
             stringifiedGuess, timeTaken]);
         
+    if (score.correct) {        
+        var checkAnswerButton = $("#check-answer-button");
+        var studentExplanation = $("#explain-answer");
+        if (studentExplanation.length === 0){                    
+             $("#solutionarea").append("<p>Can you explain why that " +
+                                       "answer is correct?<br> " +
+                   "<textarea rows='2' cols='20' id='explain-answer'>" +
+                   "</textarea></p>"); 
+             checkAnswerButton  // .val applies to checkAnswerButton, it can spill over the line. End of line is only when ;.
+                .val("Please explain that answer.");
+             if ($("#answercontent input")  // Select the children PLEASEADDzzz to finish explaining...
+             // The div element with ID answercontent usually refers to the stuff in the box on the right of a Khan Exercise. CSS - select the HTML element with id #answercontent, get whichever children are input elements - input is a type of html tag, e.g. inputtype=radio or text).
+             .not("#hint,#next-question-button,#explain-answer") // 
+             .is(":disabled")) { // :disabled is used here, and just disabled lower on, on purpose. The : represents a pseudo selector. e.g. of a use: a:hover{text-declaration:underline} in a style tag in the <head> element.
+                    $("#answercontent input")  // Jquery (and prototype) allow chaining. First, select the child element of the element with #answercontent, 
+                    .not("#hint,#next-question-button,#explain-answer") //then remove the elements that match this condition
+                    .removeAttr("disabled"); // then remove the disabled attribute from the element that is left
+                }
+                                    
+        }
+    } 
+    
     if (score.correct && $("#post-prompt").length === 0){        
         if ($("#alt-sub").length > 0){
             $("#first-framing").remove();
@@ -196,12 +218,13 @@ function handleAttempt(data) {
             $("#alt-framing").remove();
         }
         $("#workarea, #hintsarea").children().hide();        
-        $("#workarea").prepend("<p id='post-prompt' class='hint_purple'>first post-problem intervention </p>");        
-        $("#post-prompt").after("<div class='simple-button green' style='width:50%' id='hide-button' onclick='$(\042#workarea, #hintsarea\042).children().show(200); $(\042#post-prompt\042).hide();  $(\042#hide-button\042).hide(); $(\042#alt-post-sub\042).hide(); $(\042#alt-post\042).hide();'> Click to continue to the exercise </div>");
-        $("#hide-button").after("<a href='#' class='show-subhint' data-subhint='alt-post'  id='alt-post-sub'> Click to see alternative framings </a>");
-        $("#alt-post-sub").after("<div class='subhint' id='alt-post'> <p> first alt framing </p> <p> second alt framing </p></div>");
+        $("#workarea").prepend("<p id='post-prompt' class='hint_purple'>[Prompts can be inserted here.] </p>");
+        $("#post-prompt").after("<a href='#' class='show-subhint' data-subhint='alt-post'  id='alt-post-sub' data-hidden-text='Hide Alternatives'> Alternative prompts </a>");
+        $("#alt-post-sub").after("<div class='subhint' id='alt-post'> <p class='hint_purple'> [Additional prompts can be inserted here.] </p>");
+        $("#alt-post").after("<div class='simple-button green' style='width:50%' id='hide-button' onclick='$(\042#workarea, #hintsarea\042).children().show(200); $(\042#post-prompt\042).hide();  $(\042#hide-button\042).hide(); $(\042#alt-post-sub\042).hide(); $(\042#alt-post\042).hide();'> Click to continue to the exercise </div>");
+        
         return false;
-    }
+    } 
         
     if (score.correct) {
         answeredCorrectly = true;

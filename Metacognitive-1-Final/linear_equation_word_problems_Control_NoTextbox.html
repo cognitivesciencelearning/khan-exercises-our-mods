@@ -84,26 +84,26 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
                     if (guess != null) {
-                        $("#guessans").val(guess[0]);                        
+                        $("#guessans").val(guess[0]);
                     }
                     else {
-                        $("#guessans").val("");                        
+                        $("#guessans").val("");
+                        if ($("#firsttext").length &gt; 0) {
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
+                <div class="show-guess">
+                    if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                         $("#firsttext").val(guess[1]);
                         $("#secondtext").val(guess[2]);
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -243,26 +243,26 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
                     if (guess != null) {
-                        $("#guessans").val(guess[0]);                        
+                        $("#guessans").val(guess[0]);
                     }
                     else {
-                        $("#guessans").val("");                        
+                        $("#guessans").val("");
+                        if ($("#firsttext").length &gt; 0) {
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
+                <div class="show-guess">
+                    if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                         $("#firsttext").val(guess[1]);
                         $("#secondtext").val(guess[2]);
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
@@ -402,26 +402,26 @@
                 <div class="validator-function">
                     var correct = X;
                     var solutionDiv = $("&lt;div&gt;").text(correct);
-                   var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                    var validator = Khan.answerTypes.number.createValidator(solutionDiv);
                     return validator(guess[0]);
                 </div>
                 <div class="show-guess-solutionarea">
                     if (guess != null) {
-                        $("#guessans").val(guess[0]);                        
+                        $("#guessans").val(guess[0]);
                     }
                     else {
-                        $("#guessans").val("");                        
+                        $("#guessans").val("");
+                        if ($("#firsttext").length &gt; 0) {
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
+                        }
                     }
                 </div>
-                <div class="show-guess">                   
-                    if (guess != null && $("#firsttext").length > 0) {                        
+                <div class="show-guess">
+                    if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                         $("#firsttext").val(guess[1]);
                         $("#secondtext").val(guess[2]);
                     }
-                    else {                       
-                        $("#firsttext").val("");
-                        $("#secondtext").val("");
-                    }                  
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
             </div>
