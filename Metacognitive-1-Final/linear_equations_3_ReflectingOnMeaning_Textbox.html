@@ -89,24 +89,28 @@
                     </div>
                     <div class="show-guess-solutionarea">
                         if (guess != null) {
-                            $("#guessans").val(guess[0]);                            
+                            $("#guessans").val(guess[0]);
                         }
                         else {
-                            $("#guessans").val("");                            
+                            $("#guessans").val("");
+                            if ($("#firsttext").length &gt; 0) {
+                                $("#firsttext").val("");
+                                $("#secondtext").val("");
+                            }
+                            if ($("#thirdtext").length &gt; 0) {
+                                $("#thirdtext").val("");
+                                $("#fourthtext").val("");
+                            }
                         }
                     </div>
                     <div class="show-guess">
-                        if (guess != null) {                           
+                        if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
                             $("#firsttext").val(guess[1]);
                             $("#secondtext").val(guess[2]);
-                            $("#thirdtext").val(guess[3]);
-                            $("#fourthtext").val(guess[4]);
                         }
-                        else {                           
-                            $("#firsttext").val("");
-                            $("#secondtext").val("");
-                            $("#thirdtext").val("");
-                            $("#fourthtext").val("");
+                        if (guess != null &amp;&amp; $("#thirdtext").length &gt; 0) {
+                            $("#thirdtext").val(guess[3]);
+                            $("#thirdtext").val(guess[4]);
                         }
                     </div>
                     <div class="example">an integer, like <code>6</code></div>
@@ -138,7 +142,7 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                    <input type="text"  id="firsttext" style="width:75%;">
+                    <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <div>
                     <p><var>B &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B &gt; 0 ? "from" : "to"</var> both sides:</p>
@@ -162,7 +166,7 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                    <input type="text"  id="secondtext" style="width:75%;">
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>
@@ -188,7 +192,7 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                    <input type="text"  id="thirdtext" style="width:75%;">
+                    <input type="text" id="thirdtext" style="width:75%;">
                 </div>
                 <div>
                     <p><var>D &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D &gt; 0 ? "from" : "to"</var> both sides:</p>
@@ -212,7 +216,7 @@
                         <span class="hint_purple" style="font-weight: bold">How
                             do you know this step is right?</span>
                     </div>
-                    <input type="text"  id="fourthtext" style="width:75%;">
+                    <input type="text" id="fourthtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>
