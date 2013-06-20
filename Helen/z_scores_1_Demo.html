@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html data-require="math word-problems">
+<head>
+    <meta charset="UTF-8" />
+    <title>Z-scores 1</title>
+    <script src="../khan-exercise.js"></script>
+	<!--Radio button CSS styles start ZZZ-->
+    <style type="text/css">
+		label {
+			float: left;
+			padding: 0 0.8em;
+			text-align: center;
+		}
+
+		div.box {
+			width: 100%; 
+		}
+
+		div.div1 {
+			float: left; 
+			height: 100%; 
+			width: auto; 
+			font-weight: normal;
+		}
+
+		div.div2 {
+			float: right; 
+			height: 100%; 
+			font-weight: normal;
+		}
+
+		div.clear { 
+			clear: both; 
+			height: 1px; 
+			overflow: hidden; 
+			font-size:0pt; 
+			margin-top: -1px; 
+		}
+	</style>
+	<!--Radio button CSS styles end ZZZ-->
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="original">
+                <div class="vars">
+                    <var id="MEAN">randRange( 65, 85 )</var>
+                    <var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+                    <var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+                    <var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+                </div>
+
+                <div class="problem">
+                    The grades on <var>an( course( 1 ) )</var> midterm at <var>school( 1 )</var> are normally distributed with <code>\mu = <var>MEAN</var></code> and <code>\sigma = <var>STDDEV</var></code>.
+                    <br /><var>person( 1 )</var> earned a<span data-if="floorTo( 0, GRADE / 10 ) === 8">n</span> <code><var>GRADE</var></code> on the exam.
+                </div>
+
+                <p class="question">Find the z-score for <var>person( 1 )</var>'s exam grade. Round to two decimal places.</p>
+
+                <div class="solution" data-type="custom">
+					<div class="instruction">
+						<input type="text" id="guessans">
+					</div>
+					<div class="guess">[
+						$("#guessans").val(),
+						$("#firsttext").val(),
+						$('input:radio[name=firstQ]:checked').val(),
+					]</div>
+					<div class="validator-function">
+						var correct = ZSCORE;
+						var solutionDiv = $("&lt;div&gt;").text(correct);
+						var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+						return validator(guess[0]);
+					</div>
+					<div class="show-guess-solutionarea">
+						$("#guessans").val(guess[0]);
+						$("#firsttext").val(guess[1]);
+						$('input:radio[name=firstQ]').val(guess[2]);
+					</div>
+					<div class="example">an integer, like <code>6</code></div>
+					<div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+					<div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+					<div class="example">a mixed number, like <code>1\ 3/4</code></div>
+					<div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+				</div>
+
+                <div class="hints">
+					<table width="100%">
+						<tr>
+							<td width="50%" valign="top">
+								<p>A z-score is defined as the number of <span class="hint_green">standard deviations</span> a specific point is away from the <span class="hint_pink">mean</span>.</p>
+							</td>
+							<td width="50%" valign="top">
+								<span class="hint_purple" style="font-weight: bold">Explain what this step means to you:</span><!--FIRST EXPLAIN PROMPT ZZZ-->
+								<input type="text" id="firsttext" style="width:95%;"> <!--FIRST TEXT BOX-->
+							</td>
+						</tr>
+					</table>
+					<div>
+						<table width="100%">
+							<tr>
+								<td width="50%" valign="top">
+								</td>
+								<td width="50%" valign="top">
+									<p style="margin:0px 0px;">Another student explained this as:<br/>
+									<span class="hint_purple" style="font-weight: bold">A z-score tells us how unusual a student's grade is relative to the rest of the class.</span></p><!--FIRST EXPLANATION ZZZ-->
+								</td>
+							</tr>
+							<tr>
+								<td width="50%" valign="top"><!--FIRST PROMPT AND BUTTONS START ZZZ-->
+									<p style="margin:0px 0px;">How similar is your explanation to the other student's explanation?</p>
+								</td>
+								<td width="50%" valign="top">
+									<div class="box">
+										<div class="div1">Not at all</div>
+										<div class="div2">Very Similar</div>
+										<div class="clear"></div>
+									</div>
+									<p style="margin:0px 0px; font-weight: normal;">
+										<label for="firstQ1">1<br><input type="radio" id ="firstQ1" name="firstQ" value="1"> </label>
+										<label for="firstQ2">2<br><input type="radio" id ="firstQ2" name="firstQ" value="2"></label>
+										<label for="firstQ3">3<br><input type="radio" id ="firstQ3" name="firstQ" value="3"></label>
+										<label for="firstQ4">4<br><input type="radio" id ="firstQ4" name="firstQ" value="4"></label>
+										<label for="firstQ5">5<br><input type="radio" id ="firstQ5" name="firstQ" value="5"></label>
+									</p>
+									<br><!--FIRST PROMPT AND BUTTONS END ZZZ-->
+								</td>
+							</tr>	
+						</table>
+					</div>
+					<div>
+						<table width="100%">
+							<tr>
+								<td width="50%" valign="top">
+									<p>We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+									<var>his( 1 )</var> grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p>
+									<p>
+										<code>
+											\large{\quad z \quad = \quad
+											\dfrac{x - \color{<var>PINK</var>}{\mu}}{\color{<var>GREEN</var>}{\sigma}}}
+										</code>
+									</p>
+								</td>
+								<td width="50%" valign="top">
+								<span class="hint_purple" style="font-weight: bold">Explain what this step means to you:</span><!--FIRST EXPLAIN PROMPT ZZZ-->
+								<input type="text" id="firsttext" style="width:95%;"> <!--FIRST TEXT BOX-->
+                                                            </td>   
+							</tr>
+						</table>
+					</div>
+                    <div>
+						<table width="100%">
+							<tr>
+								<td width="50%" valign="top">
+								</td>
+								<td width="50%" valign="top">
+									<p style="margin:0px 0px;">Another student explained this as:<br/>
+									<span class="hint_purple" style="font-weight: bold">We can calculate the z-score by determining how far the score is from the mean in terms of standard deviations.</span></p><!--FIRST EXPLANATION ZZZ-->
+								</td>
+							</tr>
+							<tr>
+								<td width="50%" valign="top"><!--FIRST PROMPT AND BUTTONS START ZZZ-->
+									<p style="margin:0px 0px;">How similar is your explanation to the other student's explanation?</p>
+								</td>
+								<td width="50%" valign="top">
+									<div class="box">
+										<div class="div1">Not at all</div>
+										<div class="div2">Very Similar</div>
+										<div class="clear"></div>
+									</div>
+									<p style="margin:0px 0px; font-weight: normal;">
+										<label for="secondQ1">1<br><input type="radio" id ="secondQ1" name="secondQ" value="1"> </label>
+										<label for="secondQ2">2<br><input type="radio" id ="secondQ2" name="secondQ" value="2"></label>
+										<label for="secondQ3">3<br><input type="radio" id ="secondQ3" name="secondQ" value="3"></label>
+										<label for="secondQ4">4<br><input type="radio" id ="secondQ4" name="secondQ" value="4"></label>
+										<label for="secondQ5">5<br><input type="radio" id ="secondQ5" name="secondQ" value="5"></label>
+									</p>
+									<br><!--FIRST PROMPT AND BUTTONS END ZZZ-->
+								</td>
+							</tr>	
+						</table>
+					</div>
+					<div>
+					    <p>
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{<var>GRADE</var> - \color{<var>PINK</var>}{<var>MEAN</var>}}{\color{<var>GREEN</var>}{<var>STDDEV</var>}}}
+                            </code>
+                        </p>
+					</div>
+					<div>
+						<table width="100%">
+							<tr>
+								<td width="50%" valign="top">                
+									<p><code>\large{\quad z \quad = \quad <var>ZSCORE</var>}</code></p>
+									<p class="final_answer">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+									standard deviation<var>plural( abs( ZSCORE ) )</var> <span data-if="ZSCORE > 0">above</span><span data-else>below</span> the mean.</p>
+								</td>
+								<td width="50%" valign="top">
+								<span class="hint_purple" style="font-weight: bold">Explain what this step means to you:</span><!--FIRST EXPLAIN PROMPT ZZZ-->
+								<input type="text" id="firsttext" style="width:95%;"> <!--FIRST TEXT BOX-->
+                                                            </td>
+							</tr>
+						</table>
+					</div>
+                    <div>
+						<table width="100%">
+							<tr>
+								<td width="50%" valign="top">
+								</td>
+								<td width="50%" valign="top">
+									<p style="margin:0px 0px;">Another student explained this as:<br/>
+									<span class="hint_purple" style="font-weight: bold">Using the formula we have determined how unusual the student's grade is &endash; how far it is from the mean in terms of standard deviations.</span></p><!--FIRST EXPLANATION ZZZ-->
+								</td>
+							</tr>
+							<tr>
+								<td width="50%" valign="top"><!--FIRST PROMPT AND BUTTONS START ZZZ-->
+									<p style="margin:0px 0px;">How similar is your explanation to the other student's explanation?</p>
+								</td>
+								<td width="50%" valign="top">
+									<div class="box">
+										<div class="div1">Not at all</div>
+										<div class="div2">Very Similar</div>
+										<div class="clear"></div>
+									</div>
+									<p style="margin:0px 0px; font-weight: normal;">
+										<label for="thirdQ1">1<br><input type="radio" id ="thirdQ1" name="thirdQ" value="1"> </label>
+										<label for="thirdQ2">2<br><input type="radio" id ="thirdQ2" name="thirdQ" value="2"></label>
+										<label for="thirdQ3">3<br><input type="radio" id ="thirdQ3" name="thirdQ" value="3"></label>
+										<label for="thirdQ4">4<br><input type="radio" id ="thirdQ4" name="thirdQ" value="4"></label>
+										<label for="thirdQ5">5<br><input type="radio" id ="thirdQ5" name="thirdQ" value="5"></label>
+									</p>
+									<br><!--FIRST PROMPT AND BUTTONS END ZZZ-->
+								</td>
+							</tr>	
+						</table>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

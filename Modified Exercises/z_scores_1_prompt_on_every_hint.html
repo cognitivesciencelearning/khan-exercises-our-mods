@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html data-require="math word-problems subhints">
+<head>
+    <meta charset="UTF-8">
+    <title>Z scores 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="original">
+                <div class="vars">
+                    <var id="MEAN">randRange( 65, 85 )</var>
+                    <var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+                    <var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+                    <var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+                </div>
+
+                <div class="problem">
+                    The grades on a <var>course( 1 )</var> midterm at <var>school( 1 )</var> are normally distributed with <code>\mu = <var>MEAN</var></code> and <code>\sigma = <var>STDDEV</var></code>.
+                    <br><var>person( 1 )</var> earned a<span data-if="floorTo( 0, GRADE / 10 ) === 8">n</span> <code><var>GRADE</var></code> on the exam.
+                </div>
+
+                <p class="question">Find the z-score for <var>person( 1 )</var>'s exam grade. Round to two decimal places.</p>
+
+                <div class="solution" data-forms="integer, decimal"><var>ZSCORE</var></div>
+
+                <div class="hints">
+                    <div>
+                        A z-score is defined as the number of <span class="hint_green">standard deviations</span> a specific point is away from the <span class="hint_pink">mean</span>.
+                        <a href="#" class="show-subhint" data-subhint="ask1" data-hidden-text="Hide Questions" style="float:right;">[Ask a Question]</a>
+                        <div class="subhint" id="ask1">
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q11" data-hidden-text="Hide Answer">Q1ZZZ</a><br />
+                            <div class="subhint" id="Q11">
+                                A1ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q12" data-hidden-text="Hide Answer">Q2ZZZ</a><br />
+                            <div class="subhint" id="Q12">
+                                A2ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q13" data-hidden-text="Hide Answer">Q3ZZZ</a>
+                            <div class="subhint" id="Q13">
+                                A3ZZZ
+                            </div>
+                        </div>
+                        
+                        
+                        
+                    </div>
+                    <div>
+                        <p data-if="isMale(1)">We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+                        his grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p><p data-else="">We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+                        her grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p>
+                        <p>
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{x - \color{<var>PINK</var>}{\mu}}{\color{<var>GREEN</var>}{\sigma}}}
+                            </code>
+                            <a href="#" class="show-subhint" data-subhint="ask2" data-hidden-text="Hide Questions" style="float:right;">[Ask a Question]</a>
+                        <div class="subhint" id="ask2">
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q21" data-hidden-text="Hide Answer">Q1ZZZ</a><br />
+                            <div class="subhint" id="Q21">
+                                A1ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q22" data-hidden-text="Hide Answer">Q2ZZZ</a><br />
+                            <div class="subhint" id="Q22">
+                                A2ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q23" data-hidden-text="Hide Answer">Q3ZZZ</a>
+                            <div class="subhint" id="Q23">
+                                A3ZZZ
+                            </div>
+                        </div>
+                        </p>
+
+                    </div>
+                    <div>
+                        
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{<var>GRADE</var> - \color{<var>PINK</var>}{<var>MEAN</var>}}{\color{<var>GREEN</var>}{<var>STDDEV</var>}}}
+                            </code>
+                        
+                        <a href="#" class="show-subhint" data-subhint="ask3" data-hidden-text="Hide Questions" style="float:right;">[Ask a Question]</a>
+                        <div class="subhint" id="ask3">
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q31" data-hidden-text="Hide Answer">Q1ZZZ</a><br />
+                            <div class="subhint" id="Q31">
+                                A1ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q32" data-hidden-text="Hide Answer">Q2ZZZ</a><br />
+                            <div class="subhint" id="Q32">
+                                A2ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q33" data-hidden-text="Hide Answer">Q3ZZZ</a>
+                            <div class="subhint" id="Q33">
+                                A3ZZZ
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <p><code>\large{\quad z \quad = \quad <var>ZSCORE</var>}</code></p>
+                        <span class="final_answer" data-if="isSingular(abs( ZSCORE ))">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviation <span data-if="ZSCORE > 0">above</span><span data-else="">below</span> the mean.</span><span class="final_answer" data-else="">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviations <span data-if="ZSCORE > 0">above</span><span data-else="">below</span> the mean.</span>
+                        <a href="#" class="show-subhint" data-subhint="ask4" data-hidden-text="Hide Questions" style="float:right;">[Ask a Question]</a>
+                        <div class="subhint" id="ask4">
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q41" data-hidden-text="Hide Answer">Q1ZZZ</a><br />
+                            <div class="subhint" id="Q41">
+                                A1ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q42" data-hidden-text="Hide Answer">Q2ZZZ</a><br />
+                            <div class="subhint" id="Q42">
+                                A2ZZZ
+                            </div>
+                            <a href="#" class="hint_purple show-subhint" data-subhint="Q43" data-hidden-text="Hide Answer">Q3ZZZ</a>
+                            <div class="subhint" id="Q43">
+                                A3ZZZ
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
