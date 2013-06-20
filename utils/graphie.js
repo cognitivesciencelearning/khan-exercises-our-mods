@@ -113,6 +113,8 @@
             }
         };
 
+        var doLabelTypeset = function() {};
+
         var setNeedsLabelTypeset = function() {
             if (needsLabelTypeset) {
                 return;
@@ -127,11 +129,17 @@
             // except that if you do run a setNeedsLabelTypeset() followed
             // immediately by a MathJax.Hub.Queue, the labels should all have
             // been typeset by the time the queued function runs.
+            doLabelTypeset = _.once(function() {
+                needsLabelTypeset = false;
+                typesetLabels();
+            });
             MathJax.Hub.Queue(function() {
+                if (!needsLabelTypeset) {
+                    return;
+                }
                 var done = MathJax.Callback(function() {});
                 _.defer(function() {
-                    needsLabelTypeset = false;
-                    typesetLabels();
+                    doLabelTypeset();
                     done();
                 });
                 return done;
@@ -163,6 +171,11 @@
                     // Iterate in reverse so we can delete while iterating
                     for (var i = spans.length; i-- > 0;) {
                         var span = spans[i];
+                        if (!$.contains(el, span) ||
+                                span.style.display === "none") {
+                            spans.splice(i, 1);
+                            continue;
+                        }
                         var width = span.scrollWidth;
                         var height = span.scrollHeight;
 
@@ -392,7 +405,7 @@
 
                 if (latex) {
                     var $script = $("<script type='math/tex'>").text(text);
-                    $span.append($script)
+                    $span.append($script);
                 } else {
                     $span.html(text);
                 }
@@ -593,7 +606,11 @@
             scaleVector: scaleVector,
 
             unscalePoint: unscalePoint,
-            unscaleVector: unscaleVector
+            unscaleVector: unscaleVector,
+
+            forceLabelTypeset: function() {
+                doLabelTypeset();
+            }
         });
 
         $.each(drawingTools, function(name) {
@@ -674,17 +691,17 @@
             var range = options.range || [[-10, 10], [-10, 10]],
                 gridRange = options.gridRange || options.range,
                 scale = options.scale || [20, 20],
-                grid = options.grid || true,
+                grid = options.grid != null ? options.grid : true,
                 gridOpacity = options.gridOpacity || 0.1,
                 gridStep = options.gridStep || [1, 1],
-                axes = options.axes || true,
+                axes = options.axes != null ? options.axes : true,
                 axisArrows = options.axisArrows || "",
                 axisOpacity = options.axisOpacity || 1.0,
                 axisCenter = options.axisCenter || [
                     Math.min(Math.max(range[0][0], 0), range[0][1]),
                     Math.min(Math.max(range[1][0], 0), range[1][1])
                 ],
-                ticks = options.ticks || true,
+                ticks = options.ticks != null ? options.ticks : true,
                 tickStep = options.tickStep || [2, 2],
                 tickLen = options.tickLen || [5, 5],
                 tickOpacity = options.tickOpacity || 1.0,

@@ -92,6 +92,11 @@ _TEXT_NODES = [
     '//*[contains(@class,"validator-function")]',
 ]
 
+# <var> nodes that might contain $._ strings
+_VAR_NODES = [
+    '//var[not(ancestor::*[contains(@class,"vars")])]',
+]
+
 # All the tags that we want to ignore and not extract strings from
 _IGNORE_NODES = _REJECT_NODES + _INLINE_SCRIPT_NODES
 
@@ -284,6 +289,16 @@ def lint_file(filename, apply_fix, verbose):
         # (or would have changed, if apply_fix is False)
         nodes_changed += new_nodes_changed
 
+    # Manually pluck out the <var>s to check for $._
+    text_nodes = root_tree.xpath('|'.join(_VAR_NODES))
+
+    filter = StringInVarFilter()
+
+    (new_nodes, new_errors, new_nodes_changed) = filter.process(text_nodes)
+    nodes = new_nodes
+    errors += new_errors
+    nodes_changed += new_nodes_changed
+
     # Manually pluck out the code/javascript nodes for \text{} processing
     text_nodes = root_tree.xpath('|'.join(_TEXT_NODES))
 
@@ -316,7 +331,8 @@ class BaseFilter(object):
     Sub-classes must define the following:
      - xpath: A string that holds the XPath expression for finding nodes.
      - filter_var: A method for processing a single fixable <var>.
-     - get_match: A method for determining if a <var> matches
+          Returns False if the filtering proved to be a noop, otherwise True.
+     - get_match: A method returning True if a <var> matches
     """
     def __init__(self):
         """Intitialize and keep track of nodes_changed and errors."""
@@ -417,10 +433,9 @@ class BaseFilter(object):
 
             if match:
                 # Process the fixable var
-                self.filter_var(match, var_node)
-
-                # Keep a tally of nodes that've been changed
-                self.nodes_changed += 1
+                if self.filter_var(match, var_node):
+                    # Keep a tally of nodes that've been changed
+                    self.nodes_changed += 1
 
         return True
 
@@ -682,6 +697,7 @@ class PronounFilter(IfElseFilter):
         _replace_node(var_node, match.group(1))
         _replace_node(self._get_cloned_var(var_node),
             self._pronoun_map[match.group(1)])
+        return True
 
     def get_condition(self, key):
         """Generates a data-if condition to handle the gender toggle.
@@ -770,6 +786,7 @@ class AlwaysPluralFilter(BaseFilter):
             # a call to plural_form() which will attempt to return the
             # plural form of that string.
             var_node.text = pluralize % match.group(2).strip()
+        return True
 
 
 class PluralFilter(IfElseFilter):
@@ -1004,6 +1021,7 @@ class PluralFilter(IfElseFilter):
                 var_node.text = match.group(2).strip()
                 cloned_var.text = (pluralize %
                     (match.group(2).strip(), match.group(3).strip()))
+        return True
 
     def get_condition(self, key):
         """Generates a data-if condition to handle the plural toggle.
@@ -1089,6 +1107,7 @@ class TernaryFilter(IfElseFilter):
         else:
             # Otherwise just turn it into <var>STATEMENT</var>
             cloned_var.text = match.group(3).strip()
+        return True
 
     def get_condition(self, key):
         """Turns the node into two nodes with a data-if/else.
@@ -1147,6 +1166,7 @@ class AnFilter(BaseFilter):
 
         # Replace the contents of the <var> with just the variable
         var_node.text = match.group(2).strip()
+        return True
 
 
 class MathJaxTextFilter(BaseFilter):
@@ -1205,6 +1225,10 @@ class MathJaxTextFilter(BaseFilter):
                 self._do_javascript_text_replace,
                 node_text)
 
+        if new_html == node_text:
+            # All our fixing was a noop -- the input was fine as it was.
+            return False
+
         # Build a new <div> node with the correct contents
         new_node = _parse_single_node('<%(tag)s>%(html)s</%(tag)s>' % {
             "tag": var_node.tag,
@@ -1218,6 +1242,7 @@ class MathJaxTextFilter(BaseFilter):
             var_node.remove(child)
         for child in new_node.getchildren():
             var_node.append(child)
+        return True
 
     # we replace this because we want to be a bit more specific
     def find_fixable_vars(self, node):
@@ -1422,6 +1447,29 @@ class AmbiguousPluralFilter(BaseFilter):
         """Generate an error message for the usage of AMBIGUOUS_PLURAL."""
         self.errors.append("Ambiguous plural usage (%s):\n%s" % (
             match.group(1).strip(), _get_outerhtml(var_node)))
+        return True
+
+
+class StringInVarFilter(BaseFilter):
+    """Detect instances of $._ inside of <var>s and report an error."""
+    # Matches $._(...)
+    _regex = re.compile(r'\$\._\s*\((.*?)\)', re.DOTALL)
+
+    def find_fixable_vars(self, node):
+        """Return the node if it has $._ in it"""
+        if '$._' in node.text:
+            return [node]
+        else:
+            return []
+
+    def get_match(self, fix_node):
+        """Return a match of a string that matches $._(...)"""
+        return self._regex.search(fix_node.text)
+
+    def filter_var(self, match, var_node):
+        """Generate an error in every node that uses $._"""
+        self.errors.append("Using $._ inside of a <var>:\n%s" %
+            _get_outerhtml(var_node))
 
 
 def get_plural_form(word):

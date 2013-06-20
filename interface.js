@@ -139,6 +139,7 @@ function newProblem(e, data) {
     $(".hint-box").toggle(numHints !== 0);
     updateHintButtonText();
     $("#hint").attr("disabled", hintsUsed >= numHints);
+    enableCheckAnswer();
 }
 
 function handleCheckAnswer() {
@@ -258,7 +259,7 @@ function handleAttempt(data) {
         fast: !localMode && userExercise.secondsPerFastProblem >= timeTaken
     });
 
-    if (localMode) {
+    if (localMode || Exercises.currentCard.get("preview")) {
         // Skip the server; just pretend we have success
         return false;
     }
@@ -308,6 +309,16 @@ function handleAttempt(data) {
         );
     });
 
+    if (Exercises.assessmentMode) {
+        // Tell the assessment queue that the current question has been
+        // answered so that it can serve up the next question when its ready
+        // Set a small timeout to give the browser a chance to show the
+        // disabled check-answer button.  Otherwise in chrome it doesn't show
+        // Please wait...
+        setTimeout(function() {
+            Exercises.AssessmentQueue.answered(score.correct);
+        },10);
+    }
     return false;
 }
 
@@ -350,7 +361,7 @@ function onHintShown(e, data) {
     Exercises.userActivityLog.push(["hint-activity", "0", timeTaken]);
 
     if (!previewingItem && !localMode && !userExercise.readOnly &&
-            canAttempt) {
+            !Exercises.currentCard.get("preview") && canAttempt) {
         // Don't do anything on success or failure; silently failing is ok here
         request("problems/" + problemNum + "/hint",
                 buildAttemptData(false, attempts, "hint", timeTaken, false));
@@ -589,7 +600,6 @@ function disableCheckAnswer() {
 
 function clearExistingProblem() {
     var framework = Exercises.getCurrentFramework();
-    enableCheckAnswer();
 
     $("#happy").hide();
     if (!$("#examples-show").data("show")) {
