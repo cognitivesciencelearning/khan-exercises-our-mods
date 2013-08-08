@@ -140,6 +140,12 @@ function newProblem(e, data) {
     updateHintButtonText();
     $("#hint").attr("disabled", hintsUsed >= numHints);
     enableCheckAnswer();
+
+    // Update related videos
+    if (data.userExercise) {
+        Exercises.RelatedVideos.render(
+                data.userExercise.exerciseModel.relatedVideos);
+    }
 }
 
 function handleCheckAnswer() {
@@ -161,15 +167,22 @@ function handleAttempt(data) {
         score = Khan.scoreInput();
     }
 
-    // Stop if the user didn't try to skip the question and also didn't yet
-    // enter a response
-    if (score.empty && !skipped) {
-        return false;
-    }
-
     if (!canAttempt) {
         // Just don't allow further submissions once a correct answer or skip
         // has been called or sometimes the server gets confused.
+        return false;
+    }
+
+    // Is this a message to be shown?
+    if (score.message != null) {
+        $("#check-answer-results > p").html(score.message).show().tex();
+    } else {
+        $("#check-answer-results > p").hide();
+    }
+
+    // Stop if the user didn't try to skip the question and also didn't yet
+    // enter a response
+    if (score.empty && !skipped) {
         return false;
     }
 
@@ -182,11 +195,6 @@ function handleAttempt(data) {
     var curTime = new Date().getTime();
     var timeTaken = Math.round((curTime - lastAttemptOrHint) / 1000);
     var stringifiedGuess = JSON.stringify(score.guess);
-    var attemptData = null;
-    if (!localMode) {
-        attemptData = buildAttemptData(
-            score.correct, ++attempts, stringifiedGuess, timeTaken, skipped);
-    }
     lastAttemptOrHint = curTime;
 
     Exercises.guessLog.push(score.guess);
@@ -207,7 +215,6 @@ function handleAttempt(data) {
     } else if (score.correct) {
         // Correct answer, so show the next question button.
         $("#check-answer-button").hide();
-        $("#check-answer-results > p").hide();
         $("#next-question-button")
             .prop("disabled", false)
             .removeClass("buttonDisabled")
@@ -222,13 +229,6 @@ function handleAttempt(data) {
             .parent()  // .check-answer-wrapper makes shake behave
             .effect("shake", {times: 3, distance: 5}, 480)
             .val($._("Try Again"));
-
-        // Is this a message to be shown?
-        if (score.message != null) {
-            $("#check-answer-results > p").html(score.message).tmpl().show();
-        } else {
-            $("#check-answer-results > p").hide();
-        }
 
         if (framework === "perseus") {
             // TODO(alpert)?
@@ -271,12 +271,10 @@ function handleAttempt(data) {
         return false;
     }
 
-    if (skipped && !Exercises.assessmentMode) {
-        // Skipping should pull up the next card immediately - but, if we're in
-        // assessment mode, we don't know what the next card will be yet, so
-        // wait for the special assessment mode triggers to fire instead.
-        $(Exercises).trigger("gotoNextProblem");
-    }
+    // This needs to be after all updates to Exercises.currentCard (such as the
+    // "problemDone" event) or it will send incorrect data to the server
+    var attemptData = buildAttemptData(
+            score.correct, ++attempts, stringifiedGuess, timeTaken, skipped);
 
     // Save the problem results to the server
     var requestUrl = "problems/" + problemNum + "/attempt";
@@ -308,6 +306,13 @@ function handleAttempt(data) {
                 )
         );
     });
+
+    if (skipped && !Exercises.assessmentMode) {
+        // Skipping should pull up the next card immediately - but, if we're in
+        // assessment mode, we don't know what the next card will be yet, so
+        // wait for the special assessment mode triggers to fire instead.
+        $(Exercises).trigger("gotoNextProblem");
+    }
 
     if (Exercises.assessmentMode) {
         // Tell the assessment queue that the current question has been
@@ -374,8 +379,8 @@ function updateHintButtonText() {
 
     if (hintsAreFree) {
         $hintButton.val(hintsUsed ?
-                $._("Show next step (%(hintsLeft)s left)", {hintsLeft: hintsLeft}) :
-                $._("Show solution"));
+                $._("Show next hint (%(hintsLeft)s left)", {hintsLeft: hintsLeft}) :
+                $._("Show hints (%(hintsLeft)s available)", {hintsLeft: hintsLeft}));
     } else {
         $hintButton.val(hintsUsed ?
                 $.ngettext("I'd like another hint (1 hint left)",

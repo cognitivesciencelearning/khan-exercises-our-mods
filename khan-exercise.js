@@ -246,6 +246,11 @@ var Khan = (function() {
             link.rel = "stylesheet";
             link.href = urlBase + "css/khan-exercise.css";
             document.getElementsByTagName("head")[0].appendChild(link);
+
+            link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = urlBase + "local-only/katex/katex.css";
+            document.getElementsByTagName("head")[0].appendChild(link);
         })();
     }
 
@@ -335,7 +340,9 @@ var Khan = (function() {
             // MathJax is here because Perseus wants it loaded regardless of if
             // we load a khan-exercises problem that needs it. Previously it
             // was a dependency of 'math' so this isn't really any different.
-            mods.push("answer-types", "tmpl", "jquery.adhesion", "calculator",
+            mods.push(
+                "answer-types", "tmpl", "tex", "jquery.adhesion",
+                "calculator",
                 {
                     src: urlBase + "utils/MathJax/2.1/MathJax.js?config=KAthJax-da9a7f53e588f3837b045a600e1dc439"
                 });
@@ -552,128 +559,6 @@ var Khan = (function() {
             return actions;
         })(),
 
-        relatedVideos: {
-            exercise: null,
-            cache: {},
-
-            getVideos: function() {
-                return this.cache[this.exercise.name] || [];
-            },
-
-            setVideos: function(exercise) {
-
-                if (exercise.relatedVideos) {
-                    this.cache[exercise.name] = exercise.relatedVideos;
-                }
-
-                this.exercise = exercise;
-                this.render();
-            },
-
-            showThumbnail: function(index) {
-                $("#related-video-list .related-video-list li").each(function(i, el) {
-                    if (i === index) {
-                        $(el)
-                            .find("a.related-video-inline").hide().end()
-                            .find(".thumbnail").show();
-                    }
-                    else {
-                        $(el)
-                            .find("a.related-video-inline").show().end()
-                            .find(".thumbnail").hide();
-                    }
-                });
-            },
-
-            // make a link to a related video, appending exercise ID.
-            makeHref: function(video) {
-                return video.relativeUrl + "?exid=" + this.exercise.name;
-            },
-
-            anchorElement: function(video, needComma) {
-                var template = Templates.get("video.related-video-link");
-                return $(template({
-                    href: this.makeHref(video),
-                    video: video,
-                    separator: needComma
-                })).data("video", video);
-            },
-
-            render: function() {
-                if (localMode) {
-                    // Templates isn't available locally and we won't have any
-                    // related videos to show anyway
-                    return;
-                }
-
-                var container = $(".related-video-box");
-                var jel = container.find(".related-video-list");
-                jel.empty();
-
-                var self = this;
-                PackageManager.require("video.css", "video.js").then(
-                    function() {
-                        var template = Templates.get("video.thumbnail");
-                        _.each(self.getVideos(), function(video, i) {
-                            var thumbnailDiv = $(template({
-                                href: self.makeHref(video),
-                                video: video
-                            })).find("a.related-video")
-                                .data("video", video)
-                                .end();
-
-                            var inlineLink = self.anchorElement(video)
-                                .addClass("related-video-inline");
-
-                            var sideBarLi = $("<li>")
-                                .append(inlineLink)
-                                .append(thumbnailDiv);
-
-                            if (i > 0) {
-                                thumbnailDiv.hide();
-                            } else {
-                                inlineLink.hide();
-                            }
-                            jel.append(sideBarLi);
-                        });
-
-                        container.toggle(self.getVideos().length > 0);
-                        self._bindEvents();
-                    });
-            },
-
-            _eventsBound: false,
-            /**
-             * Called to initialize related video event handlers.
-             * Should only be called after video.js package is loaded.
-             */
-            _bindEvents: function() {
-                if (this._eventsBound) {
-                    return;
-                }
-
-                // make caption slide up over the thumbnail on hover
-                var captionHeight = 45;
-                var marginTop = 23;
-                // queue:false to make sure these run simultaneously
-                var options = {duration: 150, queue: false};
-                $(".related-video-box")
-                    .delegate(".thumbnail", "mouseenter mouseleave", function(e) {
-                        var isMouseEnter = e.type === "mouseenter";
-                        $(e.currentTarget).find(".thumbnail_label").animate(
-                                {marginTop: marginTop + (isMouseEnter ? 0 : captionHeight)},
-                                options)
-                            .end()
-                            .find(".thumbnail_teaser").animate(
-                                {height: (isMouseEnter ? captionHeight : 0)},
-                                options);
-                    });
-
-                ModalVideo.hookup();
-                this._eventsBound = true;
-            }
-        },
-
         getSeedInfo: function() {
             return {
                 // A hash representing the exercise version
@@ -729,13 +614,13 @@ var Khan = (function() {
                 e.preventDefault();
 
                 var report = $("#issue").css("display") !== "none",
-                    form = $("#issue form").css("display") !== "none";
+                    form = $("#issue .issue-form").css("display") !== "none";
 
                 if (report && form) {
                     $("#issue").hide();
                 } else if (!report || !form) {
                     $("#issue-status").removeClass("error").html(issueIntro);
-                    $("#issue, #issue form").show();
+                    $("#issue, #issue .issue-form").show();
                     $("html, body").animate({
                         scrollTop: $("#issue").offset().top
                     }, 500, function() {
@@ -753,11 +638,11 @@ var Khan = (function() {
             });
 
             // Submit an issue.
-            $("#issue form input:submit").click(function(e) {
+            $("#issue .issue-form input:submit").click(function(e) {
                 e.preventDefault();
 
                 // don't do anything if the user clicked a second time quickly
-                if ($("#issue form").css("display") === "none") return;
+                if ($("#issue .issue-form").css("display") === "none") return;
 
                 var framework = Exercises.getCurrentFramework(),
                     issueInfo = framework === "khan-exercises" ?
@@ -874,7 +759,7 @@ var Khan = (function() {
                     dataType: "json",
                     success: function(data) {
                         // hide the form
-                        $("#issue form").hide();
+                        $("#issue .issue-form").hide();
 
                         // show status message
                         $("#issue-status").removeClass("error")
@@ -945,14 +830,17 @@ var Khan = (function() {
                 "../local-only/jquery.ui.dialog.js",
                 "../local-only/jquery.qtip.js",
                 "../local-only/underscore.js",
+                "../local-only/kas.js",
                 "../local-only/jed.js",
                 "../local-only/i18n.js",
                 // TODO(csilvers): I18N: pick the file based on lang=XX param
                 "../local-only/localeplanet/icu.en-US.js",
                 "../local-only/i18n.js",
+                "../local-only/katex/katex.js",
                 "../exercises-stub.js",
                 "../history.js",
-                "../interface.js"
+                "../interface.js",
+                "../related-videos.js"
             ];
 
         (function loadInitScripts() {
@@ -1025,7 +913,7 @@ var Khan = (function() {
                     localMode: localMode
                 };
 
-                return this.each(function(i, elem) {
+                this.each(function(i, elem) {
                     elem = $(elem);
 
                     // Run the main method of any modules
@@ -1039,6 +927,7 @@ var Khan = (function() {
                         }
                     });
                 });
+                return this;
             }
         });
 
@@ -1167,9 +1056,6 @@ var Khan = (function() {
 
             // ...and create a new problem bag with problems of our new exercise type.
             problemBag = makeProblemBag(problems, 10);
-
-            // Update related videos
-            Khan.relatedVideos.setVideos(userExercise.exerciseModel);
 
             // Make scratchpad persistent per-user
             if (user) {
@@ -1373,7 +1259,7 @@ var Khan = (function() {
 
         // ...and inline style tags.
         if (exercise.data("style")) {
-            var exerciseStyleElem = $("head #exercise-inline-style");
+            var exerciseStyleElem = $("#exercise-inline-style");
 
             // Clear old exercise style definitions
             if (exerciseStyleElem.length && exerciseStyleElem[0].styleSheet) {
@@ -1462,8 +1348,7 @@ var Khan = (function() {
         if (validator) {
             // Have MathJax redo the font metrics for the solution area
             // (ugh, this is gross)
-            MathJax.Hub.Queue(["Reprocess", MathJax.Hub,
-                    $("#solutionarea")[0]]);
+            KhanUtil.processAllMath($("#solutionarea")[0], true);
 
             // Focus the first input
             // Use .select() and on a delay to make IE happy
@@ -1495,12 +1380,14 @@ var Khan = (function() {
         }
 
         // Remove the solution and choices elements from the display
-        if (!localMode) {
-            solution.remove();
-            choices.remove();
-        } else {
+        // Some exercises (e.g., parabola_intuition_3) break if we don't remove
+        // so always do it unless ?noremovesolution is explicitly passed
+        if (localMode && Khan.query.noremovesolution != null) {
             solution.hide();
             choices.hide();
+        } else {
+            solution.remove();
+            choices.remove();
         }
 
         // Add the problem into the page
@@ -1519,7 +1406,7 @@ var Khan = (function() {
                 examples.append("<li>" + example + "</li>");
             });
 
-            examples.children().tmpl();
+            examples.children().runModules();
 
             $("#examples-show").qtip({
                 content: {

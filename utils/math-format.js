@@ -538,50 +538,6 @@ $.extend(KhanUtil, {
         }
     },
 
-    // Assumes that the real and imaginary parts of integers
-    complexRegex: function(real, imaginary) {
-        var regex;
-
-        if (imaginary === 0) {
-            regex = "^\\s*";
-            regex += (real < 0 ? "[-\\u2212]\\s*" + (-real) : real) + "\\s*$";
-            return regex;
-        }
-
-        regex = "^\\s*";
-        if (imaginary < 0) {
-            regex += "[-\\u2212]\\s*";
-        }
-        if (imaginary !== 1 && imaginary !== -1) {
-            regex += Math.abs(imaginary) + "\\s*";
-        }
-        regex += "i\\s*";
-
-        if (real === 0) {
-            regex += "$";
-        } else {
-            regex = "(?:" + regex;
-            regex += real < 0 ? "[-\\u2212]" : "\\+";
-            regex += "\\s*" + Math.abs(real) + "\\s*$)|(?:^\\s*";
-
-            if (real < 0) {
-                regex += "[-\\u2212]\\s*";
-            }
-
-            regex += Math.abs(real) + "\\s*";
-            regex += imaginary < 0 ? "[-\\u2212]" : "\\+";
-            regex += "\\s*" + Math.abs(imaginary);
-
-            if (imaginary === 1 || imaginary === -1) {
-                regex += "?";
-            }
-
-            regex += "\\s*i\\s*$)";
-        }
-
-        return regex;
-    },
-
     complexFraction: function(real, realDenominator, imag, imagDenominator) {
         var ret = "";
         if (real == 0 && imag == 0) {
@@ -614,13 +570,13 @@ $.extend(KhanUtil, {
         var exponent = KhanUtil.scientificExponent(num);
         var factor = Math.pow(10, exponent);
         precision -= 1; // To account for the 1s digit
-        var mantissa = KhanUtil.localeToFixed(KhanUtil.roundTo(precision, num / factor), precision);
+        var mantissa = KhanUtil.roundTo(precision, num / factor);
         return mantissa;
     },
 
     scientific: function(precision, num) {
         var exponent = KhanUtil.scientificExponent(num);
-        var mantissa = KhanUtil.scientificMantissa(precision, num);
+        var mantissa = KhanUtil.localeToFixed(KhanUtil.scientificMantissa(precision, num), precision);
         return "" + mantissa + "\\times 10^{" + exponent + "}";
     }
 });
