@@ -38,7 +38,10 @@
       correct
 
     * problemDone -- when the user has completed a problem which, in this case,
-      usually means supplying the correct answer
+      usually means supplying the correct answer. Note the user may have made
+      multiple attempts to finally get at the correct answer. A summary object
+      including {attempts: <number>, card: <Object>} is included as an
+      event parameter.
 
     * attemptError -- when an error occurs during an API attempt
 
@@ -222,18 +225,6 @@ var Khan = (function() {
 
     lastFocusedSolutionInput = null,
 
-    issueError = "Communication with GitHub isn't working. Please file " +
-        "the issue manually at <a href=\"" +
-        "http://github.com/Khan/khan-exercises/issues/new\">GitHub</a>. " +
-        "Please reference exercise: " + exerciseId + ".",
-    issueSuccess = function(url, title, suggestion) {
-        return ["Thank you for your feedback! Your issue has been created and can be ",
-            "found at the following link:",
-            "<p><a id=\"issue-link\" href=\"", url, "\">", title, "</a>",
-            "<p>", suggestion, "</p>"].join("");
-    },
-    issueIntro = "Remember to check the hints and double check your math. All provided information will be public. Thanks for your help!",
-
     gae_bingo = window.gae_bingo || {
         ab_test: function() {},
         bingo: function() {},
@@ -294,22 +285,24 @@ var Khan = (function() {
             "word-problems": ["math"],
             "derivative-intuition": ["jquery.mobile.vmouse"],
             "unit-circle": ["jquery.mobile.vmouse"],
-            "interactive": ["jquery.mobile.vmouse"],
+            "interactive": ["graphie", "jquery.mobile.vmouse"],
             "mean-and-median": ["stat"],
             "math-model": ["ast"],
             "simplify": ["math-model", "ast", "expr-helpers", "expr-normal-form", "steps-helpers"],
             "congruency": ["angles", "interactive"],
             "graphie-3d": ["graphie", "matrix"],
             "graphie-geometry": ["graphie", "matrix"],
+            "graphie-helpers": ["math-format"],
             "matrix": ["expressions"],
             "matrix-input": ["jquery.cursor-position"],
-            "chemistry": ["jquery-ui"]
+            "chemistry": ["math-format"],
+            "d3": ["math-format"]
         },
 
         warnTimeout: function() {
-            $(Exercises).trigger("warning", ["Your internet might be too " +
+            $(Exercises).trigger("warning", [$._("Your internet might be too " +
                     "slow to see an exercise. Refresh the page or " +
-                    '<a href="" id="warn-report">report a problem</a>.',
+                    "<a href='' id='warn-report'>report a problem</a>."),
                     false]);
             // TODO(alpert): This event binding is kind of gross
             $("#warn-report").click(function(e) {
@@ -319,23 +312,25 @@ var Khan = (function() {
         },
 
         warnFont: function() {
-            var enableFontDownload = "enable font download in your browser";
+            var warning;
             if ($.browser.msie) {
-                enableFontDownload = '<a href="http://missmarcialee.com/2011/08/how-to-enable-font-download-in-internet-explorer-8/" target="_blank">enable font download</a>';
+                warning = $._("You should " +
+                    "<a href='http://missmarcialee.com/2011/08/" +
+                    "how-to-enable-font-download-in-internet-explorer-8/' " +
+                    "target='_blank'>enable font download</a> " +
+                    "to improve the appearance of math expressions."
+                );
+            } else {
+                warning = $._("You should enable font download in your " +
+                    "browser to improve the appearance of math expressions");
             }
 
-            $(Exercises).trigger("warning", ["You should " +
-                    enableFontDownload + " to improve the appearance of " +
-                    "math expressions.", true]);
+            $(Exercises).trigger("warning", [warning, true]);
         },
 
         // TODO(alpert): This doesn't need to be in the Khan object.
         getBaseModules: function() {
             var mods = [];
-            if (localMode) {
-                mods.push("jquery-ui", "../jquery.qtip");
-            }
-
             // Base modules required for every problem
             // MathJax is here because Perseus wants it loaded regardless of if
             // we load a khan-exercises problem that needs it. Previously it
@@ -514,7 +509,7 @@ var Khan = (function() {
 
                     var makeVisible = function() {
                         $("#scratchpad").show();
-                        $("#scratchpad-show").text("Hide scratchpad");
+                        $("#scratchpad-show").text($._("Hide scratchpad"));
 
                         // If pad has never been created or if it's empty
                         // because it was removed from the DOM, recreate a new
@@ -534,7 +529,7 @@ var Khan = (function() {
                     }
 
                     $("#scratchpad").hide();
-                    $("#scratchpad-show").text("Show scratchpad");
+                    $("#scratchpad-show").text($._("Show scratchpad"));
                 },
 
                 toggle: function() {
@@ -615,32 +610,48 @@ var Khan = (function() {
                 var jel = container.find(".related-video-list");
                 jel.empty();
 
-                var template = Templates.get("video.thumbnail");
-                _.each(this.getVideos(), function(video, i) {
-                    var thumbnailDiv = $(template({
-                        href: this.makeHref(video),
-                        video: video
-                    })).find("a.related-video").data("video", video).end();
+                var self = this;
+                PackageManager.require("video.css", "video.js").then(
+                    function() {
+                        var template = Templates.get("video.thumbnail");
+                        _.each(self.getVideos(), function(video, i) {
+                            var thumbnailDiv = $(template({
+                                href: self.makeHref(video),
+                                video: video
+                            })).find("a.related-video")
+                                .data("video", video)
+                                .end();
 
-                    var inlineLink = this.anchorElement(video)
-                        .addClass("related-video-inline");
+                            var inlineLink = self.anchorElement(video)
+                                .addClass("related-video-inline");
 
-                    var sideBarLi = $("<li>")
-                        .append(inlineLink)
-                        .append(thumbnailDiv);
+                            var sideBarLi = $("<li>")
+                                .append(inlineLink)
+                                .append(thumbnailDiv);
 
-                    if (i > 0) {
-                        thumbnailDiv.hide();
-                    } else {
-                        inlineLink.hide();
-                    }
-                    jel.append(sideBarLi);
-                }, this);
+                            if (i > 0) {
+                                thumbnailDiv.hide();
+                            } else {
+                                inlineLink.hide();
+                            }
+                            jel.append(sideBarLi);
+                        });
 
-                container.toggle(this.getVideos().length > 0);
+                        container.toggle(self.getVideos().length > 0);
+                        self._bindEvents();
+                    });
             },
 
-            hookup: function() {
+            _eventsBound: false,
+            /**
+             * Called to initialize related video event handlers.
+             * Should only be called after video.js package is loaded.
+             */
+            _bindEvents: function() {
+                if (this._eventsBound) {
+                    return;
+                }
+
                 // make caption slide up over the thumbnail on hover
                 var captionHeight = 45;
                 var marginTop = 23;
@@ -649,7 +660,6 @@ var Khan = (function() {
                 $(".related-video-box")
                     .delegate(".thumbnail", "mouseenter mouseleave", function(e) {
                         var isMouseEnter = e.type === "mouseenter";
-                        
                         $(e.currentTarget).find(".thumbnail_label").animate(
                                 {marginTop: marginTop + (isMouseEnter ? 0 : captionHeight)},
                                 options)
@@ -658,6 +668,9 @@ var Khan = (function() {
                                 {height: (isMouseEnter ? captionHeight : 0)},
                                 options);
                     });
+
+                ModalVideo.hookup();
+                this._eventsBound = true;
             }
         },
 
@@ -700,6 +713,200 @@ var Khan = (function() {
                 message: typeof pass === "string" ? pass : null,
                 guess: guess
             };
+        },
+
+        /**
+         * Hijacks a specified link so that it opens up the issue form.
+         * @param {string} selector The link selector - defaults to "#report"
+         */
+        initReportIssueLink: function(selector) {
+            selector = selector || "#report";
+            $(selector).click(function(e) {
+                var issueIntro = $._("Remember to check the hints and " +
+                        "double check your math. All provided information will " +
+                        "be public. Thanks for your help!");
+
+                e.preventDefault();
+
+                var report = $("#issue").css("display") !== "none",
+                    form = $("#issue form").css("display") !== "none";
+
+                if (report && form) {
+                    $("#issue").hide();
+                } else if (!report || !form) {
+                    $("#issue-status").removeClass("error").html(issueIntro);
+                    $("#issue, #issue form").show();
+                    $("html, body").animate({
+                        scrollTop: $("#issue").offset().top
+                    }, 500, function() {
+                        $("#issue-title").focus();
+                    });
+                }
+            });
+
+            // Hide issue form.
+            $("#issue-cancel").click(function(e) {
+                e.preventDefault();
+
+                $("#issue").hide(500);
+                $("#issue-title, #issue-body").val("");
+            });
+
+            // Submit an issue.
+            $("#issue form input:submit").click(function(e) {
+                e.preventDefault();
+
+                // don't do anything if the user clicked a second time quickly
+                if ($("#issue form").css("display") === "none") return;
+
+                var framework = Exercises.getCurrentFramework(),
+                    issueInfo = framework === "khan-exercises" ?
+                            Khan.getIssueInfo() :
+                            Exercises.PerseusBridge.getIssueInfo(),
+
+                    type = $("input[name=issue-type]:checked").prop("id"),
+                    title = $("#issue-title").val(),
+
+                    agent = navigator.userAgent,
+                    mathjaxInfo = "MathJax is " + (typeof MathJax === "undefined" ? "NOT loaded" :
+                        ("loaded, " + (MathJax.isReady ? "" : "NOT ") + "ready, queue length: " + MathJax.Hub.queue.queue.length)),
+                    sessionStorageInfo = (typeof sessionStorage === "undefined" || typeof sessionStorage.getItem === "undefined" ? "sessionStorage NOT enabled" : null),
+                    warningInfo = $("#warning-bar-content").text(),
+
+                    parts = [$("#issue-body").val() || null, issueInfo.bodyInfo, agent, sessionStorageInfo, mathjaxInfo, warningInfo],
+                    body = $.grep(parts, function(e) { return e != null; }).join("\n\n"),
+
+                    issueError = $._("Communication with GitHub isn't working. " +
+                        "Please file the issue manually at " +
+                        "<a href=\"http://github.com/Khan/khan-exercises/issues/new\">GitHub</a>. " +
+                        "Please reference exercise: %(exerciseId)s.", {exerciseId: exerciseId}),
+                    issueSuccess = function(url, title, suggestion) {
+                        return $._("Thank you for your feedback! " +
+                            "Your issue has been created and can be " +
+                            "found at the following link:" +
+                            "<p><a id=\"issue-link\" href=\"%(issueUrl)s\">%(issueTitle)s</a>" +
+                            "<p>%(suggestion)s</p>",
+                            {issueUrl: url, issueTitle: title, suggestion: suggestion}
+                        );
+                    };
+
+                var mathjaxLoadFailures = $.map(MathJax.Ajax.loading, function(info, script) {
+                    if (info.status === -1) {
+                        return [script + ": error"];
+                    } else {
+                        return [];
+                    }
+                }).join("\n");
+                if (mathjaxLoadFailures.length > 0) {
+                    body += "\n\n" + mathjaxLoadFailures;
+                }
+
+                // flagging of browsers/os for issue labels. very primitive, but
+                // hopefully sufficient.
+                var agent_contains = function(sub) {
+                        return agent.indexOf(sub) !== -1;
+                    },
+                    flags = {
+                        ie8: agent_contains("MSIE 8.0"),
+                        ie9: agent_contains("Trident/5.0"),
+                        chrome: agent_contains("Chrome/"),
+                        safari: !agent_contains("Chrome/") && agent_contains("Safari/"),
+                        firefox: agent_contains("Firefox/"),
+                        win7: agent_contains("Windows NT 6.1"),
+                        vista: agent_contains("Windows NT 6.0"),
+                        xp: agent_contains("Windows NT 5.1"),
+                        leopard: agent_contains("OS X 10_5") || agent_contains("OS X 10.5"),
+                        snowleo: agent_contains("OS X 10_6") || agent_contains("OS X 10.6"),
+                        lion: agent_contains("OS X 10_7") || agent_contains("OS X 10.7"),
+                        scratchpad: (/scratch\s*pad/i).test(body),
+                        ipad: agent_contains("iPad")
+                    },
+                    labels = [];
+                $.each(flags, function(k, v) {
+                    if (v) labels.push(k);
+                });
+
+                if (!type) {
+                    $("#issue-status").addClass("error")
+                        .html($._("Please specify the issue type.")).show();
+                    return;
+                } else {
+                    labels.push(type.slice("issue-".length));
+
+                    var hintOrVideoMsg = $._("Please click the hint button above " +
+                        "to see our solution, or watch a video for additional help.");
+                    var refreshOrBrowserMsg = $._("Please try a hard refresh " +
+                        "(press Ctrl + Shift + R) or use Khan Academy from a " +
+                        "different browser (such as Chrome or Firefox).");
+                    var suggestion = {
+                        "issue-wrong-or-unclear": hintOrVideoMsg,
+                        "issue-hard": hintOrVideoMsg,
+                        "issue-not-showing": refreshOrBrowserMsg,
+                        "issue-other": ""
+                    }[type];
+                }
+
+                if (title === "") {
+                    $("#issue-status").addClass("error")
+                        .html($._("Please provide a valid title for the issue.")).show();
+                    return;
+                }
+
+                var formElements = $("#issue input").add("#issue textarea");
+
+                // disable the form elements while waiting for a server response
+                formElements.attr("disabled", true);
+
+                $("#issue-cancel").hide();
+                $("#issue-throbber").show();
+
+                var dataObj = {
+                    title: issueInfo.pretitle + " - " + title,
+                    body: body,
+                    labels: labels
+                };
+
+                $.ajax({
+                    url: "/githubpost",
+                    type: "POST",
+                    data: JSON.stringify(dataObj),
+                    contentType: "application/json",
+                    dataType: "json",
+                    success: function(data) {
+                        // hide the form
+                        $("#issue form").hide();
+
+                        // show status message
+                        $("#issue-status").removeClass("error")
+                            .html(issueSuccess(data.html_url, data.title, suggestion))
+                            .show();
+
+                        // reset the form elements
+                        formElements.attr("disabled", false)
+                            .not("input:submit").val("");
+
+                        // replace throbber with the cancel button
+                        $("#issue-cancel").show();
+                        $("#issue-throbber").hide();
+                    },
+                    error: function() {
+                        // show status message
+                        $("#issue-status").addClass("error")
+                            .html(issueError).show();
+
+                        // enable the inputs
+                        formElements.attr("disabled", false);
+
+                        // replace throbber with the cancel button
+                        $("#issue-cancel").show();
+                        $("#issue-throbber").hide();
+                    }
+                });
+            });
+        },
+
+        cleanupProblem: function() {
+            $("#workarea, #hintsarea").runModules(problem, "Cleanup");
         }
     };
     // see line 183. this ends the main Khan module
@@ -744,9 +951,8 @@ var Khan = (function() {
                 "../local-only/localeplanet/icu.en-US.js",
                 "../local-only/i18n.js",
                 "../exercises-stub.js",
-                
                 "../history.js",
-                "../interface-exp-correct-4-6.js" // ZZZ STOPSHIP
+                "../interface-exp-correct-4-6.js"
             ];
 
         (function loadInitScripts() {
@@ -760,7 +966,7 @@ var Khan = (function() {
     } else {
         onjQueryLoaded();
     }
-        
+
     function onjQueryLoaded() {
         initEvents();
 
@@ -973,6 +1179,8 @@ var Khan = (function() {
                 }
             }
 
+            $(Exercises).trigger("clearExistingProblem");
+
             // Generate a new problem
             makeProblem(typeOverride, seedOverride);
         }
@@ -1147,11 +1355,6 @@ var Khan = (function() {
         // Remove and store hints to delay running modules on it
         hints = problem.children(".hints").remove();
 
-        // Remove the hint box if there are no hints in the problem
-        if (hints.length === 0) {
-            $(".hint-box").remove();
-        }
-
         // Only show the calculator if it's specifically allowed for this problem
         if (problem.data("calculator") == null) {
             $("#calculator").hide();
@@ -1257,12 +1460,18 @@ var Khan = (function() {
 
         // A working solution was generated
         if (validator) {
+            // Have MathJax redo the font metrics for the solution area
+            // (ugh, this is gross)
+            MathJax.Hub.Queue(["Reprocess", MathJax.Hub,
+                    $("#solutionarea")[0]]);
+
             // Focus the first input
             // Use .select() and on a delay to make IE happy
             var firstInput = solutionarea.find(":input").first();
             if ($(".calculator input:visible").length) {
                 firstInput = $(".calculator input");
             }
+
             setTimeout(function() {
                 if (!firstInput.is(":disabled")) {
                     firstInput.focus();
@@ -1286,8 +1495,13 @@ var Khan = (function() {
         }
 
         // Remove the solution and choices elements from the display
-        solution.remove();
-        choices.remove();
+        if (!localMode) {
+            solution.remove();
+            choices.remove();
+        } else {
+            solution.hide();
+            choices.hide();
+        }
 
         // Add the problem into the page
         Khan.scratchpad.resize();
@@ -1296,6 +1510,7 @@ var Khan = (function() {
         $("#answercontent input").not("#check-answer-button")
             .prop("disabled", false);
 
+        // Show acceptable formats
         if (examples !== null && answerData.examples && answerData.examples.length > 0) {
             $("#examples-show").show();
             examples.empty();
@@ -1337,9 +1552,7 @@ var Khan = (function() {
             parent.jQuery(parent.document).trigger("problemLoaded", [makeProblem, answerData.solution]);
         }
 
-        hintsUsed = 0;
-
-        $("#hint").val("I'd like a hint");
+        $("#hint").val($._("I'd like a hint"));
 
         $(Exercises).trigger("newProblem", {
             numHints: hints.length,
@@ -1351,13 +1564,19 @@ var Khan = (function() {
             problem: problem
         });
 
+        hintsUsed = userExercise ? userExercise.lastCountHints : 0;
+
+        // The server says the user has taken hints on this problem already
+        // show all lastCountHints it says we have seen
+        _(hintsUsed).times(showHint);
+
         // If the textbox is empty disable "Check Answer" button
         // Note: We don't do this for multiple choice, number line, etc.
         if (answerType === "text" || answerType === "number") {
             var checkAnswerButton = $("#check-answer-button");
             var skipQuestionButton = $("#skip-question-button");
             checkAnswerButton.attr("disabled", "disabled").attr(
-                "title", "Type in an answer first.");
+                "title", $._("Type in an answer first."));
             // Enables the check answer button - added so that people who type
             // in a number and hit enter quickly do not have to wait for the
             // button to be enabled by the key up
@@ -1386,13 +1605,40 @@ var Khan = (function() {
         return answerType;
     }
 
+    function showHint() {
+        // Called when user hits hint button triggering showHint event or when
+        // the server side data says the last_count_hints is not 0 when
+        // exercise is loaded.
+        var hint = hints.shift();
+        if (!hint) {
+            // :(
+            return;
+        }
+
+        hintsUsed++;
+
+        var problem = $(hint).parent();
+
+        // Append first so MathJax can sense the surrounding CSS context properly
+        $(hint).appendTo("#hintsarea").runModules(problem);
+
+        if (hints.length === 0) {
+            $(hint).addClass("last-hint");
+        }
+
+        // TODO(james): figure out a way to trigger hintUsed to ensure that the
+        // cards are updated properly, but make sure the the ajax calls to
+        // submit the hints are not resubmited for the case where we are
+        // calling this function because last_count_hints was not 0
+    }
+
     function renderDebugInfo() {
         // triggered on newProblem
 
         if (userExercise == null || Khan.query.debug != null) {
-            $("#problem-permalink").text("Permalink: "
-                + problemID + " #"
-                + problemSeed)
+            $("#problem-permalink").text("Permalink: " +
+                                         problemID + " #" +
+                                         problemSeed)
                 .attr("href", window.location.protocol + "//" + window.location.host + window.location.pathname + "?debug&problem=" + problemID + "&seed=" + problemSeed);
         }
 
@@ -1444,7 +1690,7 @@ var Khan = (function() {
                     .css({
                         "padding-left": "20px",
                         "outline":
-                            (problemID === probID || problemID === '' + n) ?
+                            (problemID === probID || problemID === "" + n) ?
                             "1px dashed gray" : ""
                     })
                     .append($("<span>").text(n + ": "))
@@ -1525,13 +1771,20 @@ var Khan = (function() {
             links.append($("<b>").text("Problem types:"));
 
             exercises.children(".problems").children().each(function(n, prob) {
-                var probID = $(prob).attr("id") || n;
-                links.append($("<a>").addClass("problem-type-link")
-                        .text(n + ": " + probID)
+                var probName = $(prob).attr("id");
+                var probID = probName || n;
+                var weight = $(prob).data("weight");
+                weight = weight != null ? weight : 1;
+
+                if (weight !== 0) {
+                    $("<a>").addClass("problem-type-link")
+                        .text("#" + (n + 1) +
+                            (probName != null ? ": " + probName : ""))
                         .attr("href", window.location.protocol + "//" +
                             window.location.host + window.location.pathname +
                             "?browse&problem=" + probID)
-                    );
+                        .appendTo(links);
+                }
             });
 
             browseWrap.append(links);
@@ -1539,16 +1792,21 @@ var Khan = (function() {
     }
 
     function renderNextProblem(data) {
-        $(Exercises).trigger("clearExistingProblem");
-
         if (localMode) {
             // Just generate a new problem from existing exercise
+            $(Exercises).trigger("clearExistingProblem");
             makeProblem();
         } else {
             loadAndRenderExercise(data.userExercise);
         }
     }
 
+    /**
+     * Called once each time an exercise page is initialized.
+     * For multi-exercise pages, this can be called multiple times!
+     * (e.g. in a tutorial view, where there is client side navigation between
+     * different exercises).
+     */
     function prepareSite() {
         // Grab example answer format container
         examples = $("#examples");
@@ -1617,10 +1875,12 @@ var Khan = (function() {
                         input.val("");
                         history.children().not(inputRow).remove();
                     } else if (behavior === "angle-mode") {
+                        // TODO(emily): The DEG/RAD should be i18nized at some
+                        // point here
                         Calculator.angleMode = Calculator.angleMode === "DEG" ?
                             "RAD" : "DEG";
-                        jel.html((Calculator.angleMode === "DEG" ? "<br>" : "")
-                            + Calculator.angleMode);
+                        jel.html((Calculator.angleMode === "DEG" ? "<br>" : "") +
+                                 Calculator.angleMode);
                     } else if (behavior === "evaluate") {
                         evaluate();
                     }
@@ -1633,177 +1893,14 @@ var Khan = (function() {
                 return false;
             });
 
-            $(Khan).on("gotoNextProblem", function() {
+            $(Exercises).on("gotoNextProblem", function() {
                 input.val("");
                 history.children().not(inputRow).remove();
             });
         };
 
         initializeCalculator();
-
-        $("#report").click(function(e) {
-            e.preventDefault();
-
-            var report = $("#issue").css("display") !== "none",
-                form = $("#issue form").css("display") !== "none";
-
-            if (report && form) {
-                $("#issue").hide();
-            } else if (!report || !form) {
-                $("#issue-status").removeClass("error").html(issueIntro);
-                $("#issue, #issue form").show();
-                $("html, body").animate({
-                    scrollTop: $("#issue").offset().top
-                }, 500, function() {
-                    $("#issue-title").focus();
-                });
-            }
-        });
-
-
-        // Hide issue form.
-        $("#issue-cancel").click(function(e) {
-            e.preventDefault();
-
-            $("#issue").hide(500);
-            $("#issue-title, #issue-body").val("");
-        });
-
-        // Submit an issue.
-        $("#issue form input:submit").click(function(e) {
-            e.preventDefault();
-
-            // don't do anything if the user clicked a second time quickly
-            if ($("#issue form").css("display") === "none") return;
-
-            var framework = Exercises.getCurrentFramework(),
-                issueInfo = framework === "khan-exercises" ?
-                        Khan.getIssueInfo() :
-                        Exercises.PerseusBridge.getIssueInfo(),
-
-                type = $("input[name=issue-type]:checked").prop("id"),
-                title = $("#issue-title").val(),
-
-                agent = navigator.userAgent,
-                mathjaxInfo = "MathJax is " + (typeof MathJax === "undefined" ? "NOT loaded" :
-                    ("loaded, " + (MathJax.isReady ? "" : "NOT ") + "ready, queue length: " + MathJax.Hub.queue.queue.length)),
-                sessionStorageInfo = (typeof sessionStorage === "undefined" || typeof sessionStorage.getItem === "undefined" ? "sessionStorage NOT enabled" : null),
-                warningInfo = $("#warning-bar-content").text(),
-
-                parts = [$("#issue-body").val() || null, issueInfo.bodyInfo, agent, sessionStorageInfo, mathjaxInfo, warningInfo],
-                body = $.grep(parts, function(e) { return e != null; }).join("\n\n");
-
-            var mathjaxLoadFailures = $.map(MathJax.Ajax.loading, function(info, script) {
-                if (info.status === -1) {
-                    return [script + ": error"];
-                } else {
-                    return [];
-                }
-            }).join("\n");
-            if (mathjaxLoadFailures.length > 0) {
-                body += "\n\n" + mathjaxLoadFailures;
-            }
-
-            // flagging of browsers/os for issue labels. very primitive, but
-            // hopefully sufficient.
-            var agent_contains = function(sub) {
-                    return agent.indexOf(sub) !== -1;
-                },
-                flags = {
-                    ie8: agent_contains("MSIE 8.0"),
-                    ie9: agent_contains("Trident/5.0"),
-                    chrome: agent_contains("Chrome/"),
-                    safari: !agent_contains("Chrome/") && agent_contains("Safari/"),
-                    firefox: agent_contains("Firefox/"),
-                    win7: agent_contains("Windows NT 6.1"),
-                    vista: agent_contains("Windows NT 6.0"),
-                    xp: agent_contains("Windows NT 5.1"),
-                    leopard: agent_contains("OS X 10_5") || agent_contains("OS X 10.5"),
-                    snowleo: agent_contains("OS X 10_6") || agent_contains("OS X 10.6"),
-                    lion: agent_contains("OS X 10_7") || agent_contains("OS X 10.7"),
-                    scratchpad: (/scratch\s*pad/i).test(body),
-                    ipad: agent_contains("iPad")
-                },
-                labels = [];
-            $.each(flags, function(k, v) {
-                if (v) labels.push(k);
-            });
-
-            if (!type) {
-                $("#issue-status").addClass("error")
-                    .html("Please specify the issue type.").show();
-                return;
-            } else {
-                labels.push(type.slice("issue-".length));
-
-                var hintOrVideoMsg = "Please click the hint button above to see our solution, or watch a video for additional help.";
-                var refreshOrBrowserMsg = "Please try a hard refresh (press Ctrl + Shift + R)" +
-                        " or use Khan Academy from a different browser (such as Chrome or Firefox).";
-                var suggestion = {
-                    "issue-wrong-or-unclear": hintOrVideoMsg,
-                    "issue-hard": hintOrVideoMsg,
-                    "issue-not-showing": refreshOrBrowserMsg,
-                    "issue-other": ""
-                }[type];
-            }
-
-            if (title === "") {
-                $("#issue-status").addClass("error")
-                    .html("Please provide a valid title for the issue.").show();
-                return;
-            }
-
-            var formElements = $("#issue input").add("#issue textarea");
-
-            // disable the form elements while waiting for a server response
-            formElements.attr("disabled", true);
-
-            $("#issue-cancel").hide();
-            $("#issue-throbber").show();
-
-            var dataObj = {
-                title: issueInfo.pretitle + " - " + title,
-                body: body,
-                labels: labels
-            };
-
-            $.ajax({
-                url: "/githubpost",
-                type: "POST",
-                data: JSON.stringify(dataObj),
-                contentType: "application/json",
-                dataType: "json",
-                success: function(data) {
-                    // hide the form
-                    $("#issue form").hide();
-
-                    // show status message
-                    $("#issue-status").removeClass("error")
-                        .html(issueSuccess(data.html_url, data.title, suggestion))
-                        .show();
-
-                    // reset the form elements
-                    formElements.attr("disabled", false)
-                        .not("input:submit").val("");
-
-                    // replace throbber with the cancel button
-                    $("#issue-cancel").show();
-                    $("#issue-throbber").hide();
-                },
-                error: function() {
-                    // show status message
-                    $("#issue-status").addClass("error")
-                        .html(issueError).show();
-
-                    // enable the inputs
-                    formElements.attr("disabled", false);
-
-                    // replace throbber with the cancel button
-                    $("#issue-cancel").show();
-                    $("#issue-throbber").hide();
-                }
-            });
-        });
+        Khan.initReportIssueLink("#report, #extras .report-issue-link");
 
         $("#answer_area").delegate("input.button, select", "keydown", function(e) {
             // Don't want to go back to exercise dashboard; just do nothing on backspace
@@ -1845,12 +1942,6 @@ var Khan = (function() {
                 // number)
             }
         });
-
-        Khan.relatedVideos.hookup();
-
-        if (window.ModalVideo) {
-            ModalVideo.hookup();
-        }
     }
 
     function initEvents() {
@@ -1871,28 +1962,11 @@ var Khan = (function() {
                         userExercise.exerciseModel.displayName,
                         userExercise.exerciseModel.fileName);
             })
-            .bind("cleanupProblem", function() {
-                $("#workarea, #hintsarea").runModules(problem, "Cleanup");
-            })
             .bind("showHint", function() {
-                var hint = hints.shift();
-                if (!hint) {
-                    // :(
-                    return;
-                }
-
-                hintsUsed++;
-
-                var problem = $(hint).parent();
-
-                // Append first so MathJax can sense the surrounding CSS context properly
-                $(hint).appendTo("#hintsarea").runModules(problem);
-
-                if (hints.length === 0) {
-                    $(hint).addClass("final_answer");
-                }
-
-                $(Exercises).trigger("hintUsed");
+                showHint();
+                $(Exercises).trigger("hintShown", {
+                    card: Exercises.currentCard
+                });
             })
             .bind("refocusSolutionInput", function() {
                 // Refocus text field so user can type a new answer
@@ -1901,7 +1975,7 @@ var Khan = (function() {
                         var focusInput = $(lastFocusedSolutionInput);
 
                         if (!focusInput.is(":disabled")) {
-                            // focus should always work; hopefully select 
+                            // focus should always work; hopefully select
                             // will work for text fields
                             focusInput.focus();
                             if (focusInput.is("input:text")) {
@@ -1910,7 +1984,8 @@ var Khan = (function() {
                         }
                     }, 1);
                 }
-            })
+            });
+        $(Exercises)
             .bind("newProblem", renderDebugInfo)
             .bind("newProblem", renderExerciseBrowserPreview);
     }
@@ -1953,6 +2028,8 @@ var Khan = (function() {
 
         if (data && data.exercise) {
             exerciseId = data.exercise;
+            exerciseName = data.exerciseModel.displayName;
+            exerciseFile = data.exerciseModel.fileName;
         }
 
         if (user != null) {
@@ -1975,8 +2052,8 @@ var Khan = (function() {
      * Load an exercise and return a promise that is resolved when an exercise
      * is loaded
      *
-     * @param exerciseElem HTML element with jQuery data properties name,
-     * weight, rootName, and fileName
+     * @param {Element} exerciseElem HTML element with jQuery data
+     * properties name, weight, rootName, and fileName
      */
     function loadExercise(exerciseElem) {
         exerciseElem = $(exerciseElem).detach();
@@ -2113,22 +2190,22 @@ var Khan = (function() {
             selfPromise = $.Deferred();
         }
 
-        var promises = [];
+        var depsPromises = [];
 
-        // Load module dependencies
-        promises.push(selfPromise);
-        Khan.loadScript(src, function() {
-            selfPromise.resolve();
-        });
-
+        // Load the dependencies
         $.each(deps, function(i, dep) {
-            promises.push(loadModule(dep));
+            depsPromises.push(loadModule(dep));
         });
 
-        // Return a multi-promise thing
-        var allLoaded = $.when.apply($, promises);
-        modulePromises[src] = allLoaded;
-        return allLoaded;
+        // Load the module once all of the dependencies have been loaded
+        $.when.apply($, depsPromises).then(function() {
+            Khan.loadScript(src, function() {
+                selfPromise.resolve();
+            });
+        });
+
+        modulePromises[src] = selfPromise;
+        return selfPromise;
     }
 
     function loadTestModeSite() {
