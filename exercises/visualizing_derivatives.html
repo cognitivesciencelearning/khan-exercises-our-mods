@@ -73,8 +73,11 @@
                     slidingWindow.getXLims()
                 </div>
                 <div class="validator-function">
-                    if (NO_SOLUTION) {
+                    if (NO_SOLUTION &amp;&amp;
+                            $(".sol.no-solution :checkbox").prop("checked") ) {
                         return true;
+                    } else if (_.isEqual(guess, slidingWindow.startRange)) {
+                        return "";
                     }
                     return _.any(PROBLEM_RANGES, function(problemRange) {
                         return _.isEqual(guess, problemRange);
@@ -92,16 +95,6 @@
                     </span>
                     No solution
                 </label>
-            </div>
-            <div class="sol" data-type="custom">
-                <div class="guess">
-                    _.isEqual(slidingWindow.getXLims(), slidingWindow.startRange)
-                    &amp;&amp;
-                    !$("#solutionarea input").eq(0).is(":checked")
-                </div>
-                <div class="validator-function">
-                    return guess ? "" : true;
-                </div>
             </div>
         </div>
 

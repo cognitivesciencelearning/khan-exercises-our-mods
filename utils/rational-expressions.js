@@ -22,52 +22,19 @@ $.extend(KhanUtil, {
     },
 
     writeExpressionFraction: function(numerator, denominator) {
+        if (denominator.toString() === '1') {
+            return numerator.toString();
+        }
+        if (denominator.toString() === '-1') {
+            return numerator.multiply(-1).toString();
+        }
         if (numerator.isNegative()) {
             return "-\\dfrac{" + numerator.multiply(-1).toString() + "}{" + denominator.toString() + "}";
-        } else {
-            return "\\dfrac{" + numerator.toString() + "}{" + denominator.toString() + "}";
         }
-    },
-
-    getExpressionRegex: function(coefficient, vari, constant) {
-        // Capture Ax + B or B + Ax, either A or B can be 0
-
-        if (coefficient === 0) {
-            var regex = '^\\s*';
-            regex += constant < 0 ? '[-\\u2212]\\s*' + (-constant) + '\\s*$' : constant + '\\s*$';
-            return regex;
+        if (denominator.isNegative()) {
+            return "-\\dfrac{" + numerator.toString() + "}{" + denominator.multiply(-1).toString() + "}";
         }
-
-        var regex = '^\\s*';
-        if (coefficient < 0) {
-            regex += '[-\\u2212]\\s*';
-        }
-        if (coefficient !== 1 && coefficient !== -1) {
-            regex += Math.abs(coefficient) + '\\s*';
-        }
-        regex += vari + '\\s*';
-
-        if (constant === 0) {
-            regex += '$';
-        } else {
-            regex = '(' + regex;
-            regex += constant < 0 ? '[-\\u2212]' : '\\+';
-            regex += '\\s*' + Math.abs(constant) + '\\s*$)|(^\\s*';
-
-            if (constant < 0) {
-                regex += '[-\\u2212]\\s*';
-            }
-
-            regex += Math.abs(constant) + '\\s*';
-            regex += coefficient < 0 ? '[-\\u2212]\\s*' : '\\+\\s*';
-
-            if (coefficient !== 1 && coefficient !== -1) {
-                regex += Math.abs(coefficient) + '\\s*';
-            }
-            regex += vari + '\\s*$)';
-        }
-
-        return regex;
+        return "\\dfrac{" + numerator.toString() + "}{" + denominator.toString() + "}";
     },
 
     /*
@@ -298,7 +265,13 @@ $.extend(KhanUtil, {
 
         // Return a regex that will capture this term
         // If includeSign is true, then 4x is captured by +4x
-        this.regex = function(includeSign) {
+        this.regex = function() {
+            return '^' + this.regexForExpression() + '$';
+        };
+
+        // Return a regex that will capture this term
+        // If includeSign is true, then 4x is captured by +4x
+        this.regexForExpression = function(includeSign) {
             if (this.coefficient === 0) {
                 return '';
             }
@@ -345,25 +318,8 @@ $.extend(KhanUtil, {
                 regex += degree > 1 ? vari + "\\s*\\^\\s*" + degree : vari;
             }
 
-
-
-            // Add variable of degree 1 in random order
-            // Only captures one order if there are multiple variables
-
-            /*
-            for (var vari in this.variables) {
-                var degree = this.variables[vari];
-                if (degree !== 0) {
-                    regex += vari;
-                    if (degree > 1) {
-                        regex += "\\s*\\^\\s*" + degree;
-                    }
-                }
-            }
-            */
-
             return regex + '\\s*';
-        };
+        }
 
     },
 
@@ -586,8 +542,10 @@ $.extend(KhanUtil, {
 
             if (that instanceof KhanUtil.Term) {
                 GCD = t1.getGCD(that);
-            } else {
+            } else if (that instanceof KhanUtil.RationalExpression) {
                 GCD = t1.getGCD(that.getTermsGCD());
+            } else {
+                return KhanUtil.getGCD(that, t1.coefficient);
             }
 
             if (GCD.coefficient < 0) {
@@ -673,7 +631,7 @@ $.extend(KhanUtil, {
 
                 var terms = permutations[p];
                 for (var i = 0; i < terms.length; i++) {
-                    regex += terms[i].regex(i);
+                    regex += terms[i].regexForExpression(i);
                 }
 
                 regex += stop;
@@ -704,7 +662,7 @@ $.extend(KhanUtil, {
             } else if (factors[0].toString() === '-1') {
                 regex += this.getTermsRegex(permutations, "\\s*[-\\u2212]\\s*\\(", "\\)\\s*");
             } else {
-                regex += this.getTermsRegex(permutations, factors[0].regex() + "\\*?\\s*\\(", "\\)\\s*");
+                regex += this.getTermsRegex(permutations, factors[0].regexForExpression() + "\\*?\\s*\\(", "\\)\\s*");
             }
 
             // Factor out a negative
@@ -717,7 +675,7 @@ $.extend(KhanUtil, {
             } else if (factors[0].toString === '-1') {
                 regex += this.getTermsRegex(permutations, "\\s*[-\\u2212]\\s*\\(", "\\)\\s*");
             } else {
-                regex += this.getTermsRegex(permutations, factors[0].regex() + "\\*?\\s*\\(", "\\)\\s*");
+                regex += this.getTermsRegex(permutations, factors[0].regexForExpression() + "\\*?\\s*\\(", "\\)\\s*");
             }
    
             return regex;

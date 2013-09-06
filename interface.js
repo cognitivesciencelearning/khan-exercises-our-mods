@@ -41,7 +41,7 @@ var PerseusBridge = Exercises.PerseusBridge,
     numHints,
     hintsUsed,
     lastAttemptOrHint,
-    firstProblem = true;
+    lastAttemptContent;
 
 $(Exercises)
     .bind("problemTemplateRendered", problemTemplateRendered)
@@ -52,7 +52,8 @@ $(Exercises)
     .bind("upcomingExercise", upcomingExercise)
     .bind("gotoNextProblem", gotoNextProblem)
     .bind("updateUserExercise", updateUserExercise)
-    .bind("clearExistingProblem", clearExistingProblem);
+    .bind("clearExistingProblem", clearExistingProblem)
+    .bind("showOptOut", showOptOut);
 
 
 function problemTemplateRendered() {
@@ -76,6 +77,7 @@ function problemTemplateRendered() {
     $("#check-answer-button").click(handleCheckAnswer);
     $("#answerform").submit(handleCheckAnswer);
     $("#skip-question-button").click(handleSkippedQuestion);
+    $("#opt-out-button").click(handleOptOut);
 
     // Hint button
     $("#hint").click(onHintButtonClicked);
@@ -128,6 +130,7 @@ function newProblem(e, data) {
     numHints = data.numHints;
     hintsUsed = data.userExercise ? data.userExercise.lastCountHints : 0;
     lastAttemptOrHint = new Date().getTime();
+    lastAttemptContent = null;
 
     var framework = Exercises.getCurrentFramework();
     $("#problem-and-answer")
@@ -156,9 +159,15 @@ function handleSkippedQuestion() {
     return handleAttempt({skipped: true});
 }
 
+function handleOptOut() {
+    Exercises.AssessmentQueue.end();
+    return handleAttempt({skipped: true, optOut: true});
+}
+
 function handleAttempt(data) {
     var framework = Exercises.getCurrentFramework();
     var skipped = data.skipped;
+    var optOut = data.optOut;
     var score;
 
     if (framework === "perseus") {
@@ -193,9 +202,19 @@ function handleAttempt(data) {
     }
 
     var curTime = new Date().getTime();
-    var timeTaken = Math.round((curTime - lastAttemptOrHint) / 1000);
+    var millisTaken = curTime - lastAttemptOrHint;
+    var timeTaken = Math.round(millisTaken / 1000);
     var stringifiedGuess = JSON.stringify(score.guess);
+
     lastAttemptOrHint = curTime;
+
+    // If user hasn't changed their answer and is resubmitting w/in one second
+    // of last attempt, don't allow this attempt. They're probably just
+    // smashing Enter.
+    if (stringifiedGuess === lastAttemptContent && millisTaken < 1000) {
+        return false;
+    }
+    lastAttemptContent = stringifiedGuess;
 
     Exercises.guessLog.push(score.guess);
     Exercises.userActivityLog.push([
@@ -222,6 +241,7 @@ function handleAttempt(data) {
             .focus();
         $("#positive-reinforcement").show();
         $("#skip-question-button").prop("disabled", true);
+        $("#opt-out-button").prop("disabled", true);
     } else {
         // Wrong answer. Enable all the input elements
 
@@ -254,7 +274,7 @@ function handleAttempt(data) {
     $(Exercises).trigger("checkAnswer", {
         correct: score.correct,
         card: Exercises.currentCard,
-
+        optOut: optOut,
         // Determine if this attempt qualifies as fast completion
         fast: !localMode && userExercise.secondsPerFastProblem >= timeTaken
     });
@@ -274,7 +294,8 @@ function handleAttempt(data) {
     // This needs to be after all updates to Exercises.currentCard (such as the
     // "problemDone" event) or it will send incorrect data to the server
     var attemptData = buildAttemptData(
-            score.correct, ++attempts, stringifiedGuess, timeTaken, skipped);
+            score.correct, ++attempts, stringifiedGuess, timeTaken, skipped,
+            optOut);
 
     // Save the problem results to the server
     var requestUrl = "problems/" + problemNum + "/attempt";
@@ -363,13 +384,19 @@ function onHintShown(e, data) {
     var timeTaken = Math.round((curTime - lastAttemptOrHint) / 1000);
     lastAttemptOrHint = curTime;
 
+    // When a hint is shown, clear the "last attempt content" that is used to
+    // detect duplicate, repeated attempts. Once the user clicks on a hint, we
+    // consider their next attempt to be unique and legitimate even if it's the
+    // same answer they attempted previously.
+    lastAttemptContent = null;
+
     Exercises.userActivityLog.push(["hint-activity", "0", timeTaken]);
 
     if (!previewingItem && !localMode && !userExercise.readOnly &&
             !Exercises.currentCard.get("preview") && canAttempt) {
         // Don't do anything on success or failure; silently failing is ok here
         request("problems/" + problemNum + "/hint",
-                buildAttemptData(false, attempts, "hint", timeTaken, false));
+                buildAttemptData(false, attempts, "hint", timeTaken, false, false));
     }
 }
 
@@ -392,7 +419,7 @@ function updateHintButtonText() {
 
 // Build the data to pass to the server
 function buildAttemptData(correct, attemptNum, attemptContent, timeTaken,
-                          skipped) {
+                          skipped, optOut) {
     var framework = Exercises.getCurrentFramework();
     var data;
 
@@ -418,11 +445,8 @@ function buildAttemptData(correct, attemptNum, attemptContent, timeTaken,
         // The answer the user gave
         attempt_content: attemptContent,
 
-        // Whether we're currently in review mode
-        review_mode: Exercises.reviewMode ? 1 : 0,
-
         // Whether we are currently working on a topic, as opposed to an exercise
-        topic_mode: (!Exercises.reviewMode && !Exercises.practiceMode) ? 1 : 0,
+        topic_mode: Exercises.practiceMode ? 0 : 1,
 
         // If working in the context of a LearningTask (on the new learning
         // dashboard), supply the task ID.
@@ -447,7 +471,10 @@ function buildAttemptData(correct, attemptNum, attemptContent, timeTaken,
         user_assessment_key: Exercises.userAssessmentKey,
 
         // Whether the user is skipping the question
-        skipped: skipped ? 1 : 0
+        skipped: skipped ? 1 : 0,
+
+        // Whether the user is opting out of the task
+        opt_out: optOut ? 1 : 0
     });
 
     return data;
@@ -513,16 +540,6 @@ function request(method, data) {
 
 
 function readyForNextProblem(e, data) {
-    if (!firstProblem) {
-        // As both of the following variables are only used to make sure the
-        // client matches the server on pageLoad, we will set them back to 0
-        // all other times to be on the safe side and to make sure that hints
-        // are not pre-filled in topic-mode when not the first problem.
-        data.userExercise.lastCountHints = 0;
-        data.userExercise.lastAttemptNumber = 0;
-    }
-    firstProblem = false;
-
     userExercise = data.userExercise;
     problemNum = userExercise.totalDone + 1;
 
@@ -580,6 +597,9 @@ function updateUserExercise(e, data) {
     }
 }
 
+function showOptOut() {
+    $("#opt-out-button").show();
+}
 
 function enableCheckAnswer() {
     $("#check-answer-button")
@@ -588,6 +608,10 @@ function enableCheckAnswer() {
         .val(originalCheckAnswerText);
 
     $("#skip-question-button")
+        .prop("disabled", false)
+        .removeClass("buttonDisabled");
+
+    $("#opt-out-button")
         .prop("disabled", false)
         .removeClass("buttonDisabled");
 }
@@ -599,6 +623,10 @@ function disableCheckAnswer() {
         .val($._("Please wait..."));
 
     $("#skip-question-button")
+        .prop("disabled", true)
+        .addClass("buttonDisabled");
+
+    $("#opt-out-button")
         .prop("disabled", true)
         .addClass("buttonDisabled");
 }
