@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-require="math math-format khanscript">
+<html data-require="math math-format subhints graphie">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Equations with variables on both sides</title>
@@ -7,8 +7,8 @@
 </head>
 <body>
     <div class="exercise">
-        <script type="text/khanscript">
-            Khan.scratchpad.disable();
+        <script type="text/javascript">
+        (function () { Khan.scratchpad.disable();  })()
         </script>
         <!-- equation is Ax + B = Cx + D -->
         <div class="vars">
@@ -21,8 +21,53 @@
 
         <div class="problems">
             <div>
-                <p class="question">Solve for <code>x</code>:</p>
-                <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
+                <div>
+                        <p>
+                            <a href="#" class="show-subhint"
+                               data-subhint="learn-more"
+                               data-hidden-text="Hide Information">
+                                [Click to learn about the
+                            “<span class="hint_purple"
+                                   style="font-weight: bold">What?</span>"
+                             strategy]</a>
+                        </p>
+                        <div class="subhint" id="learn-more">
+                            To use this strategy, ask yourself this
+                           "<span class="hint_purple" style="font-weight: bold">
+                               What?</span>"
+                            question after each hint in a problem.
+                            <br>
+                            <br>
+                            <span class="hint_purple" style="font-weight: bold">
+                                What is this step saying? Restate it in your
+                                own words.</span>
+                            <br>
+                            <br>
+                            As a reminder to ask yourself this question,
+                            it will sometimes appear in
+                            <span class="hint_purple" style="font-weight: bold">
+                                purple</span>.
+                            <br>
+                            <br>
+                            <a href="#" class="show-subhint"
+                               data-subhint="encouragement"
+                               data-hidden-text="Hide Information">
+                                What if I can’t do it?</a>
+                            <div class="subhint" id="encouragement">
+                                Many students are not sure what to say, or think
+                                their answer isn’t good. That is fine, as long
+                                as you
+                                <span style="font-weight: bold;
+                                      font-style:italic">
+                                    try</span>
+                                to think about the question, by typing
+                                or saying the answer to yourself.
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="question">Solve for <code>x</code>:</p>
+                    <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
 
                 <div class="solution" data-type="custom">
                     <div class="instruction">
@@ -48,23 +93,23 @@
                         else {
                             $("#guessans").val("");
                             if ($("#firsttext").length &gt; 0) {
-                                $("#firsttext").text("");
-                                $("#secondtext").text("");
+                                $("#firsttext").val("");
+                                $("#secondtext").val("");
                             }
                             if ($("#thirdtext").length &gt; 0) {
-                                $("#thirdtext").text("");
-                                $("#fourthtext").text("");
+                                $("#thirdtext").val("");
+                                $("#fourthtext").val("");
                             }
                         }
                     </div>
                     <div class="show-guess">
                         if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                            guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                            guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                            $("#firsttext").val(guess[1]);
+                            $("#secondtext").val(guess[2]);
                         }
                         if (guess != null &amp;&amp; $("#thirdtext").length &gt; 0) {
-                            guess[3] === null ? $("#thirdtext").text("") : $("#thirdtext").text(guess[3]);
-                            guess[4] === null ? $("#fourthtext").text("") : $("#fourthtext").text(guess[4]);
+                            $("#thirdtext").val(guess[3]);
+                            $("#thirdtext").val(guess[4]);
                         }
                     </div>
                     <div class="example">an integer, like <code>6</code></div>
@@ -84,13 +129,25 @@
                     <p><code><var>A - C</var>x + <var>B</var> = <var>D</var></code></p>
                 </div>
                 <div>
-                    <p data-if="B > 0">Subtract <code><var>abs(B)</var></code> from both sides:</p><p data-else="">Add <code><var>abs(B)</var></code> to both sides:</p>
+                    <p class="hint_purple" style="font-weight: bold">
+                        What is this step saying? Restate it in your own words.
+                    </p>
+                    <input type="text" id="firsttext" style="width:75%;">
+                </div>
+                <div>
+                    <p><var>B &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B &gt; 0 ? "from" : "to"</var> both sides:</p>
                     <p><code>(<var>A - C</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
                     <p><code><var>A - C</var>x = <var>D - B</var></code></p>
                 </div>
                 <div>
                     <p>Divide both sides by <code><var>A - C</var></code>.</p>
                     <p><code>\frac{<var>A - C</var>x}{<var>A - C</var>} = \frac{<var>D - B</var>}{<var>A - C</var>}</code></p>
+                </div>
+                 <div>
+                    <p class="hint_purple" style="font-weight: bold">
+                        What is this step saying? Restate it in your own words.
+                    </p>
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>
@@ -104,7 +161,13 @@
                     <p><code><var>B</var> = <var>C - A</var>x + <var>D</var></code></p>
                 </div>
                 <div>
-                    <p data-if="D > 0">Subtract <code><var>abs(D)</var></code> from both sides:</p><p data-else="">Add <code><var>abs(D)</var></code> to both sides:</p>
+                    <p class="hint_purple" style="font-weight: bold">
+                        What is this step saying? Restate it in your own words.
+                    </p>
+                    <input type="text" id="thirdtext" style="width:75%;">
+                </div>
+                <div>
+                    <p><var>D &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D &gt; 0 ? "from" : "to"</var> both sides:</p>
                     <p><code><var>B</var> + <var>-D</var> = (<var>C - A</var>x + <var>D</var>) + <var>-D</var></code></p>
                     <p><code><var>B - D</var> = <var>C - A</var>x</code></p>
                 </div>
@@ -112,12 +175,18 @@
                     <p>Divide both sides by <code><var>C - A</var></code>.</p>
                     <p><code>\dfrac{<var>B - D</var>}{<var>C - A</var>} = \dfrac{<var>C - A</var>x}{<var>C - A</var>}</code></p>
                 </div>
+                 <div>
+                    <p class="hint_purple" style="font-weight: bold">
+                        What is this step saying? Restate it in your own words.
+                    </p>
+                    <input type="text" id="fourthtext" style="width:75%;">
+                </div>
                 <div>
                     <p>Simplify.</p>
                     <p><code><var>SOLUTION</var> = x</code></p>
                 </div>
             </div>
         </div>
-    </div>
+     </div>
 </body>
 </html>

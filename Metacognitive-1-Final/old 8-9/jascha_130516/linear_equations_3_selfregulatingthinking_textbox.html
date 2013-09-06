@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-require="math math-format subhints graphie khanscript">
+<html data-require="math math-format subhints graphie">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Equations with variables on both sides</title>
@@ -7,8 +7,8 @@
 </head>
 <body>
     <div class="exercise">
-        <script type="text/khanscript">
-            Khan.scratchpad.disable();
+        <script type="text/javascript">
+        (function () { Khan.scratchpad.disable();  })()
         </script>
         <!-- equation is Ax + B = Cx + D -->
         <div class="vars">
@@ -49,8 +49,8 @@
                             How well is your current approach to this problem
                             working?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                            As a reminder to ask yourself these questions,
+                            they will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
@@ -72,7 +72,6 @@
                 </div>
                 <p class="question">Solve for <code>x</code>:</p>
                 <div><code><var>A</var>x + <var>B</var> = <var>C</var>x + <var>D</var></code></div>
-
                 <div class="solution" data-type="custom">
                     <div class="instruction">
                        <code>x =</code> <input type="text" id="guessans">
@@ -85,42 +84,32 @@
                         $("#fourthtext").val()
                     ]</div>
                     <div class="validator-function">
-                        var correct = ( D - B ) / ( A - C );
-                        var solutionDiv = $("&lt;div&gt;").text(correct);
-                        var validator = Khan.answerTypes.number.createValidator(solutionDiv);
-                        return validator(guess[0]);
+                      var correct = ( D - B ) / ( A - C );
+                      var solutionDiv = $("&lt;div&gt;").text(correct);
+                      var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+                      return validator(guess[0]);
                     </div>
                     <div class="show-guess-solutionarea">
-                        if (guess != null) {
-                            $("#guessans").val(guess[0]);
-                        }
-                        else {
-                            $("#guessans").val("");
-                            if ($("#firsttext").length &gt; 0) {
-                                $("#firsttext").text("");
-                                $("#secondtext").text("");
-                            }
-                            if ($("#thirdtext").length &gt; 0) {
-                                $("#thirdtext").text("");
-                                $("#fourthtext").text("");
-                            }
-                        }
-                    </div>
-                    <div class="show-guess">
-                        if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                            guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                            guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
-                        }
-                        if (guess != null &amp;&amp; $("#thirdtext").length &gt; 0) {
-                            guess[3] === null ? $("#thirdtext").text("") : $("#thirdtext").text(guess[3]);
-                            guess[4] === null ? $("#fourthtext").text("") : $("#fourthtext").text(guess[4]);
-                        }
+                      if (guess != null) {
+                          $("#guessans").val(guess[0]);
+                          $("#firsttext").val(guess[1]);
+                          $("#secondtext").val(guess[2]);
+                          $("#thirdtext").val(guess[3]);
+                          $("#fourthtext").val(guess[4]);
+                      }
+                      else {
+                          $("#guessans").val("");
+                          $("#firsttext").val("");
+                          $("#secondtext").val("");
+                          $("#thirdtext").val("");
+                          $("#fourthtext").val("");
+                      }
                     </div>
                     <div class="example">an integer, like <code>6</code></div>
                     <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
                     <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
                     <div class="example">a mixed number, like <code>1\ 3/4</code></div>
-                    <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+                    <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>        
                 </div>
             </div>
         </div>
@@ -147,10 +136,11 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
+                    <input type="text"  id="firsttext" style="width:75%;">
                 </div>
                 <div>
-                    <p data-if="B > 0">Subtract <code><var>abs(B)</var></code> from both sides:</p><p data-else="">Add <code><var>abs(B)</var></code> to both sides:</p>
+                    <p><var>B &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(B)</var></code> <var>B &gt; 0 ? "from" : "to"</var> both sides:
+                        </p>
                     <p><code>(<var>A - C</var>x + <var>B</var>) + <var>-B</var> = <var>D</var> + <var>-B</var></code></p>
                     <p><code><var>A - C</var>x = <var>D - B</var></code></p>
                 </div>
@@ -173,7 +163,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
+                    <input type="text"  id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>
@@ -201,10 +191,10 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="thirdtext" style="width:75%;"></textarea>
+                    <input type="text"  id="thirdtext" style="width:75%;">
                 </div>
                 <div>
-                    <p data-if="D > 0">Subtract <code><var>abs(D)</var></code> from both sides:</p><p data-else="">Add <code><var>abs(D)</var></code> to both sides:</p>
+                    <p><var>D &gt; 0 ? "Subtract" : "Add"</var> <code><var>abs(D)</var></code> <var>D &gt; 0 ? "from" : "to"</var> both sides:</p>
                     <p><code><var>B</var> + <var>-D</var> = (<var>C - A</var>x + <var>D</var>) + <var>-D</var></code></p>
                     <p><code><var>B - D</var> = <var>C - A</var>x</code></p>
                 </div>
@@ -227,7 +217,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="fourthtext" style="width:75%;"></textarea>
+                    <input type="text"  id="fourthtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Simplify.</p>

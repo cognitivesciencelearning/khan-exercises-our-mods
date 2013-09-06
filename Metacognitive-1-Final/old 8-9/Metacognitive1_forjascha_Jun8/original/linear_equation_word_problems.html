@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-require="math math-format word-problems khanscript graphie subhints">
+<html data-require="math math-format word-problems khanscript">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Linear equation word problems</title>
@@ -19,101 +19,19 @@
                 <var id="X">ceil((R - Q) / P)</var>
             </div>
 
-            <div class="problem" data-if="isMale(1)">
-                <div id="strategy">
-                    <p>
-                        <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
-                    </p>
-                    <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
-                        <br>
-                        <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
-                        <br>
-                        <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
-                        <br>
-                        <br>
-                        <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
-                        <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
-                        </div>
-                    </div>
-                </div>
+            <p class="problem" data-if="isMale(1)">
                 <var>person(1)</var> sells magazine subscriptions and earns
                 <code>$<var>P</var></code> for every new subscriber
                 he signs up. <var>person(1)</var> also earns a
                 <code>$<var>Q</var></code> weekly bonus regardless of how many
                 magazine subscriptions he sells.
-            </div><div class="problem" data-else="">
-                <div id="strategy">
-                    <p>
-                        <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
-                    </p>
-                    <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
-                        <br>
-                        <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
-                        <br>
-                        <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
-                        <br>
-                        <br>
-                        <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
-                        <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
-                        </div>
-                    </div>
-                </div>
+            </p><p class="problem" data-else="">
                 <var>person(1)</var> sells magazine subscriptions and earns
                 <code>$<var>P</var></code> for every new subscriber
                 she signs up. <var>person(1)</var> also earns a
                 <code>$<var>Q</var></code> weekly bonus regardless of how many
                 magazine subscriptions she sells.
-            </div>
+            </p>
             <p class="question" data-if="isMale(1)">
                 If <var>person(1)</var> wants to earn at least
                 <code>$<var>R</var></code> this week, what is the minimum
@@ -146,15 +64,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -163,9 +81,6 @@
             <div class="hints">
                 <p>To solve this, let's set up an expression to show how much
                     money <var>person(1)</var> will make.</p>
-                <p class="hint_purple" style="font-weight: bold">
-                    What is this step saying? Restate it in your own words.
-                </p>
                 <p>
                     <span>Amount earned this week <code>=</code></span><br>
                     <span><code>\qquad</code>Subscriptions sold
@@ -175,9 +90,6 @@
                 <p>Since <var>person(1)</var> wants to make
                     <strong>at least</strong> <code>$<var>R</var></code> this
                     week, we can turn this into an inequality.</p>
-                <p class="hint_purple" style="font-weight: bold">
-                    What is this step saying? Restate it in your own words.
-                </p>
                 <div>
                     <p>Amount earned this week
                         <code>\geq $<var>R</var></code></p>
@@ -229,103 +141,21 @@
                 <var id="X">ceil((R - Q) / P)</var>
             </div>
 
-            <div class="problem" data-if="isMale(1)">
-                <div id="strategy">
-                    <p>
-                        <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
-                    </p>
-                    <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
-                        <br>
-                        <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
-                        <br>
-                        <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
-                        <br>
-                        <br>
-                        <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
-                        <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
-                        </div>
-                    </div>
-                </div>
+            <p class="problem" data-if="isMale(1)">
                 For every level <var>person(1)</var> completes in
                 his favorite game, he earns
                 <code><var>P</var></code> points. <var>person(1)</var> already
                 has <code><var>Q</var></code> points in the game and wants to
                 end up with at least <code><var>R</var></code> points before
                 he goes to bed.
-            </div><div class="problem" data-else="">
-                <div id="strategy">
-                    <p>
-                        <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
-                    </p>
-                    <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
-                        <br>
-                        <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
-                        <br>
-                        <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
-                        <br>
-                        <br>
-                        <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
-                        <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
-                        </div>
-                    </div>
-                </div>
+            </p><p class="problem" data-else="">
                 For every level <var>person(1)</var> completes in
                 her favorite game, she earns
                 <code><var>P</var></code> points. <var>person(1)</var> already
                 has <code><var>Q</var></code> points in the game and wants to
                 end up with at least <code><var>R</var></code> points before
                 she goes to bed.
-            </div>
+            </p>
             <p class="question" data-if="isMale(1)">
                 What is the minimum number of complete levels that
                 <var>person(1)</var> needs to complete to reach
@@ -358,15 +188,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -375,9 +205,6 @@
             <div class="hints">
                 <p>To solve this, let's set up an expression to show how many
                     points <var>person(1)</var> will have after each level.</p>
-                <p class="hint_purple" style="font-weight: bold">
-                    What is this step saying? Restate it in your own words.
-                </p>
                 <p>
                     <span>Number of points <code>=</code></span><br>
                     <span><code>\qquad</code>Levels completed
@@ -388,9 +215,6 @@
                     Since <var>person(1)</var> wants to have
                     <strong>at least</strong> <code><var>R</var></code> points
                     before going to bed, we can set up an inequality.
-                </p>
-                <p class="hint_purple" style="font-weight: bold">
-                    What is this step saying? Restate it in your own words.
                 </p>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -446,99 +270,17 @@
                 <var id="X">ceil(( R - Q ) / P)</var>
             </div>
 
-            <div class="problem" data-if="isMale(1)">
-                <div id="strategy">
-                    <p>
-                        <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
-                    </p>
-                    <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
-                        <br>
-                        <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
-                        <br>
-                        <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
-                        <br>
-                        <br>
-                        <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
-                        <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
-                        </div>
-                    </div>
-                </div>
+            <p class="problem" data-if="isMale(1)">
                 To move up to the maestro level in his piano
                 school, <var>person(1)</var> needs to master at least
                 <code><var>R</var></code> songs. <var>person(1)</var> has
                 already mastered <code><var>Q</var></code> songs.
-            </div><div class="problem" data-else="">
-                <div id="strategy">
-                    <p>
-                        <a href="#" class="show-subhint"
-                          data-subhint="learn-more"
-                          data-hidden-text="Hide Information">
-                            [Click to learn about the
-                            “<span class="hint_purple" style="font-weight: bold">
-                            What?</span>" strategy]</a>
-                    </p>
-                    <div class="subhint" id="learn-more">
-                        To use this strategy, ask yourself this
-                        "<span class="hint_purple" style="font-weight: bold">
-                            What?</span>"
-                        question after each hint in a problem.
-                        <br>
-                        <br>
-                        <span class="hint_purple" style="font-weight: bold">What
-                            is this step saying? Restate it in your own words.
-                        </span>
-                        <br>
-                        <br>
-                        As a reminder to ask yourself this question,  it will
-                        sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
-                        <br>
-                        <br>
-                        <a href="#" class="show-subhint"
-                           data-subhint="encouragement"
-                           data-hidden-text="Hide Information">
-                            What if I can’t do it?</a>
-                        <div class="subhint" id="encouragement">
-                            Many students are not sure what to say, or think
-                           their answer isn’t good. That is fine, as long as you
-                            <span style="font-weight: bold; font-style:italic">
-                                try</span>
-                           to think about the question, by typing or saying the
-                           answer to yourself.
-                        </div>
-                    </div>
-                </div>
+            </p><p class="problem" data-else="">
                 To move up to the maestro level in her piano
                 school, <var>person(1)</var> needs to master at least
                 <code><var>R</var></code> songs. <var>person(1)</var> has
                 already mastered <code><var>Q</var></code> songs.
-            </div>
+            </p>
             <p class="question">
                 If <var>person(1)</var> can typically master
                 <code><var>P</var></code> songs per month, what is the minimum
@@ -568,15 +310,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -586,9 +328,6 @@
                 <p>To solve this, let's set up an expression to show how many
                     songs <var>person(1)</var> will have mastered after each
                     month.</p>
-                <p class="hint_purple" style="font-weight: bold">
-                    What is this step saying? Restate it in your own words.
-                </p>
                 <p>
                     <span>Number of songs mastered <code>=</code></span><br>
                     <span><code>\quad</code>Months at school
@@ -600,9 +339,6 @@
                     <strong>at least</strong> <code><var>R</var></code> songs
                     mastered to move to maestro level, we can set up an
                     inequality to find the number of months needed.
-                </p>
-                <p class="hint_purple" style="font-weight: bold">
-                    What is this step saying? Restate it in your own words.
                 </p>
                 <div>
                     <p>Number of songs mastered <code>\geq

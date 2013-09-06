@@ -24,39 +24,36 @@
                 <div id="strategy">
                     <p>
                         <a href="#" class="show-subhint"
-                           data-subhint="learn-more"
-                           data-hidden-text="Hide Information">
-                            [Click to learn about the
-                        “<span class="hint_purple" style="font-weight: bold">
-                            What? Why? How?</span>"
-                            strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
-                        questions while solving a problem.
+                        questions after each hint in a problem.
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            What are you doing or thinking right now?</span>
+                            What does this step mean to you?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            Why is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            Why is it helpful to take this step?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            How well is your current approach to this problem
-                            working?</span>
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                            data-subhint="encouragement"
-                            data-hidden-text="Hide Information">
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
@@ -77,39 +74,36 @@
                 <div id="strategy">
                     <p>
                         <a href="#" class="show-subhint"
-                           data-subhint="learn-more"
-                           data-hidden-text="Hide Information">
-                            [Click to learn about the
-                        “<span class="hint_purple" style="font-weight: bold">
-                            What? Why? How?</span>"
-                            strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
-                        questions while solving a problem.
+                        questions after each hint in a problem.
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            What are you doing or thinking right now?</span>
+                            What does this step mean to you?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            Why is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            Why is it helpful to take this step?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            How well is your current approach to this problem
-                            working?</span>
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                            data-subhint="encouragement"
-                            data-hidden-text="Hide Information">
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
@@ -159,15 +153,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -179,19 +173,16 @@
                 <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
-                            are you doing or thinking right now?</span>
+                            does this step mean to you?</span>
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            is it helpful to take this step?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
                         <span class="hint_purple" style="font-weight: bold">How
-                            well is your current approach to this problem
-                            working?</span>
+                            do you know this step is right?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
                 </div>
                 <p>
                     <span>Amount earned this week <code>=</code></span><br>
@@ -205,19 +196,16 @@
                 <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
-                            are you doing or thinking right now?</span>
+                            does this step mean to you?</span>
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            is it helpful to take this step?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
                         <span class="hint_purple" style="font-weight: bold">How
-                            well is your current approach to this problem
-                            working?</span>
+                            do you know this step is right?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
                 </div>
                 <div>
                     <p>Amount earned this week
@@ -275,39 +263,36 @@
                 <div id="strategy">
                     <p>
                         <a href="#" class="show-subhint"
-                           data-subhint="learn-more"
-                           data-hidden-text="Hide Information">
-                            [Click to learn about the
-                        “<span class="hint_purple" style="font-weight: bold">
-                            What? Why? How?</span>"
-                            strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
-                        questions while solving a problem.
+                        questions after each hint in a problem.
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            What are you doing or thinking right now?</span>
+                            What does this step mean to you?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            Why is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            Why is it helpful to take this step?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            How well is your current approach to this problem
-                            working?</span>
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                            data-subhint="encouragement"
-                            data-hidden-text="Hide Information">
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
@@ -329,39 +314,36 @@
                 <div id="strategy">
                     <p>
                         <a href="#" class="show-subhint"
-                           data-subhint="learn-more"
-                           data-hidden-text="Hide Information">
-                            [Click to learn about the
-                        “<span class="hint_purple" style="font-weight: bold">
-                            What? Why? How?</span>"
-                            strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
-                        questions while solving a problem.
+                        questions after each hint in a problem.
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            What are you doing or thinking right now?</span>
+                            What does this step mean to you?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            Why is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            Why is it helpful to take this step?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            How well is your current approach to this problem
-                            working?</span>
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                            data-subhint="encouragement"
-                            data-hidden-text="Hide Information">
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
@@ -412,15 +394,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -432,19 +414,16 @@
                 <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
-                            are you doing or thinking right now?</span>
+                            does this step mean to you?</span>
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            is it helpful to take this step?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
                         <span class="hint_purple" style="font-weight: bold">How
-                            well is your current approach to this problem
-                            working?</span>
+                            do you know this step is right?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
                 </div>
                 <p>
                     <span>Number of points <code>=</code></span><br>
@@ -460,19 +439,16 @@
                 <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
-                            are you doing or thinking right now?</span>
+                            does this step mean to you?</span>
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            is it helpful to take this step?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
                         <span class="hint_purple" style="font-weight: bold">How
-                            well is your current approach to this problem
-                            working?</span>
+                            do you know this step is right?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
                 </div>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -533,39 +509,36 @@
                 <div id="strategy">
                     <p>
                         <a href="#" class="show-subhint"
-                           data-subhint="learn-more"
-                           data-hidden-text="Hide Information">
-                            [Click to learn about the
-                        “<span class="hint_purple" style="font-weight: bold">
-                            What? Why? How?</span>"
-                            strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
-                        questions while solving a problem.
+                        questions after each hint in a problem.
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            What are you doing or thinking right now?</span>
+                            What does this step mean to you?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            Why is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            Why is it helpful to take this step?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            How well is your current approach to this problem
-                            working?</span>
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                            data-subhint="encouragement"
-                            data-hidden-text="Hide Information">
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
@@ -585,39 +558,36 @@
                 <div id="strategy">
                     <p>
                         <a href="#" class="show-subhint"
-                           data-subhint="learn-more"
-                           data-hidden-text="Hide Information">
-                            [Click to learn about the
-                        “<span class="hint_purple" style="font-weight: bold">
-                            What? Why? How?</span>"
-                            strategy]</a>
+                        data-subhint="learn-more"
+                        data-hidden-text="Hide Information">
+                           [Click to learn about the
+                           “<span class="hint_purple" style="font-weight: bold">
+                           What? Why? How?</span>" strategy]</a>
                     </p>
                     <div class="subhint" id="learn-more">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
                             What? Why? How?</span>"
-                        questions while solving a problem.
+                        questions after each hint in a problem.
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            What are you doing or thinking right now?</span>
+                            What does this step mean to you?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            Why is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            Why is it helpful to take this step?</span>
                         <br>
                         <span class="hint_purple" style="font-weight: bold">
-                            How well is your current approach to this problem
-                            working?</span>
+                            How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions,
-                        they will sometimes appear in
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
                         <span class="hint_purple" style="font-weight: bold">
                             purple</span>.
                         <br>
                         <br>
                         <a href="#" class="show-subhint"
-                            data-subhint="encouragement"
-                            data-hidden-text="Hide Information">
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
@@ -663,15 +633,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -684,19 +654,16 @@
                 <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
-                            are you doing or thinking right now?</span>
+                            does this step mean to you?</span>
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            is it helpful to take this step?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
                         <span class="hint_purple" style="font-weight: bold">How
-                            well is your current approach to this problem
-                            working?</span>
+                            do you know this step is right?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
                 </div>
                 <p>
                     <span>Number of songs mastered <code>=</code></span><br>
@@ -713,19 +680,16 @@
                 <div>
                     <div data-if="HINTRAND === 1">
                         <span class="hint_purple" style="font-weight: bold">What
-                            are you doing or thinking right now?</span>
+                            does this step mean to you?</span>
                     </div>
                     <div data-else-if="HINTRAND === 2">
                         <span class="hint_purple" style="font-weight: bold">Why
-                            is what you are currently doing helpful?
-                            Why is it useful for achieving your goal?</span>
+                            is it helpful to take this step?</span>
                     </div>
                     <div data-else-if="HINTRAND === 3">
                         <span class="hint_purple" style="font-weight: bold">How
-                            well is your current approach to this problem
-                            working?</span>
+                            do you know this step is right?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
                 </div>
                 <div>
                     <p>Number of songs mastered <code>\geq

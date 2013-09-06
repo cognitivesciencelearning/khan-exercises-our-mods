@@ -159,15 +159,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -191,7 +191,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
+                    <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Amount earned this week <code>=</code></span><br>
@@ -217,7 +217,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Amount earned this week
@@ -412,15 +412,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -444,7 +444,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
+                    <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of points <code>=</code></span><br>
@@ -472,7 +472,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of points <code>\geq <var>R</var></code></p>
@@ -663,15 +663,15 @@
                     else {
                         $("#guessans").val("");
                         if ($("#firsttext").length &gt; 0) {
-                            $("#firsttext").text("");
-                            $("#secondtext").text("");
+                            $("#firsttext").val("");
+                            $("#secondtext").val("");
                         }
                     }
                 </div>
                 <div class="show-guess">
                     if (guess != null &amp;&amp; $("#firsttext").length &gt; 0) {
-                        guess[1] === null ? $("#firsttext").text("") : $("#firsttext").text(guess[1]);
-                        guess[2] === null ? $("#secondtext").text("") : $("#secondtext").text(guess[2]);
+                        $("#firsttext").val(guess[1]);
+                        $("#secondtext").val(guess[2]);
                     }
                 </div>
                 <div class="example">an integer, like <code>6</code></div>
@@ -696,7 +696,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="firsttext" style="width:75%;"></textarea>
+                    <input type="text" id="firsttext" style="width:75%;">
                 </div>
                 <p>
                     <span>Number of songs mastered <code>=</code></span><br>
@@ -725,7 +725,7 @@
                             well is your current approach to this problem
                             working?</span>
                     </div>
-                    <textarea id="secondtext" style="width:75%;"></textarea>
+                    <input type="text" id="secondtext" style="width:75%;">
                 </div>
                 <div>
                     <p>Number of songs mastered <code>\geq
