@@ -1,3 +1,98 @@
+"""
+Code to take a list of problem cards, and select and add motivational text to 
+each of the problem cards.  For use in the growth mindset A/B test.
+"""
+
+import experiments
+import random
+import event_log
+
+# the names of the exercises being targeted with this intervention
+# (currently, this is the fractions topic)
+target_exercises = [
+    'adding_and_subtracting_fractions',
+    'adding_fractions',
+    'adding_fractions_with_common_denominators',
+    'changing_fractions_to_decimals_1',
+    'changing_fractions_to_percents',
+    'changing_percents_to_fractions',
+    'comparing_fractions_1',
+    'comparing_fractions_2',
+    'comparing_improper_fractions_and_mixed_numbers',
+    'converting_decimals_to_fractions_1',
+    'converting_decimals_to_fractions_2',
+    'converting_fractions_to_decimals',
+    'converting_mixed_numbers_and_improper_fractions',
+    'converting_repeating_decimals_to_fractions_1',
+    'converting_repeating_decimals_to_fractions_2',
+    'dividing_fractions',
+    'dividing_fractions_0.5',
+    'dividing_fractions_alternative',
+    'dividing_fractions_word_problems',
+    'equivalent_fractions',
+    'equivalent_fractions_2',
+    'expressing_ratios_as_fractions',
+    'fractions_cut_and_copy_1',
+    'fractions_cut_and_copy_2',
+    'fractions_on_the_number_line_1',
+    'fractions_on_the_number_line_2',
+    'fractions_on_the_number_line_3',
+    'fraction_word_problems_1',
+    'multiplying_fractions',
+    'multiplying_fractions_0.5',
+    'multiplying_fractions_word_problems',
+    'ordering_fractions',
+    'ordering_improper_fractions_and_mixed_numbers',
+    'recognizing_fractions',
+    'recognizing_fractions_0.5',
+    'simplifying_fractions',
+    'subtracting_fractions',
+    'subtracting_fractions_with_common_denominators',
+    ]
+
+# the growth mindset messages
+growth_messages = [
+    "Remember, the more you practice the smarter you become!",
+    "When you learn a new kind of math problem, you grow your math brain!",
+    "If this is challenging, you have an opportunity to learn and become"
+    " smarter!",
+    "Mistakes help you learn. Think hard to learn from them",
+    "The more you learn today, the smarter you'll be tomorrow!",
+    "The harder you try the better you get!",
+    "Did you know... Your brain gets better the more you use it.",
+    "If you make a mistake, it's an opportunity to get smarter!",
+    "Your brain is like a muscle."
+    "  The more you flex it, the more powerful it gets!",
+    "Thinking hard makes your brain grow stronger!"
+    "  Think hard about these math exercises.",
+    "Your brain grows new connections every time you practice."
+    "  Help your brain grow new connections!",
+    "When you have to think harder, it makes you smarter!",
+    "Make your brain more powerful!  Practice hard!",
+    "Give your brain a workout.  The more you use it,"
+    " the stronger it gets.",
+    ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def add_header_text_to_cards(card, user_exercise):
     """
    Adds header text to a problem card based on exercise and
@@ -35,7 +130,7 @@ def add_header_text_to_cards(card, user_exercise):
         card.growthHeader = ""
         
     elif test_condition == "learning support.message + link":
-        message = “Click here to get tips for motivating yourself and learning more quickly:”
+        message = "Click here to get tips for motivating yourself and learning more quickly:"
         card.growthHeader = ('<p><em>' + message + '</em>'
                              '&nbsp&nbsp&nbsp<FONT SIZE="-5">'
                              '<a href=/brainworkout_1 target="_blank">'
@@ -43,8 +138,8 @@ def add_header_text_to_cards(card, user_exercise):
                              '</FONT></p>')
                              
     elif test_condition == "learning support.single scaffold":
-        message = “Click here to get tips for motivating yourself and learning more quickly:”
-        card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here for learning tips</a></p>'
+        message = random.choice(growth_messages)
+        card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here to get tips for motivating yourself and learning more quickly</a></p>'
                               '<div class="subhint" id="help-me">'
                               '<a href="#" class="show-subhint" data-subhint="mindset-message">I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
                               '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
