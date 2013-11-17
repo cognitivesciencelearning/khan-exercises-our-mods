@@ -116,7 +116,8 @@ def add_header_text_to_cards(card, user_exercise):
         # nested experiments because only 4 conditions are supported in
         # GAE/Bingo
         
-        # Single Scaffold is the learning coach, message + link is just the growth mindset+ link for original expt.
+        # Single Scaffold is the learning coach, message + link sends people to another page with learning tutor
+        # (currently just an exercise we made with the learning tutor at the top)
        
         test_subcondition = experiments.CoreMetrics.ab_test(
             "learning support subtest",
@@ -133,7 +134,7 @@ def add_header_text_to_cards(card, user_exercise):
         message = "Click here to get tips for motivating yourself and learning more quickly:"
         card.growthHeader = ('<p><em>' + message + '</em>'
                              '&nbsp&nbsp&nbsp<FONT SIZE="-5">'
-                             '<a href=/brainworkout_1 target="_blank">'
+                             '<a href=http://tiny.cc/learningtutor target="_blank">'
                              'LEARN MORE</a>'
                              '</FONT></p>')
                              
