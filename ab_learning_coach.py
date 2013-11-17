@@ -5,7 +5,7 @@ def add_header_text_to_cards(card, user_exercise):
    """
 
     if not (card.exercise_name in target_exercises):
-        card.growthHeader = ""
+        card.growthHeader = ""     # card refers to the problem object. growthHeader is an attribute of the card.
         return
 
     # A/B test condition. “KIND OF HEADER”
@@ -13,13 +13,16 @@ def add_header_text_to_cards(card, user_exercise):
     test_condition = experiments.CoreMetrics.ab_test("learning support and header",
             alternative_params={
                 "no header": 5,
-                "learning support": 3, "header": 4},
+                "learning support": 1, 
+                "header": 1},
             core_categories='all')
 
     if test_condition == "learning support":
         # nested experiments because only 4 conditions are supported in
         # GAE/Bingo
+        
         # Single Scaffold is the learning coach, message + link is just the growth mindset+ link for original expt.
+       
         test_subcondition = experiments.CoreMetrics.ab_test(
             "learning support subtest",
             alternative_params={
@@ -30,15 +33,17 @@ def add_header_text_to_cards(card, user_exercise):
         
     if test_condition == "no header":
         card.growthHeader = ""
+        
     elif test_condition == "learning support.message + link":
-        message = random.choice(growth_messages)
+        message = “Click here to get tips for motivating yourself and learning more quickly:”
         card.growthHeader = ('<p><em>' + message + '</em>'
                              '&nbsp&nbsp&nbsp<FONT SIZE="-5">'
                              '<a href=/brainworkout_1 target="_blank">'
                              'LEARN MORE</a>'
                              '</FONT></p>')
+                             
     elif test_condition == "learning support.single scaffold":
-        message = random.choice(growth_messages)
+
         card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here for learning tips</a></p>'
                               '<div class="subhint" id="help-me">'
                               '<a href="#" class="show-subhint" data-subhint="mindset-message">I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
@@ -80,6 +85,7 @@ def add_header_text_to_cards(card, user_exercise):
                               ' try</span>'
                               ' to think about the question, by typing or saying the answer to yourself.'
                               '</div></div></div></div>')
+                              
     elif test_condition == "header":
         message = random.choice(mindset_messages)
         card.growthHeader = "<p><em>" + message + "</em></p>"
