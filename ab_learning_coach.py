@@ -43,7 +43,7 @@ def add_header_text_to_cards(card, user_exercise):
                              '</FONT></p>')
                              
     elif test_condition == "learning support.single scaffold":
-
+        message = “Click here to get tips for motivating yourself and learning more quickly:”
         card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here for learning tips</a></p>'
                               '<div class="subhint" id="help-me">'
                               '<a href="#" class="show-subhint" data-subhint="mindset-message">I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
