@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems spin subhints">
+<head>
+    <meta charset="UTF-8" />
+    <title>Z-scores 1</title>
+    <script src="../khan-exercise.js"></script>
+    <style type="text/css">
+
+label {
+    float: left;
+    padding: 0 0.8em; /**1em**/
+    text-align: center;
+}
+
+div.box {
+	width: 100%; 
+}
+
+div.div1 {
+	float: left; 
+	height: 100%; 
+	width: auto; 
+}
+
+div.div2 {
+	float: right; 
+	height: 100%; 
+}
+
+div.clear { 
+	clear: both; 
+	height: 1px; 
+	overflow: hidden; 
+	font-size:0pt; 
+	margin-top: -1px; 
+}
+
+</style>
+
+<!-- changesZZZ end CSS styles -->
+
+	
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="original">
+                <div class="vars">
+                    <var id="MEAN">randRange( 65, 85 )</var>
+                    <var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+                    <var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+                    <var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+                </div>
+
+            <div class="problem">
+
+               	<!-- Here we start meddling with stuff!:) -->	  
+                <div>
+                    <p><a href="#" class="show-subhint" data-subhint="help-me">Click here for learning tips</a></p>
+                     <div class="subhint" id="help-me">
+                        <a href="#" class="show-subhint" data-subhint="mindset-message">I'm feeling discouraged, I'd like a motivational message.</a>
+                        <div class="subhint" id="mindset-message"><p>Remember, the harder you try, the more you grow your math brain!</p>
+                            <p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>
+                            <div class="subhint" id="mindset-tellmore">Even if it's tough, the time you spend working help you form more connections that will help you solve future problems.</div>
+                            <p><a href="#" class="show-subhint" data-subhint="mindset-altmore">How do you motivate yourself?</a></p>                            
+                            <div class="subhint" id="mindset-altmore">What would you tell another student to get motivated?</div>
+                        </div>
+                    <p><a href="#" class="show-subhint" data-subhint="learn-strat">Would you like some suggestions for problem-solving strategies?</a></p>
+                    <div class="subhint" id="learn-strat">
+                        <a href="#" class="show-subhint" data-subhint="what-why-how">Click here to learn about the "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>
+                        <div class="subhint" id="what-why-how">
+                        To use this strategy, ask yourself these
+                        “<span class="hint_purple" style="font-weight: bold">
+                            What? Why? How?</span>"
+                        questions after each hint in a problem.
+                        <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            What does this step mean to you?</span>
+                        <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            Why is it helpful to take this step?</span>
+                        <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            How do you know this step is right?</span>
+                        <br>
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
+                        <span class="hint_purple" style="font-weight: bold">
+                            purple</span>.
+                        <br>
+                        <br>
+                        <a href="#" class="show-subhint"
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
+                            What if I can’t do it?</a>
+                        <div class="subhint" id="encouragement">
+                            Many students are not sure what to say, or think
+                            their answer isn’t good. That is fine, as long as you
+                            <span style="font-weight: bold; font-style:italic">
+                                try</span>
+                            to think about the question, by typing or saying the
+                            answer to yourself.
+                        </div>
+                    </div>
+                    </div>
+                      </div>           
+                <div>              
+                    <p>
+                    The grades on <var>an( course( 1 ) )</var> midterm at <var>school( 1 )</var> are normally distributed with 
+                    <a href="#" class="show-definition" data-definition="mean">mean</a>
+                    <code>\mu = <var>MEAN</var></code> 
+                    and 
+                    <a href="#" class="show-definition" data-definition="standarddeviation">standard deviation</a>              
+                    <code>\sigma = <var>STDDEV</var></code>.
+                    <br /><var>person( 1 )</var> earned a<span data-if="floorTo( 0, GRADE / 10 ) === 8">n</span> <code><var>GRADE</var></code> on the exam.
+                    </p>
+                    
+                </div>
+            </div>
+                                
+                <p class="question">What is the 
+                	<a href="#" class="show-definition" data-definition="z-score">z-score</a>
+                	for <var>person( 1 )</var>'s exam grade? Round to two decimal places.
+                </p>
+           		    <div class="definition" id="mean">
+                        The mean is the sum of all the scores in the class, divided by the number of scores. 
+                    </div>
+                    <div class="definition" id="standarddeviation">
+                        The standard deviation is the average distance of all the individuals from the mean. 
+                    </div>
+                    <div class="definition" id="z-score">
+                    	A z-score is the number of standard deviations a specific point is away from the mean.  
+               		</div>
+           		 </div>
+           		 
+           		 <!-- Resume Normal -->
+
+
+        <div class="solution" data-type="custom">
+        <div class="instruction">
+            <input type="text" id="guessans">
+        </div>
+        <div class="guess">[ <!--CREATES A LIST THAT HAS 2 TEXT BOXES AND THE ANSWER-->
+            $("#firsttext").val(),
+            $("#secondtext").val(),
+			$("#thirdtext").val(),
+            $("#guessans").val(),
+			$("#secondQ1").val(),
+			$("#secondQ2").val(),
+			$("#secondQ3").val(),
+			$("#secondQ4").val(),
+			$("#secondQ5").val(),
+        ]</div>
+        <div class="validator-function">
+            
+
+            var correct = ZSCORE;
+            var solutionDiv = $("&lt;div&gt;").text(correct);
+            var validator = Khan.answerTypes.number.createValidator(solutionDiv);
+            return validator(guess[3]); <!--NEED TO CHANGE THAT BASED ON THE NUMBER OF GUESSES-->
+        </div>
+        <div class="show-guess-solutionarea"> <!--THIS IS FOR COACHES TO REPOPULATE WITH VALUES THAT STUDENTS ANSWERED-->
+            $("#firsttext").val(guess[0]);
+            $("#secondtext").val(guess[1]);
+			$("#thirdtext").val(guess[2]);
+            $("#guessans").val(guess[3]);
+			$("#secondQ1").val(),
+			$("#secondQ2").val(),
+			$("#secondQ3").val(),
+			$("#secondQ4").val(),
+			$("#secondQ5").val(),
+        </div>
+        <div class="example">an integer, like <code>6</code></div>
+        <div class="example">a <em>simplified proper</em> fraction, like <code>3/5</code></div>
+        <div class="example">a <em>simplified improper</em> fraction, like <code>7/4</code></div>
+        <div class="example">a mixed number, like <code>1\ 3/4</code></div>
+        <div class="example">an <em>exact</em> decimal, like <code>0.75</code></div>
+    </div>
+
+                <div class="hints">
+
+				<!-- More meddling! --> 
+				
+				<div>  <!-- HINT 1 -->
+				<p>	A 
+				<a href="#" class="show-definition" data-definition="z-score2">z-score</a>
+				is defined as the number of 
+                <a href="#" class="show-definition" data-definition="standarddeviation2">standard deviations</a>
+				 a specific point is away from the 
+                <a href="#" class="show-definition" data-definition="mean2">mean</a>. <br>
+					<b>Why is that true?</b>
+					<input type="text" id="firsttext" style="width:95%;"> <!--FIRST TEXT BOX-->
+					
+					<!-- the only way to get the same word to appear multiple times is to declare as a unique variable each time -->
+					<div class="definition" id="mean2">
+                       (Hint1): The mean is the sum of all the scores in the class, divided by the number of scores. 
+                    </div>
+                    <div class="definition" id="standarddeviation2">
+                        (Hint1): The standard deviation is the average distance of all the individuals from the mean. 
+                    </div>
+                    <div class="definition" id="z-score2">
+                    	(Hint1): A z-score is the number of standard deviations a specific point is away from the mean.  
+               		</div>
+				</div>
+				
+				<div> <!-- HINT 2 -->
+				<p>	We can calculate the 
+				<a href="#" class="show-definition" data-definition="z-score3">z-score</a>
+				for <var>person( 1 )</var>'s exam grade by subtracting the 
+				<a href="#" class="show-definition" data-definition="mean3">mean</a>
+				(μ) from their grade and then dividing by the 
+                <a href="#" class="show-definition" data-definition="standarddeviation3">standard deviation</a>. <br>
+				
+					<div>
+						<div class="definition" id="mean3">
+                      	The mean is the sum of all the scores in the class, divided by the number of scores. 
+                    	</div>
+                    	<div class="definition" id="standarddeviation3">
+                        The standard deviation is the average distance of all the individuals from the mean. 
+                    	</div>
+                    	<div class="definition" id="z-score3">
+                    	A z-score is the number of standard deviations a specific point is away from the mean.  
+               			</div>
+                	</div>
+				
+				<b>Why is that true?    </b>
+				
+						<!-- H2 EXPLANATION  -->
+				[<a href="#" class="show-subhint" data-subhint="explanation2">Show Explanation</a>]
+				<input type="text" id="secondtext" style="width:95%;"> <!--SECOND TEXT BOX-->
+				 <div class="subhint" id="explanation2">
+                    	(This demonstrates a hint BELOW the answer text.)
+                    	Because this is a way of taking the distance of Michael's score from the mean and 
+                   		dividing it by the standard deviation or average variability to give the distance 
+                    	in terms of the "number of standard deviations " away from the mean.
+                 </div>
+				</p>
+				</div>
+				
+				<div> <!-- HINT 3 -->
+					<p>	z = (x−μ) / σ </p> 
+										<div class="subhint" id="explanation3">
+                		(This demonstrates a hint ABOVE the answer text.)
+                		This is correct for the same reasons the previous step was correct. 
+              		</div>
+						<b>Why is that true?    </b>
+						
+						<!-- H3 EXPLANATION  -->
+					[<a href="#" class="show-subhint" data-subhint="explanation3">Show Explanation</a>]
+					<input type="text" id="thirdtext" style="width:95%;"> <!--THIRD TEXT BOX-->
+
+					</p>
+				</div>
+				
+				<div>  <!-- HINT 4 -->
+					<p>	z = (<var>GRADE</var>-<var>MEAN</var>)/<var>STDDEV</var> </p> 
+					<b>Why is that true?    </b>
+					
+						<!-- H4 EXPLANATION  -->
+					[<a href="#" class="show-subhint" data-subhint="explanation4">Show Explanation</a>]
+					<input type="text" id="fourthtext" style="width:95%;"> <!--FOURTH TEXT BOX-->
+					<div class="subhint" id="explanation4">
+            	    The z-score = (Sample - Mean) / Standard Deviation
+            	  	</div>
+					</p>
+				</div>
+
+
+				<div>  <!-- HINT 5 -->
+					<!-- <p><code>\large{\quad z \quad = \quad <var>ZSCORE</var>}</code></p> -->
+                        <p class="final_answer">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviation<var>plural( abs( ZSCORE ) )</var> <span data-if="ZSCORE > 0">above</span><span data-else>below</span> the mean. <br>
+					<b>Why is that true? </b>
+					</p>
+					
+						<!-- H5 EXPLANATION  -->
+					[<a href="#" class="show-subhint" data-subhint="explanation5">Show Explanation</a>]
+					<input type="text" id="fifthtext" style="width:95%;"> <!--FIFTH TEXT BOX-->
+					<div class="subhint" id="explanation5">
+            	       That is correct because Michael's score was very low relative to the mean, and far beyond typical variability.  
+            	  	</div>
+					</p>
+				</div>
+				
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
