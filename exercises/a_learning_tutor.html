@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html data-require="math math-format word-problems spin subhints khanscript">
+<head>
+    <meta charset="UTF-8" />
+    <title>Learning Coach Demo</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <script type="text/khanscript">
+            $("#answercontent").hide();
+            //$("#problemarea:not(#workarea)").detach();
+        </script>
+        <div class="problems">
+            <div id="original">
+                <div class="vars">
+                    <var id="MEAN">randRange( 65, 85 )</var>
+                    <var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+                    <var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+                    <var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+                </div>
+
+            <div class="problem">
+
+               	<!-- Here we start meddling with stuff!:) -->	  
+                <div id = "learning-tutor">
+                    <p><a href="#" class="show-subhint" data-subhint="help-me">Click here for learning tips</a></p>
+                     <div class="subhint" id="help-me">
+                        <a href="#" class="show-subhint" data-subhint="mindset-message">I'm feeling discouraged, I'd like a motivational message.</a>
+                        <div class="subhint" id="mindset-message"><p>Remember, the harder you try, the more you grow your math brain!</p>
+                            <p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>
+                            <div class="subhint" id="mindset-tellmore">Even if it's tough, the time you spend working help you form more connections that will help you solve future problems.</div>
+                            <p><a href="#" class="show-subhint" data-subhint="mindset-altmore">How do you motivate yourself?</a></p>                            
+                            <div class="subhint" id="mindset-altmore">What would you tell another student to get motivated?</div>
+                        </div>
+                    <p><a href="#" class="show-subhint" data-subhint="learn-strat">Would you like some suggestions for problem-solving strategies?</a></p>
+                    <div class="subhint" id="learn-strat">
+                        <a href="#" class="show-subhint" data-subhint="what-why-how">Click here to learn about the "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>
+                        <div class="subhint" id="what-why-how">
+                        To use this strategy, ask yourself these
+                        “<span class="hint_purple" style="font-weight: bold">
+                            What? Why? How?</span>"
+                        questions after each hint in a problem.
+                        <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            What does this step mean to you?</span>
+                        <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            Why is it helpful to take this step?</span>
+                        <br>
+                        <span class="hint_purple" style="font-weight: bold">
+                            How do you know this step is right?</span>
+                        <br>
+                        As a reminder to ask yourself these questions, they
+                        will sometimes appear in
+                        <span class="hint_purple" style="font-weight: bold">
+                            purple</span>.
+                        <br>
+                        <br>
+                        <a href="#" class="show-subhint"
+                           data-subhint="encouragement"
+                           data-hidden-text="Hide Information">
+                            What if I can’t do it?</a>
+                        <div class="subhint" id="encouragement">
+                            Many students are not sure what to say, or think
+                            their answer isn’t good. That is fine, as long as you
+                            <span style="font-weight: bold; font-style:italic">
+                                try</span>
+                            to think about the question, by typing or saying the
+                            answer to yourself.
+                        </div>
+                    </div>
+                    </div>
+                      </div>           
+                <div>              
+                    
+                    
+                </div>
+            </div>
+                                
+                
+
+        <div class="solution" data-type="custom">
+        
+    </div>
+
+                <div class="hints">
+
+				
+				
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
