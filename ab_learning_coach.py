@@ -1,14 +1,15 @@
 """
-Code to take a list of problem cards, and select and add motivational text to 
-each of the problem cards.  For use in the growth mindset A/B test.
+This latest explanation messages & prompting A/B test.
+Code to take a list of problem cards, and select and add text to 
+each of the problem cards. 
 """
 
 import experiments
 import random
 import event_log
 
-# the names of the exercises being targeted with this intervention
-# (currently, this is the fractions topic)
+# the names of the exercises being targeted with this intervention.
+# Currently same as the Growth Mindset experiment.
 target_exercises = [
     'adding_and_subtracting_fractions',
     'adding_fractions',
@@ -82,17 +83,6 @@ growth_messages = [
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 def add_header_text_to_cards(card, user_exercise):
     """
    Adds header text to a problem card based on exercise and
@@ -103,43 +93,47 @@ def add_header_text_to_cards(card, user_exercise):
         card.growthHeader = ""     # card refers to the problem object. growthHeader is an attribute of the card.
         return
 
-    # A/B test condition. “KIND OF HEADER”
-    # learning support is the coach or mindset + link, header (for now) just corresponds to "growth mindset" from old expt
-    test_condition = experiments.CoreMetrics.ab_test("learning support and header",
+    # STOPSHIP. The new experiment starts with the KIND OF HEADER A/B test. 
+    # 
+    test_condition = experiments.CoreMetrics.ab_test("KIND OF HEADER",
             alternative_params={
-                "no header": 5,
-                "learning support": 1, 
-                "header": 1},
+                "no header": 5, # As before, unaffected users.
+                "header": 1, # Text message is added but NO links to more info. 
+                "learning support": 1, # Header has a clickable link to DropDown text or a webpage.
+                },
             core_categories='all')
 
     if test_condition == "learning support":
-        # nested experiments because only 4 conditions are supported in
-        # GAE/Bingo
-        
-        # Single Scaffold is the learning coach, message + link sends people to another page with learning tutor
-        # (currently just an exercise we made with the learning tutor at the top)
-       
+        # People in the "learning support" condition go into 1 of 2 conditions.
+        # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
+        # Right now this is just a placeholder exercise on our server with the LearningCoach at top.
+        # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
+        # through a nested series of dropdown text.
+
         test_subcondition = experiments.CoreMetrics.ab_test(
             "learning support subtest",
             alternative_params={
-                "single scaffold": 1,                
-                "message + link": 1},
+                "webpage link": 1, # provides a link to a webpage on KA with the LearningCoach study information               
+                "dropdown link": 1}, # reveals text on dropdown that provides the LearningCoach study information
             core_categories='all')
         test_condition += "." + test_subcondition
         
     if test_condition == "no header":
         card.growthHeader = ""
-        
-    elif test_condition == "learning support.message + link":
-        message = "Click here to get tips for motivating yourself and learning more quickly:"
-        card.growthHeader = ('<p><em>' + message + '</em>'
+
+    # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
+    # Right now this is just a placeholder exercise on our server with the LearningCoach at top.
+    elif test_condition == "learning support.webpage link":
+        card.growthHeader = ('<p><em>Click here to get tips for motivating yourself and learning more quickly:</em>'
                              '&nbsp&nbsp&nbsp<FONT SIZE="-5">'
-                             '<a href=http://tiny.cc/learningtutor target="_blank">'
-                             'LEARN MORE</a>'
+                             '<a href=http://tiny.cc/learningtutor target="_blank">' # This is a placeholder link to rough demo, actual link can be on KA like brain workout.
+                             'GET TIPS</a>'
                              '</FONT></p>')
-                             
-    elif test_condition == "learning support.single scaffold":
-        message = random.choice(growth_messages)
+    # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
+    # through a nested series of dropdown text.                             
+    # You can easily see what this complicated code does through demo at tiny.cc/learningtutor          
+    elif test_condition == "learning support.dropdown link":
+        message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
         card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here to get tips for motivating yourself and learning more quickly</a></p>'
                               '<div class="subhint" id="help-me">'
                               '<a href="#" class="show-subhint" data-subhint="mindset-message">I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
