@@ -1,6 +1,31 @@
 """
-This latest explanation messages & prompting A/B test.
-Code to take a list of problem cards, and select and add text to 
+abtest_learningstrategies.py contains the latest AB Test to encourage learning strategies. 
+CMD + F for STOPSHIP to move through explanations of each key change.
+
+SUMMARY EXPLANATION for current version:
+The new experiment starts with the "KIND OF HEADER" A/B test, where
+    "no header" as before does not affect users
+    "header" means a header text message is added that does NOT have links to more info, like mindset/explanation prompts.
+    "learning support" has 2 subconditions. 
+        In each subcondition it adds a header with a clickable link that reveals
+a sequence of prompts and messages that a user can choose
+to expand by clicking on links that reveal DropDown or Mouseover text
+See tiny.cc/kalearningcoach for a demo.
+    "learning support.dropdown link" subcondition reveals text on dropdown that provides the
+LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
+    "learning support.webpage link" subcondition provides a link to a webpage on KA 
+with basically just the LearningCoach study information (like brain workout page in mindset study).
+Although right now there's just a placeholder, the same tiny.cc/kalearningcoach.
+    The advantage of adding this webpage with equivalent information is that we can then measure
+who actually clicked on it, as we're doing for the brain_workout page
+(which Jascha said would be challenging for the "dropdown link" 
+version. Also, this could test the willingness of students to use external study resources.
+And it could make any later A/B testing of different versions of the LearningCoach easier,
+because then A/B testing can take place *only* on the target webpage, instead of in exercises.
+
+
+Older notes:
+The code takes a list of problem cards, and select and add text to 
 each of the problem cards. 
 """
 
@@ -94,17 +119,23 @@ def add_header_text_to_cards(card, user_exercise):
         return
 
     # STOPSHIP. The new experiment starts with the KIND OF HEADER A/B test. 
-    # 
     test_condition = experiments.CoreMetrics.ab_test("KIND OF HEADER",
             alternative_params={
-                "no header": 5, # As before, unaffected users.
+                "no header": 5, # STOPSHIP. As before, unaffected users.
                 "header": 1, # Text message is added but NO links to more info. 
                 "learning support": 1, # Header has a clickable link to DropDown text or a webpage.
                 },
             core_categories='all')
 
-    if test_condition == "learning support":
-        # People in the "learning support" condition go into 1 of 2 conditions.
+    if test_condition == "no header":
+        card.growthHeader = ""
+        
+    elif test_condition == "header":
+        message = random.choice(mindset_messages)
+        card.growthHeader = "<p><em>" + message + "</em></p>"
+        
+    elif test_condition == "learning support":
+        # STOPSHIP. People in the "learning support" condition are assigned to 1 of 2 sub-conditions.
         # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
         # Right now this is just a placeholder exercise on our server with the LearningCoach at top.
         # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
@@ -118,23 +149,22 @@ def add_header_text_to_cards(card, user_exercise):
             core_categories='all')
         test_condition += "." + test_subcondition
         
-    if test_condition == "no header":
-        card.growthHeader = ""
 
-    # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
+
+    # STOPSHIP. "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
     # Right now this is just a placeholder exercise on our server with the LearningCoach at top.
-    elif test_condition == "learning support.webpage link":
-        card.growthHeader = ('<p><em>Click here to get tips for motivating yourself and learning more quickly:</em>'
+        if test_condition == "learning support.webpage link":
+            card.growthHeader = ('<p><em>Click here to get tips for motivating yourself and learning more quickly:</em>'
                              '&nbsp&nbsp&nbsp<FONT SIZE="-5">'
-                             '<a href=http://tiny.cc/learningtutor target="_blank">' # This is a placeholder link to rough demo, actual link can be on KA like brain workout.
+                             '<a href="http://tiny.cc/kalearningcoach" target="_blank">' # This is a placeholder link to rough demo, actual link can be on KA like brain workout.
                              'GET TIPS</a>'
                              '</FONT></p>')
-    # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
+    # STOPSHIP. "dropdown link" reveals text on dropdown that provides the LearningCoach study information
     # through a nested series of dropdown text.                             
-    # You can easily see what this complicated code does through demo at tiny.cc/learningtutor          
-    elif test_condition == "learning support.dropdown link":
-        message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
-        card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here to get tips for motivating yourself and learning more quickly</a></p>'
+    # You can easily see what this complicated code does through demo at tiny.cc/kalearningcoach       
+        elif test_condition == "learning support.dropdown link":
+            message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
+            card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">Click here to get tips for motivating yourself and learning more quickly</a></p>'
                               '<div class="subhint" id="help-me">'
                               '<a href="#" class="show-subhint" data-subhint="mindset-message">I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
                               '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
@@ -176,9 +206,7 @@ def add_header_text_to_cards(card, user_exercise):
                               ' to think about the question, by typing or saying the answer to yourself.'
                               '</div></div></div></div>')
                               
-    elif test_condition == "header":
-        message = random.choice(mindset_messages)
-        card.growthHeader = "<p><em>" + message + "</em></p>"
+
 
     
 
