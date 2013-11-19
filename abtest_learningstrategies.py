@@ -100,61 +100,13 @@ growth_messages = [
     ]
 
 
-#the what why how study strategy
-wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
-             'Click here to learn about the'
-             ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
-             '<div class="subhint" id="what-why-how">'
-             'To use this strategy, ask yourself these'
-             ' "<span class="hint_purple" style="font-weight: bold">'
-             'What? Why? How?</span>"'
-             ' questions after each hint in a problem.'
-             '<br><span class="hint_purple" style="font-weight: bold">'
-             'What does this step mean to you?</span>'
-             '<br>'
-             '<span class="hint_purple" style="font-weight: bold">'
-             'Why is it helpful to take this step?</span>'
-             '<br><span class="hint_purple" style="font-weight: bold">'
-             'How do you know this step is right?</span>'
-             '<br>'
-             '<br><br>'
-             '<a href="#" class="show-subhint" data-subhint="encouragement" data-hidden-text="Hide Information">'
-             'What if I can’t do it?</a>'
-             '<div class="subhint" id="encouragement">'
-             'Many students are not sure what to say, or think '
-             'their answer isn’t good. That is fine, as long as you'
-             '<span style="font-weight: bold; font-style:italic">'
-             ' try</span>'
-             ' to think about the question, by typing or saying the answer to yourself.'
-             '</div></div>')
 
 
 
-def create_learning_tutor(message, strategy):
-    """
-    makes the learning tutor using mostly pre-defined HTML, 
-    but with variable motivational message and explanation study strategy.
-    """
-    tutor = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
-             'Click here to get tips for motivating yourself and learning more quickly</a></p>'
-             '<div class="subhint" id="help-me">'
-             '<a href="#" class="show-subhint" data-subhint="mindset-message">'
-             'I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
-             '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
-             '<p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>'
-             '<div class="subhint" id="mindset-tellmore">'
-             'Even if it&#39;s tough, the time you spend working help you form more '
-             'connections that will help you solve future problems.</div>'
-             '<p><a href="#" class="show-subhint" data-subhint="mindset-altmore">'
-             'How do you motivate yourself?</a></p>'                            
-             '<div class="subhint" id="mindset-altmore">'
-             'What would you tell another student to get motivated?</div>'
-             '</div>'
-             '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
-             'Would you like some suggestions for problem-solving strategies?</a></p>'
-             '<div class="subhint" id="learn-strat">'+ strategy + '</div></div>')
 
-    return tutor
+
+
+
 
 def add_header_text_to_cards(card, user_exercise):
     """
@@ -178,31 +130,10 @@ def add_header_text_to_cards(card, user_exercise):
     if test_condition == "no header":
         card.growthHeader = ""
         
-    
     elif test_condition == "header":
-        test_subcondition = experiments.CoreMetrics.ab_test(
-            "header type subtest",
-            alternative_params={
-                "mindset only": 1, # mindset message, exactly as in previous expt            
-                "explanation only": 1, #provides dropdown explanation strategy
-                "mindset + explanation": 1}, #provides a combination
-            core_categories='all')
-        test_condition += "." + test_subcondition
+        message = random.choice(mindset_messages)
+        card.growthHeader = "<p><em>" + message + "</em></p>"
         
-
-        if test_condition == "header.mindset only"
-            message = random.choice(mindset_messages)
-            card.growthHeader = "<p><em>" + message + "</em></p>" #show mindset message
-
-
-        elif test_condition == "header.explanation only"
-            card.growthHeader = wwh_strat #show explanation strategy
-        
-        elif test_condition == "header.mindset + explanation"
-            message = random.choice(mindset_messages)
-            card.growthHeader = wwh_strat + "<p><em>" + message + "</em></p>" #show strategy, followed by mindset message
-
-
     elif test_condition == "learning support":
         # STOPSHIP. People in the "learning support" condition are assigned to 1 of 2 sub-conditions.
         # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
@@ -233,7 +164,54 @@ def add_header_text_to_cards(card, user_exercise):
     # You can easily see what this complicated code does through demo at tiny.cc/kalearningcoach       
         elif test_condition == "learning support.dropdown link":
             message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
-            card.growthHeader = create_learning_tutor(message, wwh_strat)
+            card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
+                              'Click here to get tips for motivating yourself and learning more quickly</a></p>'
+                              '<div class="subhint" id="help-me">'
+                              '<a href="#" class="show-subhint" data-subhint="mindset-message">'
+                              'I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
+                              '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
+                              '<p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>'
+                              '<div class="subhint" id="mindset-tellmore">'
+                              'Even if it&#39;s tough, the time you spend working help you form more '
+                              'connections that will help you solve future problems.</div>'
+                              '<p><a href="#" class="show-subhint" data-subhint="mindset-altmore">'
+                              'How do you motivate yourself?</a></p>'                            
+                              '<div class="subhint" id="mindset-altmore">'
+                              'What would you tell another student to get motivated?</div>'
+                              '</div>'
+                              '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
+                              'Would you like some suggestions for problem-solving strategies?</a></p>'
+                              '<div class="subhint" id="learn-strat">'
+                              '<a href="#" class="show-subhint" data-subhint="what-why-how">'
+                              'Click here to learn about the'
+                              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
+                              '<div class="subhint" id="what-why-how">'
+                              'To use this strategy, ask yourself these'
+                              ' "<span class="hint_purple" style="font-weight: bold">'
+                              'What? Why? How?</span>"'
+                              ' questions after each hint in a problem.'
+                              '<br><span class="hint_purple" style="font-weight: bold">'
+                              'What does this step mean to you?</span>'
+                              '<br>'
+                              '<span class="hint_purple" style="font-weight: bold">'
+                              'Why is it helpful to take this step?</span>'
+                              '<br><span class="hint_purple" style="font-weight: bold">'
+                              'How do you know this step is right?</span>'
+                              '<br>'
+                              'As a reminder to ask yourself these questions, they'
+                              'will sometimes appear in '
+                              '<span class="hint_purple" style="font-weight: bold">'
+                              'purple</span>.'
+                              '<br><br>'
+                              '<a href="#" class="show-subhint" data-subhint="encouragement" data-hidden-text="Hide Information">'
+                              'What if I can’t do it?</a>'
+                              '<div class="subhint" id="encouragement">'
+                              'Many students are not sure what to say, or think '
+                              'their answer isn’t good. That is fine, as long as you'
+                              '<span style="font-weight: bold; font-style:italic">'
+                              ' try</span>'
+                              ' to think about the question, by typing or saying the answer to yourself.'
+                              '</div></div></div></div>')
                               
 
 
