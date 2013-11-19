@@ -100,6 +100,33 @@ growth_messages = [
     ]
 
 
+#the what why how study strategy
+wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
+                              'Click here to learn about the'
+                              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
+                              '<div class="subhint" id="what-why-how">'
+                              'To use this strategy, ask yourself these'
+                              ' "<span class="hint_purple" style="font-weight: bold">'
+                              'What? Why? How?</span>"'
+                              ' questions after each hint in a problem.'
+                              '<br><span class="hint_purple" style="font-weight: bold">'
+                              'What does this step mean to you?</span>'
+                              '<br>'
+                              '<span class="hint_purple" style="font-weight: bold">'
+                              'Why is it helpful to take this step?</span>'
+                              '<br><span class="hint_purple" style="font-weight: bold">'
+                              'How do you know this step is right?</span>'
+                              '<br>'
+                              '<br><br>'
+                              '<a href="#" class="show-subhint" data-subhint="encouragement" data-hidden-text="Hide Information">'
+                              'What if I can’t do it?</a>'
+                              '<div class="subhint" id="encouragement">'
+                              'Many students are not sure what to say, or think '
+                              'their answer isn’t good. That is fine, as long as you'
+                              '<span style="font-weight: bold; font-style:italic">'
+                              ' try</span>'
+                              ' to think about the question, by typing or saying the answer to yourself.'
+                              '</div></div>')
 
 
 
@@ -131,6 +158,14 @@ def add_header_text_to_cards(card, user_exercise):
         card.growthHeader = ""
         
     elif test_condition == "header":
+        test_subcondition = experiments.CoreMetrics.ab_test(
+            "learning support subtest",
+            alternative_params={
+                "mindset only": 1, # mindset message, exactly as in previous expt            
+                "explanation only": 1, #provides dropdown explanation strategy
+                "mindset + explanation": 1}, #provides a combination
+            core_categories='all')
+        test_condition += "." + test_subcondition
         message = random.choice(mindset_messages)
         card.growthHeader = "<p><em>" + message + "</em></p>"
         
@@ -181,37 +216,7 @@ def add_header_text_to_cards(card, user_exercise):
                               '</div>'
                               '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
                               'Would you like some suggestions for problem-solving strategies?</a></p>'
-                              '<div class="subhint" id="learn-strat">'
-                              '<a href="#" class="show-subhint" data-subhint="what-why-how">'
-                              'Click here to learn about the'
-                              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
-                              '<div class="subhint" id="what-why-how">'
-                              'To use this strategy, ask yourself these'
-                              ' "<span class="hint_purple" style="font-weight: bold">'
-                              'What? Why? How?</span>"'
-                              ' questions after each hint in a problem.'
-                              '<br><span class="hint_purple" style="font-weight: bold">'
-                              'What does this step mean to you?</span>'
-                              '<br>'
-                              '<span class="hint_purple" style="font-weight: bold">'
-                              'Why is it helpful to take this step?</span>'
-                              '<br><span class="hint_purple" style="font-weight: bold">'
-                              'How do you know this step is right?</span>'
-                              '<br>'
-                              'As a reminder to ask yourself these questions, they'
-                              'will sometimes appear in '
-                              '<span class="hint_purple" style="font-weight: bold">'
-                              'purple</span>.'
-                              '<br><br>'
-                              '<a href="#" class="show-subhint" data-subhint="encouragement" data-hidden-text="Hide Information">'
-                              'What if I can’t do it?</a>'
-                              '<div class="subhint" id="encouragement">'
-                              'Many students are not sure what to say, or think '
-                              'their answer isn’t good. That is fine, as long as you'
-                              '<span style="font-weight: bold; font-style:italic">'
-                              ' try</span>'
-                              ' to think about the question, by typing or saying the answer to yourself.'
-                              '</div></div></div></div>')
+                              '<div class="subhint" id="learn-strat">'+ wwh_strat + '</div></div>')
                               
 
 
