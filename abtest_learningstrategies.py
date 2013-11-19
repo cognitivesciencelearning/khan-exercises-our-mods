@@ -154,7 +154,7 @@ def create_learning_tutor(message, strategy):
              'Would you like some suggestions for problem-solving strategies?</a></p>'
              '<div class="subhint" id="learn-strat">'+ strategy + '</div></div>')
 
-
+    return tutor
 
 def add_header_text_to_cards(card, user_exercise):
     """
