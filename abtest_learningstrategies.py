@@ -130,8 +130,29 @@ wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
 
 
 
-
-
+def create_learning_tutor(message, strategy):
+    """
+    makes the learning tutor using mostly pre-defined HTML, 
+    but with variable motivational message and explanation study strategy.
+    """
+    tutor = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
+             'Click here to get tips for motivating yourself and learning more quickly</a></p>'
+             '<div class="subhint" id="help-me">'
+             '<a href="#" class="show-subhint" data-subhint="mindset-message">'
+             'I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
+             '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
+             '<p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>'
+             '<div class="subhint" id="mindset-tellmore">'
+             'Even if it&#39;s tough, the time you spend working help you form more '
+             'connections that will help you solve future problems.</div>'
+             '<p><a href="#" class="show-subhint" data-subhint="mindset-altmore">'
+             'How do you motivate yourself?</a></p>'                            
+             '<div class="subhint" id="mindset-altmore">'
+             'What would you tell another student to get motivated?</div>'
+             '</div>'
+             '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
+             'Would you like some suggestions for problem-solving strategies?</a></p>'
+             '<div class="subhint" id="learn-strat">'+ strategy + '</div></div>')
 
 
 
@@ -212,24 +233,7 @@ def add_header_text_to_cards(card, user_exercise):
     # You can easily see what this complicated code does through demo at tiny.cc/kalearningcoach       
         elif test_condition == "learning support.dropdown link":
             message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
-            card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
-                              'Click here to get tips for motivating yourself and learning more quickly</a></p>'
-                              '<div class="subhint" id="help-me">'
-                              '<a href="#" class="show-subhint" data-subhint="mindset-message">'
-                              'I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
-                              '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
-                              '<p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>'
-                              '<div class="subhint" id="mindset-tellmore">'
-                              'Even if it&#39;s tough, the time you spend working help you form more '
-                              'connections that will help you solve future problems.</div>'
-                              '<p><a href="#" class="show-subhint" data-subhint="mindset-altmore">'
-                              'How do you motivate yourself?</a></p>'                            
-                              '<div class="subhint" id="mindset-altmore">'
-                              'What would you tell another student to get motivated?</div>'
-                              '</div>'
-                              '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
-                              'Would you like some suggestions for problem-solving strategies?</a></p>'
-                              '<div class="subhint" id="learn-strat">'+ wwh_strat + '</div></div>')
+            card.growthHeader = create_learning_tutor(message, wwh_strat)
                               
 
 
