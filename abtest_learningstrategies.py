@@ -157,6 +157,7 @@ def add_header_text_to_cards(card, user_exercise):
     if test_condition == "no header":
         card.growthHeader = ""
         
+    
     elif test_condition == "header":
         test_subcondition = experiments.CoreMetrics.ab_test(
             "header type subtest",
@@ -173,10 +174,10 @@ def add_header_text_to_cards(card, user_exercise):
             card.growthHeader = "<p><em>" + message + "</em></p>" #show mindset message
 
 
-        if test_condition == "header.explanation only"
+        elif test_condition == "header.explanation only"
             card.growthHeader = wwh_strat #show explanation strategy
         
-        if test_condition == "header.mindset + explanation"
+        elif test_condition == "header.mindset + explanation"
             message = random.choice(mindset_messages)
             card.growthHeader = wwh_strat + "<p><em>" + message + "</em></p>" #show strategy, followed by mindset message
 
