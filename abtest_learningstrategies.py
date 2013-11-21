@@ -5,23 +5,31 @@ CMD + F for STOPSHIP to move through explanations of each key change.
 SUMMARY EXPLANATION for current version:
 The new experiment starts with the "KIND OF HEADER" A/B test, where
     "no header" as before does not affect users
-    "header" means a header text message is added that does NOT have links to more info, like mindset/explanation prompts.
+    "header" means a header text message is added that does NOT have links to more info, like mindset/explanation prompts. 
+        subtests: 
+        "mindset" displays a mindset message, as in the mindset experiment.
+        "explanation" displays a self-explanation learning strategy as in the metacognitive experiment
+        "mindset + explanation" displays a mindset message followed by an explanation strategy
     "learning support" has 2 subconditions. 
         In each subcondition it adds a header with a clickable link that reveals
-a sequence of prompts and messages that a user can choose
-to expand by clicking on links that reveal DropDown or Mouseover text
-See tiny.cc/kalearningcoach for a demo.
+        a sequence of prompts and messages that a user can choose
+        to expand by clicking on links that reveal DropDown or Mouseover text.
+        See tiny.cc/kalearningcoach for a demo.
+        
+The TWO SUBCONDITIONS of "learning support" are:
+
     "learning support.dropdown link" subcondition reveals text on dropdown that provides the
-LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
+        LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
+    
     "learning support.webpage link" subcondition provides a link to a webpage on KA 
-with basically just the LearningCoach study information (like brain workout page in mindset study).
-Although right now there's just a placeholder, the same tiny.cc/kalearningcoach.
-    The advantage of adding this webpage with equivalent information is that we can then measure
-who actually clicked on it, as we're doing for the brain_workout page
-(which Jascha said would be challenging for the "dropdown link" 
-version. Also, this could test the willingness of students to use external study resources.
-And it could make any later A/B testing of different versions of the LearningCoach easier,
-because then A/B testing can take place *only* on the target webpage, instead of in exercises.
+         with basically just the LearningCoach study information (like brain workout page in mindset study).
+    Although right now there's just a placeholder, the same tiny.cc/kalearningcoach.
+        The advantage of adding this webpage with equivalent information is that we can then measure
+    who actually clicked on it, as we're doing for the brain_workout page
+    (which Jascha said would be challenging for the "dropdown link" 
+    version. Also, this could test the willingness of students to use external study resources.
+    And it could make any later A/B testing of different versions of the LearningCoach easier,
+    because then A/B testing can take place *only* on the target webpage, instead of in exercises.
 
 
 Older notes:
@@ -100,12 +108,67 @@ growth_messages = [
     ]
 
 
+#STOPSHIP The variable "wwh_strat" captures the code for showing the what why how study strategy clickable links
+# in one place, for simplicity. 
+# In future we'll want to add more variables to capture different study strategies.
+wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
+             'Click here to learn about the'
+             ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
+             '<div class="subhint" id="what-why-how">'
+             'To use this strategy, ask yourself these'
+             ' "<span class="hint_purple" style="font-weight: bold">'
+             'What? Why? How?</span>"'
+             ' questions after each hint in a problem.'
+             '<br><span class="hint_purple" style="font-weight: bold">'
+             'What does this step mean to you?</span>'
+             '<br>'
+             '<span class="hint_purple" style="font-weight: bold">'
+             'Why is it helpful to take this step?</span>'
+             '<br><span class="hint_purple" style="font-weight: bold">'
+             'How do you know this step is right?</span>'
+             '<br>'
+             '<br><br>'
+             '<a href="#" class="show-subhint" data-subhint="encouragement" data-hidden-text="Hide Information">'
+             'What if I can’t do it?</a>'
+             '<div class="subhint" id="encouragement">'
+             'Many students are not sure what to say, or think '
+             'their answer isn’t good. That is fine, as long as you'
+             '<span style="font-weight: bold; font-style:italic">'
+             ' try</span>'
+             ' to think about the question, by typing or saying the answer to yourself.'
+             '</div></div>')
 
 
+# STOPSHIP the function "create_learning_tutor" creates the Learning Coach (see tiny.cc/kalearningcoach) by producing the relevant HTML.
+# It takes in a "message", the motivational message we'd like to add, and "strategy" is a learning strategy like the
+# what-why-how strategy (only one for now) since these are embedded within the Learning Coach.
 
+def create_learning_tutor(message, strategy):
+    """
+    makes the learning tutor using mostly pre-defined HTML, 
+    but with variable motivational message and explanation study strategy.
+    Currently the only strategy is the "what-why-how" Strategy from the previous experiment.
+    """
+    tutor = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
+             'Click here to get tips for motivating yourself and learning more quickly</a></p>'
+             '<div class="subhint" id="help-me">'
+             '<a href="#" class="show-subhint" data-subhint="mindset-message">'
+             'I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
+             '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
+             '<p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>'
+             '<div class="subhint" id="mindset-tellmore">'
+             'Even if it&#39;s tough, the time you spend working help you form more '
+             'connections that will help you solve future problems.</div>'
+             '<p><a href="#" class="show-subhint" data-subhint="mindset-altmore">'
+             'How do you motivate yourself?</a></p>'                            
+             '<div class="subhint" id="mindset-altmore">'
+             'What would you tell another student to get motivated?</div>'
+             '</div>'
+             '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
+             'Would you like some suggestions for problem-solving strategies?</a></p>'
+             '<div class="subhint" id="learn-strat">'+ strategy + '</div></div>')
 
-
-
+    return tutor
 
 
 def add_header_text_to_cards(card, user_exercise):
@@ -130,16 +193,37 @@ def add_header_text_to_cards(card, user_exercise):
     if test_condition == "no header":
         card.growthHeader = ""
         
+    
     elif test_condition == "header":
-        message = random.choice(mindset_messages)
-        card.growthHeader = "<p><em>" + message + "</em></p>"
+        test_subcondition = experiments.CoreMetrics.ab_test(
+            "header type subtest",
+            alternative_params={
+                "mindset only": 1, #STOPSHIP mindset message, exactly as in previous expt            
+                "explanation only": 1, #provides dropdown explanation strategy
+                "mindset + explanation": 1}, #provides a mindset message, followed by an explanation strategy
+            core_categories='all')
+        test_condition += "." + test_subcondition
         
+
+        if test_condition == "header.mindset only"
+            message = random.choice(mindset_messages)
+            card.growthHeader = "<p><em>" + message + "</em></p>" #show mindset message
+
+
+        elif test_condition == "header.explanation only"
+            card.growthHeader = wwh_strat #show explanation strategy
+        
+        elif test_condition == "header.mindset + explanation"
+            message = random.choice(mindset_messages)
+            card.growthHeader = "<p><em>" + message + "</em></p>" + wwh_strat  #show mindset message, followed by explanation strategy
+
+
     elif test_condition == "learning support":
         # STOPSHIP. People in the "learning support" condition are assigned to 1 of 2 sub-conditions.
-        # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
-        # Right now this is just a placeholder exercise on our server with the LearningCoach at top.
-        # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
-        # through a nested series of dropdown text.
+        #   "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
+        #       Right now this is just a placeholder exercise on our server with the LearningCoach at top.
+        #   "dropdown link" reveals text on dropdown that provides the LearningCoach study information
+        #       through a nested series of dropdown text.
 
         test_subcondition = experiments.CoreMetrics.ab_test(
             "learning support subtest",
@@ -164,54 +248,7 @@ def add_header_text_to_cards(card, user_exercise):
     # You can easily see what this complicated code does through demo at tiny.cc/kalearningcoach       
         elif test_condition == "learning support.dropdown link":
             message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
-            card.growthHeader = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
-                              'Click here to get tips for motivating yourself and learning more quickly</a></p>'
-                              '<div class="subhint" id="help-me">'
-                              '<a href="#" class="show-subhint" data-subhint="mindset-message">'
-                              'I&#39;m feeling discouraged, I&#39;d like a motivational message.</a>'
-                              '<div class="subhint" id="mindset-message"><p>' + message + '</p>'
-                              '<p><a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a></p>'
-                              '<div class="subhint" id="mindset-tellmore">'
-                              'Even if it&#39;s tough, the time you spend working help you form more '
-                              'connections that will help you solve future problems.</div>'
-                              '<p><a href="#" class="show-subhint" data-subhint="mindset-altmore">'
-                              'How do you motivate yourself?</a></p>'                            
-                              '<div class="subhint" id="mindset-altmore">'
-                              'What would you tell another student to get motivated?</div>'
-                              '</div>'
-                              '<p><a href="#" class="show-subhint" data-subhint="learn-strat">'
-                              'Would you like some suggestions for problem-solving strategies?</a></p>'
-                              '<div class="subhint" id="learn-strat">'
-                              '<a href="#" class="show-subhint" data-subhint="what-why-how">'
-                              'Click here to learn about the'
-                              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
-                              '<div class="subhint" id="what-why-how">'
-                              'To use this strategy, ask yourself these'
-                              ' "<span class="hint_purple" style="font-weight: bold">'
-                              'What? Why? How?</span>"'
-                              ' questions after each hint in a problem.'
-                              '<br><span class="hint_purple" style="font-weight: bold">'
-                              'What does this step mean to you?</span>'
-                              '<br>'
-                              '<span class="hint_purple" style="font-weight: bold">'
-                              'Why is it helpful to take this step?</span>'
-                              '<br><span class="hint_purple" style="font-weight: bold">'
-                              'How do you know this step is right?</span>'
-                              '<br>'
-                              'As a reminder to ask yourself these questions, they'
-                              'will sometimes appear in '
-                              '<span class="hint_purple" style="font-weight: bold">'
-                              'purple</span>.'
-                              '<br><br>'
-                              '<a href="#" class="show-subhint" data-subhint="encouragement" data-hidden-text="Hide Information">'
-                              'What if I can’t do it?</a>'
-                              '<div class="subhint" id="encouragement">'
-                              'Many students are not sure what to say, or think '
-                              'their answer isn’t good. That is fine, as long as you'
-                              '<span style="font-weight: bold; font-style:italic">'
-                              ' try</span>'
-                              ' to think about the question, by typing or saying the answer to yourself.'
-                              '</div></div></div></div>')
+            card.growthHeader = create_learning_tutor(message, wwh_strat) #use the function above to generate a learning tutor with mindset message & what why how strategy.
                               
 
 
