@@ -9,23 +9,26 @@ The new experiment starts with the "KIND OF HEADER" A/B test, where
         subtests: 
         "mindset" displays a mindset message, as in the mindset experiment.
         "explanation" displays a self-explanation learning strategy as in the metacognitive experiment
-        "mindset + explanation" displays both a mindset message and an explanation strategy
+        "mindset + explanation" displays a mindset message followed by an explanation strategy
     "learning support" has 2 subconditions. 
         In each subcondition it adds a header with a clickable link that reveals
-a sequence of prompts and messages that a user can choose
-to expand by clicking on links that reveal DropDown or Mouseover text
+        a sequence of prompts and messages that a user can choose
+        to expand by clicking on links that reveal DropDown or Mouseover text
+
 See tiny.cc/kalearningcoach for a demo.
+"learning support" has 2 subconditions, which are:
     "learning support.dropdown link" subcondition reveals text on dropdown that provides the
-LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
+    LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
+    
     "learning support.webpage link" subcondition provides a link to a webpage on KA 
-with basically just the LearningCoach study information (like brain workout page in mindset study).
-Although right now there's just a placeholder, the same tiny.cc/kalearningcoach.
+    with basically just the LearningCoach study information (like brain workout page in mindset study).
+    Although right now there's just a placeholder, the same tiny.cc/kalearningcoach.
     The advantage of adding this webpage with equivalent information is that we can then measure
-who actually clicked on it, as we're doing for the brain_workout page
-(which Jascha said would be challenging for the "dropdown link" 
-version. Also, this could test the willingness of students to use external study resources.
-And it could make any later A/B testing of different versions of the LearningCoach easier,
-because then A/B testing can take place *only* on the target webpage, instead of in exercises.
+    who actually clicked on it, as we're doing for the brain_workout page
+    (which Jascha said would be challenging for the "dropdown link" 
+    version. Also, this could test the willingness of students to use external study resources.
+    And it could make any later A/B testing of different versions of the LearningCoach easier,
+    because then A/B testing can take place *only* on the target webpage, instead of in exercises.
 
 
 Older notes:
@@ -104,8 +107,8 @@ growth_messages = [
     ]
 
 
-#STOPSHIP the what why how study strategy. 
-#In future we'll want to add more study strategies, and randomly display one in the learning coach and header.explanation conditions.
+#STOPSHIP this variable captures the code for the what why how study strategy in one place for simplicity. 
+#In future we'll want to add more variables to capture different study strategies
 wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
              'Click here to learn about the'
              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
@@ -134,8 +137,9 @@ wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
              '</div></div>')
 
 
-# STOPSHIP this function creates the learning tutor. It's just a string of HTML exactly as in tiny.cc/kalearningcoach
-# the message is the motivational message we'd like to add, and strategy is a learning strategy. 
+# STOPSHIP this function creates the learning tutor. 
+# It's just a string of HTML exactly as in tiny.cc/kalearningcoach
+# the "message" is the motivational message we'd like to add, and "strategy" is a learning strategy. 
 # For now the only strategy is the what-why-how strategy
 def create_learning_tutor(message, strategy):
     """
@@ -194,7 +198,7 @@ def add_header_text_to_cards(card, user_exercise):
             alternative_params={
                 "mindset only": 1, #STOPSHIP mindset message, exactly as in previous expt            
                 "explanation only": 1, #provides dropdown explanation strategy
-                "mindset + explanation": 1}, #provides a combination
+                "mindset + explanation": 1}, #provides a mindset message, followed by an explanation strategy
             core_categories='all')
         test_condition += "." + test_subcondition
         
@@ -209,7 +213,7 @@ def add_header_text_to_cards(card, user_exercise):
         
         elif test_condition == "header.mindset + explanation"
             message = random.choice(mindset_messages)
-            card.growthHeader = wwh_strat + "<p><em>" + message + "</em></p>" #show strategy, followed by mindset message
+            card.growthHeader = "<p><em>" + message + "</em></p>" + wwh_strat  #show mindset message, followed by explanation strategy
 
 
     elif test_condition == "learning support":
