@@ -5,7 +5,11 @@ CMD + F for STOPSHIP to move through explanations of each key change.
 SUMMARY EXPLANATION for current version:
 The new experiment starts with the "KIND OF HEADER" A/B test, where
     "no header" as before does not affect users
-    "header" means a header text message is added that does NOT have links to more info, like mindset/explanation prompts.
+    "header" means a header text message is added that does NOT have links to more info, like mindset/explanation prompts. 
+        subtests: 
+        "mindset" displays a mindset message, as in the mindset experiment.
+        "explanation" displays a self-explanation learning strategy as in the metacognitive experiment
+        "mindset + explanation" displays both a mindset message and an explanation strategy
     "learning support" has 2 subconditions. 
         In each subcondition it adds a header with a clickable link that reveals
 a sequence of prompts and messages that a user can choose
@@ -129,11 +133,14 @@ wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
              '</div></div>')
 
 
-
+# STOPSHIP this function creates the learning tutor. It's just a string of HTML exactly as in tiny.cc/kalearningcoach
+# the message is the motivational message we'd like to add, and strategy is a learning strategy. 
+# For now the only strategy is the what-why-how strategy
 def create_learning_tutor(message, strategy):
     """
     makes the learning tutor using mostly pre-defined HTML, 
     but with variable motivational message and explanation study strategy.
+    Currently the only strategy is the "what-why-how" Strategy from the previous experiment.
     """
     tutor = ('<p><a href="#" class="show-subhint" data-subhint="help-me">'
              'Click here to get tips for motivating yourself and learning more quickly</a></p>'
@@ -233,7 +240,7 @@ def add_header_text_to_cards(card, user_exercise):
     # You can easily see what this complicated code does through demo at tiny.cc/kalearningcoach       
         elif test_condition == "learning support.dropdown link":
             message = random.choice(growth_messages) # These are assigned here and then used INSIDE of the LearningCoach
-            card.growthHeader = create_learning_tutor(message, wwh_strat)
+            card.growthHeader = create_learning_tutor(message, wwh_strat) #use the function above to generate a learning tutor with mindset message & what why how strategy.
                               
 
 
