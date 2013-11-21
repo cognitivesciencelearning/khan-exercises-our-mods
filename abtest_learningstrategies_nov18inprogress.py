@@ -13,17 +13,18 @@ The new experiment starts with the "KIND OF HEADER" A/B test, where
     "learning support" has 2 subconditions. 
         In each subcondition it adds a header with a clickable link that reveals
         a sequence of prompts and messages that a user can choose
-        to expand by clicking on links that reveal DropDown or Mouseover text
+        to expand by clicking on links that reveal DropDown or Mouseover text.
+        See tiny.cc/kalearningcoach for a demo.
+        
+The TWO SUBCONDITIONS of "learning support" are:
 
-See tiny.cc/kalearningcoach for a demo.
-"learning support" has 2 subconditions, which are:
     "learning support.dropdown link" subcondition reveals text on dropdown that provides the
-    LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
+        LearningCoach study information via a nested series of clickable links.See tiny.cc/kalearningcoach
     
     "learning support.webpage link" subcondition provides a link to a webpage on KA 
-    with basically just the LearningCoach study information (like brain workout page in mindset study).
+         with basically just the LearningCoach study information (like brain workout page in mindset study).
     Although right now there's just a placeholder, the same tiny.cc/kalearningcoach.
-    The advantage of adding this webpage with equivalent information is that we can then measure
+        The advantage of adding this webpage with equivalent information is that we can then measure
     who actually clicked on it, as we're doing for the brain_workout page
     (which Jascha said would be challenging for the "dropdown link" 
     version. Also, this could test the willingness of students to use external study resources.
