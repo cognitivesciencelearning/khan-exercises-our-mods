@@ -63,11 +63,11 @@
                             </p>
                             <!-- request to learn more about motivational message -->
                             <p>
-                                <a href="#" class="show-subhint" data-subhint="problem-solving-tellmore">Tell me more!</a>
+                                <a href="#" class="show-subhint" data-subhint="mindset-tellmore">Tell me more!</a>
                             </p>
                             <!-- end request to learn more about motivational message -->
                             <!-- text explaining more about motivational message -->
-                            <div class="subhint" id="problem-solving-tellmore">
+                            <div class="subhint" id="mindset-tellmore">
                                 Even if it's tough, the time you spend working help you form more connections that will help you solve future problems.
                             </div>
                             <!-- end text explaining more about motivational message -->
