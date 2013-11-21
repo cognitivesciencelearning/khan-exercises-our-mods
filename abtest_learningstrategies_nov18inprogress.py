@@ -104,7 +104,8 @@ growth_messages = [
     ]
 
 
-#the what why how study strategy
+#STOPSHIP the what why how study strategy. 
+#In future we'll want to add more study strategies, and randomly display one in the learning coach and header.explanation conditions.
 wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
              'Click here to learn about the'
              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
@@ -163,6 +164,7 @@ def create_learning_tutor(message, strategy):
 
     return tutor
 
+
 def add_header_text_to_cards(card, user_exercise):
     """
    Adds header text to a problem card based on exercise and
@@ -190,7 +192,7 @@ def add_header_text_to_cards(card, user_exercise):
         test_subcondition = experiments.CoreMetrics.ab_test(
             "header type subtest",
             alternative_params={
-                "mindset only": 1, # mindset message, exactly as in previous expt            
+                "mindset only": 1, #STOPSHIP mindset message, exactly as in previous expt            
                 "explanation only": 1, #provides dropdown explanation strategy
                 "mindset + explanation": 1}, #provides a combination
             core_categories='all')
