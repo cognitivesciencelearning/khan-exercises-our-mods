@@ -108,8 +108,9 @@ growth_messages = [
     ]
 
 
-#STOPSHIP this variable captures the code for the what why how study strategy in one place for simplicity. 
-#In future we'll want to add more variables to capture different study strategies
+#STOPSHIP The variable "wwh_strat" captures the code for showing the what why how study strategy clickable links
+# in one place, for simplicity. 
+# In future we'll want to add more variables to capture different study strategies.
 wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
              'Click here to learn about the'
              ' "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>'
@@ -138,10 +139,10 @@ wwh_strat = ('<a href="#" class="show-subhint" data-subhint="what-why-how">'
              '</div></div>')
 
 
-# STOPSHIP this function creates the learning tutor. 
-# It's just a string of HTML exactly as in tiny.cc/kalearningcoach
-# the "message" is the motivational message we'd like to add, and "strategy" is a learning strategy. 
-# For now the only strategy is the what-why-how strategy
+# STOPSHIP the function "create_learning_tutor" creates the Learning Coach (see tiny.cc/kalearningcoach) by producing the relevant HTML.
+# It takes in a "message", the motivational message we'd like to add, and "strategy" is a learning strategy like the
+# what-why-how strategy (only one for now) since these are embedded within the Learning Coach.
+
 def create_learning_tutor(message, strategy):
     """
     makes the learning tutor using mostly pre-defined HTML, 
@@ -219,10 +220,10 @@ def add_header_text_to_cards(card, user_exercise):
 
     elif test_condition == "learning support":
         # STOPSHIP. People in the "learning support" condition are assigned to 1 of 2 sub-conditions.
-        # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
-        # Right now this is just a placeholder exercise on our server with the LearningCoach at top.
-        # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
-        # through a nested series of dropdown text.
+        #   "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
+        #       Right now this is just a placeholder exercise on our server with the LearningCoach at top.
+        #   "dropdown link" reveals text on dropdown that provides the LearningCoach study information
+        #       through a nested series of dropdown text.
 
         test_subcondition = experiments.CoreMetrics.ab_test(
             "learning support subtest",
