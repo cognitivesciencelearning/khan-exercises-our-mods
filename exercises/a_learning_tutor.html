@@ -26,10 +26,11 @@
             <div class="problem">
 
                	<!-- STOPSHIP. This is where you can make changes, Here we start meddling with stuff!:) -->	  
-                <div id = "learning-tutor">
+                <div id = "learning-tutor"><!-- begin learning tutor -->
                     <p><!--the top-level message -->
                         <a href="#" class="show-subhint" data-subhint="help-me">Click here for learning tips</a>
                     </p><!--end top-level message -->
+
                     <!-- this is the dropdown text -->
                      <div class="subhint" id="help-me">
                         <!--link to request a motivational message & dropdown motivational message-->
@@ -63,9 +64,18 @@
                             <!-- end alternative text explaining more about motivational message -->
                         </div>
                         <!-- end link to request a motivational message & dropdown motivational message-->
-                    <p><a href="#" class="show-subhint" data-subhint="learn-strat">Would you like some suggestions for problem-solving strategies?</a></p>
+
+                        <!-- link to request study strategy and dropdown study strategy -->
+                    <p>
+                        <a href="#" class="show-subhint" data-subhint="learn-strat">Would you like some suggestions for problem-solving strategies?</a>
+                    </p>
+                    <!-- end link -->
+                    <!-- begin dropdown study strategy -->
                     <div class="subhint" id="learn-strat">
+                        <!-- begin link to dropdown study strategy (maybe we should remove this link since they've already requested it?) -->
                         <a href="#" class="show-subhint" data-subhint="what-why-how">Click here to learn about the "<span class="hint_purple" style="font-weight:bold">What? Why? How?</span> strategy</a>
+                        <!-- end link to study strategy -->
+                        <!-- begin dropdown study strategy -->
                         <div class="subhint" id="what-why-how">
                         To use this strategy, ask yourself these
                         “<span class="hint_purple" style="font-weight: bold">
@@ -81,16 +91,15 @@
                         <span class="hint_purple" style="font-weight: bold">
                             How do you know this step is right?</span>
                         <br>
-                        As a reminder to ask yourself these questions, they
-                        will sometimes appear in
-                        <span class="hint_purple" style="font-weight: bold">
-                            purple</span>.
                         <br>
-                        <br>
+                        <!-- end study strategy -->
+                        <!-- begin link to encourage students who feel they may not be able to do it -->
                         <a href="#" class="show-subhint"
                            data-subhint="encouragement"
                            data-hidden-text="Hide Information">
                             What if I can’t do it?</a>
+                        <!-- end link to encourage students who feel they may not be able to do it -->
+                        <!-- begin dropdown to encourage students who feel they may not be able to do it -->
                         <div class="subhint" id="encouragement">
                             Many students are not sure what to say, or think
                             their answer isn’t good. That is fine, as long as you
@@ -99,14 +108,14 @@
                             to think about the question, by typing or saying the
                             answer to yourself.
                         </div>
+                        <!-- end dropdown to encourage students who feel they may not be able to do it -->
                     </div>
+                    <!-- end dropdown study strategy -->
                     </div>
-                      </div>           
-                <div>              
-                    
-                    
-                </div>
-            </div>
+                    <!-- end link to request study strategy and dropdown study strategy -->
+                      </div>
+                      <!-- end dropdown text -->
+            </div> <!-- end learning tutor -->
                                 
                 
 
