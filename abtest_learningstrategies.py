@@ -220,9 +220,9 @@ def add_header_text_to_cards(card, user_exercise):
 
     elif test_condition == "learning support":
         # STOPSHIP. People in the "learning support" condition are assigned to 1 of 2 sub-conditions.
-        #   "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
+        # "webpage link" provides a link to a webpage on KA with the LearningCoach study information (like brain workout page in mindset study).
         #       Right now this is just a placeholder exercise on our server with the LearningCoach at top.
-        #   "dropdown link" reveals text on dropdown that provides the LearningCoach study information
+        # "dropdown link" reveals text on dropdown that provides the LearningCoach study information
         #       through a nested series of dropdown text.
 
         test_subcondition = experiments.CoreMetrics.ab_test(
