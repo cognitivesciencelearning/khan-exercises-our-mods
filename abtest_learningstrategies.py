@@ -31,6 +31,8 @@ The TWO SUBCONDITIONS of "learning support" are:
     And it could make any later A/B testing of different versions of the LearningCoach easier,
     because then A/B testing can take place *only* on the target webpage, instead of in exercises.
 
+To see a demonstration of the learning tutor go to tiny.cc/kalearningcoach. 
+Source code for that page is available on GitHub at https://github.com/cognitivesciencelearning/khan-exercises-our-mods/blob/master/exercises/a_learning_tutor_demo2wed.html
 
 Older notes:
 The code takes a list of problem cards, and select and add text to 
