@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html data-require="math word-problems khanscript">
+<head>
+    <meta charset="UTF-8">
+    <title>Z scores 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <script type="text/khanscript">
+        var growth_messages = [
+        "Remember, the more you practice the smarter you become!",
+        "When you learn a new kind of math problem, you grow your math brain!",
+     "If this is challenging, you have an opportunity to learn and become smarter!",
+        "Mistakes help you learn. Think hard to learn from them",
+        "The more you learn today, the smarter you'll be tomorrow!",
+     "The harder you try the better you get!",
+        "Did you know... Your brain gets better the more you use it.",
+        "If you make a mistake, it's an opportunity to get smarter!",
+        "Your brain is like a muscle.  The more you flex it, the more powerful it gets!",
+     "Thinking hard makes your brain grow stronger!  Think hard about these math exercises.",
+     "Your brain grows new connections every time you practice.  Help your brain grow new connections!",
+        "When you have to think harder, it makes you smarter!",
+        "Make your brain more powerful!  Practice hard!",
+        "Give your brain a workout.  The more you use it, the stronger it gets.",
+        ];
+        var message = growth_messages[Math.floor(Math.random() * (growth_messages.length - 1))];
+        $("#workarea").prepend('<p class="hint_purple" style="font-weight:bold;">' + message + '</p>');
+
+        </script>
+        <div class="problems">
+            <div id="original">
+                <div class="vars">
+                    <var id="MEAN">randRange( 65, 85 )</var>
+                    <var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+                    <var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+                    <var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+                </div>
+
+                <div class="problem">
+                    The grades on a <var>course( 1 )</var> midterm at <var>school( 1 )</var> are normally distributed with <code>\mu = <var>MEAN</var></code> and <code>\sigma = <var>STDDEV</var></code>.
+                    <br><var>person( 1 )</var> earned a<span data-if="floorTo( 0, GRADE / 10 ) === 8">n</span> <code><var>GRADE</var></code> on the exam.
+                </div>
+
+                <p class="question">Find the z-score for <var>person( 1 )</var>'s exam grade. Round to two decimal places.</p>
+
+                <div class="solution" data-forms="integer, decimal"><var>ZSCORE</var></div>
+
+                <div class="hints">
+                    <p>A z-score is defined as the number of <span class="hint_green">standard deviations</span> a specific point is away from the <span class="hint_pink">mean</span>.</p>
+                    <div>
+                        <p data-if="isMale(1)">We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+                        his grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p><p data-else="">We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+                        her grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p>
+                        <p>
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{x - \color{<var>PINK</var>}{\mu}}{\color{<var>GREEN</var>}{\sigma}}}
+                            </code>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{<var>GRADE</var> - \color{<var>PINK</var>}{<var>MEAN</var>}}{\color{<var>GREEN</var>}{<var>STDDEV</var>}}}
+                            </code>
+                        </p>
+                    </div>
+                    <div>
+                        <p><code>\large{\quad z \quad = \quad <var>ZSCORE</var>}</code></p>
+                        <p class="final_answer" data-if="isSingular(abs( ZSCORE ))">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviation <span data-if="ZSCORE > 0">above</span><span data-else="">below</span> the mean.</p><p class="final_answer" data-else="">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviations <span data-if="ZSCORE > 0">above</span><span data-else="">below</span> the mean.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
