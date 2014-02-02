@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html data-require="math word-problems subhints khanscript">
+<head>
+    <meta charset="UTF-8">
+    <title>Z scores 1</title>
+    <script src="../khan-exercise.js"></script>
+</head>
+<body>
+    <div class="exercise">
+        <div class="problems">
+            <div id="original">
+                <div class="vars">
+                    <var id="MEAN">randRange( 65, 85 )</var>
+                    <var id="STDDEV">randRange( 2, 5 ) + randRange( 0, 1 ) * 0.5</var>
+                    <var id="GRADE">randRangeWeighted( roundTo( 0, MEAN - STDDEV * 3 ), min( roundTo( 0, MEAN + STDDEV * 3 ), 100 ), MEAN, 0 )</var>
+                    <var id="ZSCORE">roundTo( 2, ( GRADE - MEAN ) / STDDEV )</var>
+                </div>
+                <!-- STOPSHIP. This is where you can make changes, Here we start meddling with stuff!:) -->   
+                <script type="text/khanscript">
+                var motive_messages = _.shuffle(['Picture how it will feel to master this exercise.', 'The "Strategies for when you\'re stuck" link might help.',
+                                       'Give yourself a break after you try a few more.', 'Remember that obstacles are a normal part of learning.',
+                                       'Things that come easily to you don\'t teach you much.',  'When problems feel hardest can be when you’re learning the most.',
+                                       'What would you tell another student in your position?']);
+                var motive_message = motive_messages.pop();
+                $('#motivated-topmessage').html(motive_message);
+                var motive_str = '<ul> <li> &middot; ' + motive_messages.pop() + '</li>';
+                for (i = 0; i < motive_messages.length - 1; i++) {
+                    motive_str = motive_str + "<li> &middot; " + motive_messages[i] + '</li>';
+                }
+                motive_str = motive_str + "</ul>";
+                $('#idea-1').html(motive_str);
+                </script>
+                <div class="problem">
+                    <div id="learning-tutor"><!-- begin learning tutor -->
+                    <p><!--the top-level message -->
+                       
+                        <table style="width: 100%; text-align:center;">
+                                <tr>
+                                <td><a href="#" class="show-subhint" data-subhint="unmotivated" data-hidden-text="Hide">[Keeping yourself motivated]</a>  </td>
+                                <td><a href="#" class="show-subhint" data-subhint="stuck" data-hidden-text="Hide">[Strategies for solving problems]</a></td>
+                               <td><a href="#" class="show-subhint" data-subhint="tips" data-hidden-text="Hide">[Learning tips]</a></td>
+                                </tr>
+                             </table>
+                        
+                        
+                        
+                    </p><!--end top-level message -->
+
+                    <!-- this is the dropdown text -->
+                     <div class="subhint" id="unmotivated">
+                       
+                            <p id="motivated-topmessage">
+                                Remember, the harder you try, the more you grow your math brain!
+                            </p>
+                            <!-- request to learn more about motivational message -->
+                            <p>
+                                <a href="#" id="motivated-more" class="show-subhint" data-subhint="idea-1">[[More Ideas]]
+                                </a>
+                                
+                                
+                                
+                                <div class="subhint" id="idea-1" style="font-weight: bold;">Choose a specific number of problems to work through and then reward yourself with a break.</div>
+                                
+                            </p>
+                        </div>
+                        <!-- end link to request a motivational message & dropdown motivational message-->
+
+
+                      
+                      <div class="subhint" id="stuck">
+                       <p>
+                            Sometimes it can help to ask yourself questions that help you reflect about your approach to the problem. Try the "What? Why? How?" 
+                            <span style="font-weight:bold">Reflect-on-Problem-Solving</span> strategy.
+                            Put your Mouse Cursor over each purple word to see a question you can ask yourself while solving a problem.
+                            </p>
+                            
+                            
+                                
+                            <table style="width: 100%; text-align:center;">
+                                <tr>
+                                <td><a href="#" class="show-definition" data-definition="what-problem-solving" style="color: #9D38BD; font-weight: bold">
+                                What?</a> </td>
+                                <td><a href="#" class="show-definition" data-definition="why-problem-solving" style="color: #9D38BD; font-weight: bold">
+                                Why?</a> </td>
+                               <td> <a href="#" class="show-definition" data-definition="how-problem-solving" style="color: #9D38BD; font-weight: bold">
+                                 How?</a></td>
+                                </tr>
+                             </table>
+                                
+                            
+                         <div class="definition" style="font-weight: bold" id="what-problem-solving">
+                            What are you doing or thinking right now?</div>
+                       
+                        <div class="definition " style="font-weight: bold" id="why-problem-solving">
+                            Why is what you are currently doing helpful?
+                            Why is it useful for achieving your goal?</div>
+
+                         <div class="definition" style="font-weight: bold" id="how-problem-solving">
+                            How well is your current approach to this problem
+                            working?</div>
+                        <br>
+                        <br>
+                        <a href="#" class="show-subhint"
+                            data-subhint="encouragement"
+                            data-hidden-text="Hide Information">
+                            What if I can’t do it?</a>
+                        <div class="subhint" id="encouragement">
+                            Many students are not sure what to say, or think
+                            their answer isn’t good. That is fine, as long as you
+                            <span style="font-weight: bold; font-style:italic">
+                                try</span>
+                            to think about the question, by typing or saying the
+                            answer to yourself.
+                        </div>
+                           
+                            <!-- end text explaining more about problem solving strategy -->
+                            
+                            
+                        
+                        <!-- end link to request a Problem Solving Strategy & dropdown strategy-->
+
+
+                      </div>
+
+                      <div class="subhint" id="tips">
+                        <p>
+                            Sometimes it can help to ask yourself questions that help you reflect about your understanding of the problem. 
+                            Try the  "What? Why? How?" <span style="font-weight:bold">Reflect-on-Understanding</span> strategy.
+                            Put your Mouse Cursor over each purple word to see a question you can ask yourself while solving a problem.
+                            </p>
+                            
+                            
+                                
+                            <table style="width: 100%; text-align:center;">
+                                <tr>
+                                <td><a href="#" class="show-definition" data-definition="what-problem-understanding" style="color: #9D38BD; font-weight: bold">
+                                What?</a> </td>
+                                <td><a href="#" class="show-definition" data-definition="why-problem-understanding" style="color: #9D38BD; font-weight: bold">
+                                Why?</a> </td>
+                               <td> <a href="#" class="show-definition" data-definition="how-problem-understanding" style="color: #9D38BD; font-weight: bold">
+                                 How?</a></td>
+                                </tr>
+                             </table>
+                                
+                            
+                         <div class="definition" style="font-weight: bold" id="what-problem-understanding">
+                            What does this step mean to you?</div>
+                       
+                        <div class="definition " style="font-weight: bold" id="why-problem-understanding">
+                           Why is it helpful to take this step?</div>
+
+                         <div class="definition" style="font-weight: bold" id="how-problem-understanding">
+                            How do you know this step is right?</div>
+                        <br>
+                        <br>
+                        <a href="#" class="show-subhint"
+                            data-subhint="encouragement-understanding"
+                            data-hidden-text="Hide Information">
+                            What if I can’t do it?</a>
+                        <div class="subhint" id="encouragement-understanding">
+                            Many students are not sure what to say, or think
+                            their answer isn’t good. That is fine, as long as you
+                            <span style="font-weight: bold; font-style:italic">
+                                try</span>
+                            to think about the question, by typing or saying the
+                            answer to yourself.
+                        </div>
+                            </div>
+                           
+                        </div>
+                    The grades on a <var>course( 1 )</var> midterm at <var>school( 1 )</var> are normally distributed with <code>\mu = <var>MEAN</var></code> and <code>\sigma = <var>STDDEV</var></code>.
+                    <br><var>person( 1 )</var> earned a<span data-if="floorTo( 0, GRADE / 10 ) === 8">n</span> <code><var>GRADE</var></code> on the exam.
+                </div>
+
+
+                <p class="question">Find the z-score for <var>person( 1 )</var>'s exam grade. Round to two decimal places.</p>
+
+                <div class="solution" data-forms="integer, decimal"><var>ZSCORE</var></div>
+
+                <div class="hints">
+                    <p>A z-score is defined as the number of <span class="hint_green">standard deviations</span> a specific point is away from the <span class="hint_pink">mean</span>.</p>
+                    <div>
+                        <p data-if="isMale(1)">We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+                        his grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p><p data-else="">We can calculate the z-score for <var>person( 1 )</var>'s exam grade by subtracting the <span class="hint_pink">mean <code>(\mu)</code></span> from
+                        her grade and then dividing by the <span class="hint_green">standard deviation <code>(\sigma)</code></span>.</p>
+                        <p>
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{x - \color{<var>PINK</var>}{\mu}}{\color{<var>GREEN</var>}{\sigma}}}
+                            </code>
+                        </p>
+                    </div>
+                    <div>
+                        <p>
+                            <code>
+                                \large{\quad z \quad = \quad
+                                \dfrac{<var>GRADE</var> - \color{<var>PINK</var>}{<var>MEAN</var>}}{\color{<var>GREEN</var>}{<var>STDDEV</var>}}}
+                            </code>
+                        </p>
+                    </div>
+                    <div>
+                        <p><code>\large{\quad z \quad = \quad <var>ZSCORE</var>}</code></p>
+                        <p class="final_answer" data-if="isSingular(abs( ZSCORE ))">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviation <span data-if="ZSCORE > 0">above</span><span data-else="">below</span> the mean.</p><p class="final_answer" data-else="">The z-score is <code><var>ZSCORE</var></code>. In other words, <var>person( 1 )</var>'s score was <code><var>abs( ZSCORE )</var></code>
+                        standard deviations <span data-if="ZSCORE > 0">above</span><span data-else="">below</span> the mean.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
