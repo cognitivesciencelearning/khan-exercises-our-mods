@@ -3,6 +3,7 @@
 coach_with_strategies = i18n._("""
 <div id="learning-tutor">
     <p>
+        Click below if you are...
         <table style="width: 100%; text-align:center;">
             <tr>
                 <td><a href="#" class="show-subhint" data-subhint="unmotivated" data-hidden-text="Hide">[Feeling unmotivated?]</a>  </td>
