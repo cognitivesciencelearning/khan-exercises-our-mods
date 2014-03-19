@@ -18,7 +18,7 @@
                 <!-- STOPSHIP. This is where you can make changes, Here we start meddling with stuff!:) -->   
                 
                 <div class="problem">
-                    <div id="learning-tutor"><!-- begin learning tutor -->
+<div id="learning-tutor"><!-- begin learning tutor -->
     <p><!--the top-level message -->
         <table style="width: 100%; text-align:center;">
             <tr>
@@ -32,7 +32,7 @@
     <!-- this is the dropdown text -->
     <div class="subhint" id="unmotivated">
         <p id="first-message">
-            Remember, the harder you try, the more you grow your math brain!
+            This text will be replaced with a member of the list below.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
@@ -61,6 +61,7 @@
             var mindsetList = document.getElementById('message-list');
             var messages = mindsetList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
+            message = "Remind yourself: " + message;
             document.getElementById('first-message').innerHTML = message;
         </script>
     </div>
@@ -70,7 +71,7 @@
                       
     <div class="subhint" id="stuck">
         <p id="first-message-2">
-            Remember, the harder you try, the more you grow your math brain!
+            This text will be replaced with a member of the list below.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
@@ -99,6 +100,7 @@
             var mindsetList = document.getElementById('message-list-2');
             var messages = mindsetList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
+            message = "Remind yourself: " + message;
             document.getElementById('first-message-2').innerHTML = message;
         </script>
     </div>
@@ -106,7 +108,7 @@
 
     <div class="subhint" id="tips">
         <p id="first-message-3">
-            Remember, the harder you try, the more you grow your math brain!
+            This text will be replaced with a member of the list below.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
@@ -135,6 +137,7 @@
             var mindsetList = document.getElementById('message-list-3');
             var messages = mindsetList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
+            message = "Remind yourself: " + message;
             document.getElementById('first-message-3').innerHTML = message;
         </script>
     </div>
