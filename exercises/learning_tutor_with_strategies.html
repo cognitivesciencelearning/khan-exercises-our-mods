@@ -13,7 +13,7 @@
     <!-- Dropdown text for "[Feeling Unmotivated]" -->
     <div class="subhint" id="unmotivated">
         <p id="first-message">
-            Remind yourself: *This text will be replaced with a member of the list below*.
+            *This text will be replaced with a member of the list below*.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
@@ -43,6 +43,7 @@
             var mindsetList = document.getElementById('message-list');
             var messages = mindsetList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
+            message = "Remind yourself: " + message;
             document.getElementById('first-message').innerHTML = message;
         </script>
     </div>
