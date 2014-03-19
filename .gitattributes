@@ -1,1 +1,8 @@
-* text eol = lf
+# make sure line endings are always lf
+* text eol=lf
+
+#specify that code files are text explicitly
+*.html text
+*.js text
+*.css text
+*.py text

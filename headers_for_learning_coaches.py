@@ -1,32 +1,32 @@
+#this header coach with learning strategies can be pasted directly into the A/B test code
+#and used as a variable there.
 coach_with_strategies = i18n._("""
-<div id="learning-tutor"><!-- begin learning tutor -->
-    <p><!--the top-level message -->
+<div id="learning-tutor">
+    <p>
         <table style="width: 100%; text-align:center;">
             <tr>
                 <td><a href="#" class="show-subhint" data-subhint="unmotivated" data-hidden-text="Hide">[Feeling unmotivated?]</a>  </td>
-                <td><a href="#" class="show-subhint" data-subhint="stuck" data-hidden-text="Hide">[Stuck?]</a></td>
+                <td><a href="#" class="show-subhint" data-subhint="stuck" data-hidden-text="Hide">[Stuck on a problem?]</a></td>
                 <td><a href="#" class="show-subhint" data-subhint="tips" data-hidden-text="Hide">[Want learning tips?]</a></td>
             </tr>
             </table>                        
-    </p><!--end top-level message -->
+    </p>
 
-    <!-- this is the dropdown text -->
     <div class="subhint" id="unmotivated">
         <p id="first-message">
-            Remember, the harder you try, the more you grow your math brain!
+            *This text will be replaced with a member of the list below*.
         </p>
-        <!-- request to learn more about motivational message -->
         <p>
-            <a href="#" id="motivated-more" class="show-subhint" data-subhint="idea-1" data-hidden-text="Hide">[[More Ideas]]</a>
+            <a href="#" id="motivated-more" class="show-subhint" data-subhint="idea-1" data-hidden-text="Hide">[[More Messages]]</a>
             <div class="subhint" id="idea-1" style="font-weight: bold;">
                 <ul id="message-list">
-                    <li>Remember, the more you practice the smarter you become!</li>
+                    <li>The more you practice the smarter you become!</li>
                     <li>When you learn a new kind of math problem, you grow your math brain!</li>
                     <li>If this is challenging, you have an opportunity to learn and become smarter!</li>
                     <li>Mistakes help you learn. Think hard to learn from them.</li>
                     <li>The more you learn today, the smarter you'll be tomorrow!</li>
                     <li>The harder you try the better you get!</li>
-                    <li>Did you know... Your brain gets better the more you use it.</li>
+                    <li>Your brain gets better the more you use it.</li>
                     <li>If you make a mistake, it's an opportunity to get smarter!</li>
                     <li>Your brain is like a muscle. The more you flex it, the more powerful it gets!</li>
                     <li>Thinking hard makes your brain grow stronger! Think hard about these math exercises.</li>
@@ -42,20 +42,18 @@ coach_with_strategies = i18n._("""
             var mindsetList = document.getElementById('message-list');
             var messages = mindsetList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
+            message = "Remind yourself: " + message;
             document.getElementById('first-message').innerHTML = message;
         </script>
     </div>
-    <!-- end link to request a motivational message & dropdown motivational message-->
-
-
-                      
+              
     <div class="subhint" id="stuck">
         <p>
-            Sometimes it can help to ask yourself questions that help you reflect about your approach to the problem. Try the "What? Why? How?" 
-            <span style="font-weight:bold">Reflect-on-Problem-Solving</span> strategy.
-            Click on each word to see a question you can ask yourself while solving a problem.
+            It can help to think about how you are approaching the problem, by asking yourself reflection questions. 
+            Click on each word below to try a question from the "What? Why? How?" 
+            <span style="font-weight:bold">Problem-Solving</span> strategy.
         </p>
-                                
+        <!-- table displaying "What? Why? How?" -->                        
         <table style="width: 100%; text-align:center;">
             <tr>
                 <td><a href="#" class="show-subhint" data-subhint="what-problem-solving" style="font-weight: bold" data-hidden-text="Hide">
@@ -66,8 +64,7 @@ coach_with_strategies = i18n._("""
                     How?</a></td>
             </tr>
         </table>
-                                
-                            
+                                                
         <div class="subhint" style="font-weight: bold" id="what-problem-solving">
             What are you doing or thinking right now?</div>
                        
@@ -90,15 +87,14 @@ coach_with_strategies = i18n._("""
             answer to yourself.
         </div>
     </div>
-    <!-- end link to request a Problem Solving Strategy & dropdown strategy-->
 
     <div class="subhint" id="tips">
         <p>
-            Sometimes it can help to ask yourself questions that help you reflect about your understanding of the problem. 
-            Try the  "What? Why? How?" <span style="font-weight:bold">Reflect-on-Understanding</span> strategy.
-            Click on each word to see a question you can ask yourself while solving a problem.
+            Try asking yourself questions after you read a solution hint, to make sure you have a deep understanding.  
+           For questions from the "What? Why? How?" <span style="font-weight:bold">Understand-Meaning</span> strategy,
+            click on each word below.
         </p>
-                            
+                               
         <table style="width: 100%; text-align:center;">
             <tr>
                 <td><a href="#" class="show-subhint" data-subhint="what-problem-understanding" style="font-weight: bold" data-hidden-text="Hide">
@@ -109,8 +105,7 @@ coach_with_strategies = i18n._("""
                 How?</a></td>
             </tr>
         </table>
-                                
-                            
+                                              
         <div class="subhint" style="font-weight: bold" id="what-problem-understanding">
             What does this step mean to you?</div>
                        
@@ -131,12 +126,14 @@ coach_with_strategies = i18n._("""
             to think about the question, by typing or saying the
             answer to yourself.
         </div>
-    </div>                         
+    </div>
+                           
 </div>
 """)
 
 
-
+#this learning coach header with 3 lists of messages instead of study strategies
+#is not ready to go yet.
 coach_with_lists = i18n._("""
 <div id="learning-tutor"><!-- begin learning tutor -->
     <p><!--the top-level message -->
