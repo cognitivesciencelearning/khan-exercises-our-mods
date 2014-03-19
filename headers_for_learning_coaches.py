@@ -43,7 +43,7 @@ coach_with_strategies = i18n._("""
             var mindsetList = document.getElementById('message-list');
             var messages = mindsetList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
-            message = "Remind yourself: " + message;
+            message = "<em>" + "Remind yourself: " + message + "</em>";
             document.getElementById('first-message').innerHTML = message;
         </script>
     </div>
