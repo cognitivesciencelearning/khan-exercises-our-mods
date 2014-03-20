@@ -35,38 +35,34 @@
 
     <!-- this is the dropdown text -->
     <div class="subhint" id="unmotivated">
-        <p id="first-message">
+        <p id="motivate-first-message">
             This text will be replaced with a member of the list below.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
             <a href="#" id="motivated-more" class="show-subhint" data-subhint="idea-1" data-hidden-text="Hide">[[More Ideas]]</a>
             <div class="subhint" id="idea-1" style="font-weight: bold;">
-                <ul id="message-list">
-                    <li>Remember, the more you practice the smarter you become!</li>
-                    <li>When you learn a new kind of math problem, you grow your math brain!</li>
-                    <li>If this is challenging, you have an opportunity to learn and become smarter!</li>
-                    <li>Mistakes help you learn. Think hard to learn from them.</li>
-                    <li>The more you learn today, the smarter you'll be tomorrow!</li>
-                    <li>The harder you try the better you get!</li>
-                    <li>Did you know... Your brain gets better the more you use it.</li>
-                    <li>If you make a mistake, it's an opportunity to get smarter!</li>
-                    <li>Your brain is like a muscle. The more you flex it, the more powerful it gets!</li>
-                    <li>Thinking hard makes your brain grow stronger! Think hard about these math exercises.</li>
-                    <li>Your brain grows new connections every time you practice. Help your brain grow more connections!</li>
-                    <li>When you have to think harder, it makes you smarter!</li>
-                    <li>Make your brain more powerful!  Practice hard!</li>
-                    <li>Give your brain a workout.  The more you use it, the stronger it gets!</li>
+                <ul id="motivate-message-list">
+                    <li>Picture how it will feel to master this exercise.</li>
+                    <li>The “Strategies for when you’re stuck” link might help.</li>
+                    <li>Give yourself a break after you try a few more.</li>
+                    <li>Remember that obstacles are a normal part of learning.</li>
+                    <li>Things that come easily to you don’t teach you much.</li>
+                    <li>When problems feel hardest can be when you’re learning the most.</li>
+                    <li>What would you tell another student in your position?</li>
+                    <li>There are always thousands of other students on Khan Academy solving problems alongside you.</li>
+                    <li>Many students find math problems tough, but if you all keep working you’ll master them.</li>
+                    <li>Many teachers who use Khan Academy say that they love seeing their students make progress by practicing.</li>
                 </ul>
             </div>    
         </p>
         <script type="text/javascript">
             //choose a random message from the list and display it at the top
-            var mindsetList = document.getElementById('message-list');
-            var messages = mindsetList.getElementsByTagName('li');
+            var messageList = document.getElementById('motivate-message-list');
+            var messages = messageList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
-            message = "<em>" + "Remind yourself: " + message + "</em>";
-            document.getElementById('first-message').innerHTML = message;
+            message = "<em>" + message + "</em>";
+            document.getElementById('motivate-first-message').innerHTML = message;
         </script>
     </div>
     <!-- end link to request a motivational message & dropdown motivational message-->
@@ -74,97 +70,82 @@
 
                       
     <div class="subhint" id="stuck">
-        <p id="first-message-2">
+        <p id="stuck-first-message">
             This text will be replaced with a member of the list below.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
             <a href="#" id="motivated-more-2" class="show-subhint" data-subhint="idea-1-2" data-hidden-text="Hide">[[More Ideas]]</a>
             <div class="subhint" id="idea-1-2" style="font-weight: bold;">
-                <ul id="message-list-2">
-                    <li>Remember, the more you practice the smarter you become!</li>
-                    <li>When you learn a new kind of math problem, you grow your math brain!</li>
-                    <li>If this is challenging, you have an opportunity to learn and become smarter!</li>
-                    <li>Mistakes help you learn. Think hard to learn from them.</li>
-                    <li>The more you learn today, the smarter you'll be tomorrow!</li>
-                    <li>The harder you try the better you get!</li>
-                    <li>Did you know... Your brain gets better the more you use it.</li>
-                    <li>If you make a mistake, it's an opportunity to get smarter!</li>
-                    <li>Your brain is like a muscle. The more you flex it, the more powerful it gets!</li>
-                    <li>Thinking hard makes your brain grow stronger! Think hard about these math exercises.</li>
-                    <li>Your brain grows new connections every time you practice. Help your brain grow more connections!</li>
-                    <li>When you have to think harder, it makes you smarter!</li>
-                    <li>Make your brain more powerful!  Practice hard!</li>
-                    <li>Give your brain a workout.  The more you use it, the stronger it gets!</li>
+                <ul id="stuck-message-list">
+                    <li> Have you solved similar problems before?</li>
+                    <li>What is another approach you can take to the problem?</li>
+                    <li>What are the unknowns in this problem?</li>
+                    <li>What is the quantity you are trying to calculate?</li>
+                    <li>Can you spot any mistakes in your reasoning so far?</li>
+                    <li>Try to start solving the problem again from the beginning.</li>
+                    <li>Can you remember how you solved a similar problem to this one?</li>
+                    <li>What concepts or principles are relevant to solving this problem?</li>
                 </ul>
             </div>    
         </p>
         <script type="text/javascript">
             //choose a random message from the list and display it at the top
-            var mindsetList = document.getElementById('message-list-2');
-            var messages = mindsetList.getElementsByTagName('li');
+            var messageList = document.getElementById('stuck-message-list');
+            var messages = messageList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
-            message = "<em>" + "Remind yourself: " + message + "</em>";
-            document.getElementById('first-message-2').innerHTML = message;
+            message = "<em>" + message + "</em>";
+            document.getElementById('stuck-first-message').innerHTML = message;
         </script>
     </div>
     <!-- end link to request a Problem Solving Strategy & dropdown strategy-->
 
     <div class="subhint" id="tips">
-        <p id="first-message-3">
+        <p id="tips-first-message">
             This text will be replaced with a member of the list below.
         </p>
         <!-- request to learn more about motivational message -->
         <p>
             <a href="#" id="motivated-more-3" class="show-subhint" data-subhint="idea-1-3" data-hidden-text="Hide">[[More Ideas]]</a>
             <div class="subhint" id="idea-1-3" style="font-weight: bold;">
-                <ul id="message-list-3">
-                    <li>Remember, the more you practice the smarter you become!</li>
-                    <li>When you learn a new kind of math problem, you grow your math brain!</li>
-                    <li>If this is challenging, you have an opportunity to learn and become smarter!</li>
-                    <li>Mistakes help you learn. Think hard to learn from them.</li>
-                    <li>The more you learn today, the smarter you'll be tomorrow!</li>
-                    <li>The harder you try the better you get!</li>
-                    <li>Did you know... Your brain gets better the more you use it.</li>
-                    <li>If you make a mistake, it's an opportunity to get smarter!</li>
-                    <li>Your brain is like a muscle. The more you flex it, the more powerful it gets!</li>
-                    <li>Thinking hard makes your brain grow stronger! Think hard about these math exercises.</li>
-                    <li>Your brain grows new connections every time you practice. Help your brain grow more connections!</li>
-                    <li>When you have to think harder, it makes you smarter!</li>
-                    <li>Make your brain more powerful!  Practice hard!</li>
-                    <li>Give your brain a workout.  The more you use it, the stronger it gets!</li>
+                <ul id="tips-message-list">
+                    <li>Before you move on, make sure you can explain why an answer was correct.</li>
+                    <li>Before you check if an answer is correct, challenge yourself to explain why it might be wrong.</li>
+                    <li>Try explaining how you solved a problem to someone else.</li>
+                    <li>Imagine you were asked to explain how you solved a problem- what would you say?</li>
+                    <li>What was the key principle you needed to understand?</li>
+                    <li>After each problem, try to see what new idea you learned from it.</li>
+                    <li>Pay attention to how a problem is similar to other problems you have solved.</li>
+                    <li>Try to spot how you have to change your approach when you move from one problem to another.</li>
                 </ul>
             </div>    
         </p>
         <script type="text/javascript">
             //choose a random message from the list and display it at the top
-            var mindsetList = document.getElementById('message-list-3');
-            var messages = mindsetList.getElementsByTagName('li');
+            var messageList = document.getElementById('tips-message-list');
+            var messages = messageList.getElementsByTagName('li');
             var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
-            message = "<em>" + "Remind yourself: " + message + "</em>";
-            document.getElementById('first-message-3').innerHTML = message;
+            message = "<em>" + message + "</em>";
+            document.getElementById('tips-first-message').innerHTML = message;
         </script>
     </div>
     <script type="text/javascript">
         //choose a random message from the list and display it at the top
         var randList = Math.floor(Math.random() * 3);
-        var mindsetList;
+        var messageList;
         var prependedText;
         if (randList === 0) {
-            mindsetList = document.getElementById('message-list');
-            prependedText = "Remind yourself: ";
+            messageList = document.getElementById('motivate-message-list');
         }
         else if (randList === 1) {
-            mindsetList = document.getElementById('message-list-2');
-            prependedText = "Remind yourself: ";
+            messageList = document.getElementById('stuck-message-list');
         }
         else if (randList === 2) {
-            mindsetList = document.getElementById('message-list-3');
-            prependedText = "Remind yourself: ";
+            messageList = document.getElementById('tips-message-list');
         }
-        var messages = mindsetList.getElementsByTagName('li');
+        var messages = messageList.getElementsByTagName('li');
         var message = messages[Math.floor(Math.random() * messages.length)].innerHTML;
-        message = "<em>" + prependedText + message + "</em>";
+        message = "<em>" + message + "</em>";
         document.getElementById('top-level-message').innerHTML = message;
     </script>
                            
